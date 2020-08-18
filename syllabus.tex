@@ -1,0 +1,173 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Problem Solving and Computer Programming Syllabus},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CYBER 691 Advanced Malware Analysis},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104: Problem Solving and Computer Programming}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104}
+\AtEndDocument{\vfill \hfill \LaTeX}
+
+\begin{document}
+
+\textbf{Semester:} \input{semester}\\
+\textbf{Location:} Online via Blackboard Connect \\
+\textbf{Time:} Tuesdays \& Thursdays 5:30 -- 6:45p \\
+\textbf{Instructor:} Richard Zak \\
+\textbf{Email:} \href{mailto:richard.zak@umbc.edu?Subject=CMSC104}{richard.zak@umbc.edu} \\
+\textbf{Teaching Fellow:} Fredrick Gough \\
+\textbf{Email:} \href{mailto:vf15810@umbc.edu?Subject=CMSC104}{vf15810@umbc.edu}
+
+\section*{Day/Hours Available}
+\begin{itemize}
+\item We can meet 30 minutes prior to class if you coordinate with us prior to the day of class. We can also stay after class for about 30 minutes.
+\item In Email: Anytime, and we will respond within 48 hours.
+\end{itemize}
+
+\section*{Blackboard Connect}
+\paragraph{}Do to the COVID-19 pandemic, class will meet virtually. Blackboard Connect is accessible via \url{https://blackboard.umbc.edu}. For information on UMBC's response to the Coronavirus outbreak, visit the UMBC website for the Coronavirus at \url{https://covid19.umbc.edu/}.
+
+\section*{Course Description}
+\paragraph{}This course is designed to provide an introduction to problem solving and computer programming that does not require prior programming experience. Elementary problem solving skills and algorithm development will be introduced. Students will be taught the basic use of a programming environment and basic programming constructs (including loops, control statements, functions, and arrays). This course also teaches students the fundamentals of using the UNIX operating system, and introduces general computer science concepts.
+\paragraph{Note:}This course does not fulfill any of the computer science major requirements. Students who have taken and received transfer credit for, or who are taking concurrently any computer programming course in a high-level programming language, will not receive credit for CMSC 104. The list of such computer programming courses includes, but is not limited to AP Computer Science, CMSC 201, CMSC 202, and sections of CMSC 291 that cover programming topics.
+
+The following is a list of the topics that will be covered:
+\begin{itemize}
+\item Introduction to Computer Organization and Architecture
+\item Data Representation and Memory Usage
+\item Introduction to Operating Systems (Linux)
+\item Introduction to Software Engineering Using Top-Down Design
+\item Programming in C
+\item Problem Solving and Algorithm Development
+\end{itemize}
+
+\section*{Overall Course Objectives}
+\paragraph{}After completion of this course, students will be able to:
+\begin{multicols}{2}
+\begin{itemize}
+    \item describe basic computer hardware and software,
+    \item navigate the Linux command line using UMBC's Linux GL environment,
+    \item create, edit, and remove files and directories in Unix,
+    \item write C programs with loops, control statements, functions, and arrays that compile and solve their intended problems.
+\end{itemize}
+\end{multicols}
+
+\section*{Course Textbook}
+\textbf{C How to Program} by Deitel \& Deitel, Eighth Edition. Publisher: Pearson; ISBN 978-0133976892.
+
+\section*{Course Work}
+\paragraph{Attendance}It is important to be present for each class, though it's up to the student to best manage their own time. This is your time to have regular interaction with the instructor and Teaching Fellow, to ask questions, and seek clarification. I cannot overstate the importance of being able to ask questions and engage in dialog to help facilitate the learning process.
+
+\paragraph{Classwork}Thursdays will be for working on classwork assignments, and anything that's not finished during class time becomes homework.
+
+\paragraph{Quizzes}There are five quizzes, and they will be held during the first 40 minutes of the class in which they're administered. The best way to study for the quiz is to do your homework and learn from it. Quizzes will be administered using the Respondus Lockdown Browser in Blackboard, so please read the following section for details on how to set it up and use it. There will be a practice quiz early in the semester to ensure everyone can use the system.
+
+\paragraph{LockDown Browser}This course uses the LockDown Browser for online exams. Watch this short video to get a basic understanding of LockDown Browser and the optional webcam feature (which may be required for some exams) \url{http://www.respondus.com/products/lockdown-browser/student-movie.shtml}. Then download and install LockDown Browser from this link: \url{http://www.respondus.com/lockdown/download.php?id=978442813}. NOTE: This link is unique for UMBC. It cannot be used by non-UMBC students or for another Blackboard or LMS outside of our campus. To take an online test, start LockDown Browser and navigate to the exam. You won't be able to access the exam with a standard web browser. For additional details on using LockDown Browser, review this FAQ \url{https://wiki.umbc.edu/x/BQb9Aw} or the Respondus Student Quick Start Guide (PDF) \url{http://respondus.com/products/lockdown-browser/guides.shtml#student}. Finally, when taking an online exam, follow these guidelines:
+\begin{itemize}
+\item Select a location where you won't be interrupted
+\item Before starting the test, know how much time is available for it, and that you've allotted sufficient time to complete it
+\item Turn off all mobile devices, phones, etc. and don't have them within reach
+\item Clear your area of all external materials — books, papers, other computers, or devices
+\item Remain at your desk or workstation for the duration of the test
+\item LockDown Browser will prevent you from accessing other websites or applications; you will be unable to exit the test until all questions are completed and submitted
+\end{itemize}
+
+\paragraph{Exams}There will be one exam, the final. It is designed to reinforce the topics discussed throughout the semester in order to promote retention of the information.
+
+\section*{Course Policies}
+\subsection*{Grading}
+
+\begin{center}
+\begin{tabular}{ c c || c c}
+\multicolumn{2}{c||}{\underline{Scale}} & \underline{Course Work} & \underline{Grade Distribution} \\
+90\%-100\% & A & Classwork & 15\% \\
+80\%-89\% & B & Homework & 25\% \\
+70\%-79\% & C & Quizzes & 30\% \\ 
+60\%-69\% & D & Final Exam & 30\% \\
+$<$60\%     & F & 
+\end{tabular}
+\end{center}
+
+\paragraph{}For borderline grades, there may be adjustments in the student's favor based on attendance, but under no circumstances will the letter grades be lower than in the standard formula. Grades will not be ``curved'' in the sense that the percentages of A's, B's and C's are not fixed. As a guideline, a student receiving an ``A'' should be able to produce correct programs for the homework assignments and quizzes with ease.
+
+\subsection*{Academic Integrity}
+\paragraph{}By enrolling is this course, each student assumes the responsibilities of an active participant in UMBC's scholarly community in which everyone's academic work and behavior are held to the highest standards of honesty. Cheating, fabrication, plagiarism, and helping others to commit these acts are all forms of academic dishonesty, and they are wrong. Academic misconduct could result in disciplinary action that may include, but is not limited to, suspension or dismissal. To find useful information about avoiding plagiarism infractions through appropriate citations, or to read the full policy regarding student academic misconduct for the graduate school, please see \url{http://www.umbc.edu/provost/integrity}.
+
+\section*{Schedule}
+\textit{Note: The schedule is subject to change. However, any changes will be thoroughly discussed and well disseminated. The lecture \& textbook topics don't usually align, that's okay, please read the chapter before class starts anyway.}
+
+\small
+\begin{tabular}{c c l l c}
+Date & Week & ~~~~~~~~~~~~Topic & Chapter & Assignment \\
+\hline
+Th Aug 27  & 1 & Introduction & 1, Appendix C & Classwork 1  \\ \hline
+Tu Sept 1  & 2 & L2: Machine Architecture \& Number Systems & 2 \& 3 \\
+Th Sept 3  & 2 & & \\
+Tu Sept 8  & 3 & L3: Operating Systems & 4 \\
+Th Sept 10 & 3 &  & \\
+Tu Sept 15 & 4 & L4: Algorithms, Part I & 5 \\
+Th Sept 17 & 4 &  &  \\
+Tu Sept 22 & 5 & L5: Algorithms, Part II & 6 \\
+Th Sept 24 & 5 &  &  \\
+Tu Sept 29 & 6 & L6: Introduction to C & 7 \\ \hline
+Th Oct  01 & 6 & Classwork &  \\
+Tu Oct 06 & 7 & L7: Variables in C  & 8 \\
+Th Oct 08 & 7 & Classwork  & \\
+Tu Oct 13 & 8 & L8: Arithmetic Operators in C  & 9 \\
+Th Oct 15 & 8 & Classwork  & \\
+Tu Oct 20 & 9 & L9: Relational \& Logical Operators  & 10 \\
+Th Oct 22 & 9 & Classwork  & \\
+Tu Oct 27 & 10 & L10: While Loops & 11 \\
+Th Oct 29 & 10 & Classwork & \\ \hline
+Tu Nov 03 & 11 & L11: More Loops & 12 \\
+Th Nov 05 & 11 & Classwork & \\
+Tu Nov 10 & 12 & L12: Assignment Operators & 13 \\
+Th Nov 12 & 12 & Classwork & \\
+Tu Nov 17 & 13 & L13: Switch Statements & 14 \\
+Th Nov 19 & 13 & Classwork & \\
+Tu Nov 24 & 14 & L14: Functions &  \\
+Th Nov 26 & 14 & \hl{Thanksgiving Break} &  \\ \hline
+Tu Dec 01 & 15 & Topic & 15 (optional) \\
+Th Dec 03 & 15 & Classwork &  \\
+Tu Dec 08 & 16 & Topic &  \\
+Th Dec 10 & 16 & \hl{Final Exam} & \\
+\end{tabular}
+
+\section*{Title IX Statement}
+\paragraph{}As an instructor, I am considered a Responsible Employee, per UMBC’s Policy on Prohibited Sexual Misconduct, Interpersonal Violence, and Other Related Misconduct \footnote{\url{http://humanrelations.umbc.edu/sexual-misconduct/umbc-resource-page-for-sexual-misconduct-and-other-related-misconduct/}}. While my goal is for you to be able to share information related to your life experiences through discussion and written work, I want to be transparent that as a Responsible Employee I am required to report disclosures of sexual assault, domestic violence, relationship violence, stalking, and/or gender-based harassment to the University’s Title IX Coordinator.
+
+\paragraph{}As an instructor, I also have a mandatory obligation to report disclosures of or suspected instances of child abuse or neglect\footnote{\url{http://www.usmh.usmd.edu/regents/bylaws/SectionVI/VI150.pdf}}.
+
+\paragraph{}The purpose of these reporting requirements is for the University to inform you of options, supports and resources; you will not be forced to file a report with the police. Further, you are able to receive supports and resources, even if you choose to not want any action taken. Please note that in certain situations, based on the nature of the disclosure, the University may need to take action.
+\end{document}
