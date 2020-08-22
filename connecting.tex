@@ -10,7 +10,7 @@
     pdftitle={Linux @ UMBC},    % title
     pdfauthor={Richard Zak},     % author
     pdfsubject={Linux @ UMBC},   % subject of the document
-    pdfkeywords={Computer Science, Programming, Problem Solving}, % list of keywords
+    pdfkeywords={Computer Science, Programming, Linux, UMBC, CSEE}, % list of keywords
     pdfnewwindow=true,      % links in new PDF window
     colorlinks=false,       % false: boxed links; true: colored links
     linkcolor=red,          % color of internal links (change box color with linkbordercolor)
@@ -32,13 +32,13 @@
 \usepackage[utf8]{inputenc}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
-\rhead{Connecting to and Using UMBC's Linux Servers}
+\rhead{Connecting to and Using UMBC's Linux Servers\begin{picture}(0,0) \put(85,-6){\includegraphics[width=1.1cm]{Images/Tux.png}} \end{picture}}
 %\rhead{}
 \lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
 \cfoot{\thepage}
 \rfoot{}
 \lfoot{Linux @ UMBC}
-\AtEndDocument{\vfill \hfill \LaTeX}
+\AtEndDocument{\vfill \footnotesize{Last updated 22 Aug 2020} \hfill \LaTeX}
 
 \begin{document}
 
@@ -51,7 +51,7 @@
     \item Start by downloading Putty from \url{https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html}. The Installer option adds the option to have a shortcut on the desktop. However, the \texttt{putty.exe} link under ``Alternative binary files'' provides the program itself, which you may place where you'd like.
     \item When you launch Putty, enter \texttt{gl.umbc.edu} in the ``Host Name'' field and click ``Open'', as shown in \autoref{fig:puttyconnection}.
     \item For the first time you connect, you'll see a box asking about caching the host key. Don't worry about this, click ``Yes'', as shown in \autoref{fig:puttyserverkey}.
-    \item A black window will appear asking for your user name, then you'll see some text from UMBC, followed by a password prompt. Type your password, and it will not be shown. \autoref{fig:puttyconnected} shows that you'll see once connected.
+    \item A black window will appear asking for your user name, then you'll see some text from UMBC, followed by a password prompt. Type your password, and it will not be shown. \autoref{fig:puttyconnected} shows what you'll see once connected.
 \end{enumerate}
 
 \begin{figure}
@@ -107,5 +107,85 @@
 \label{fig:winscpconnected}
 \end{figure}
 
+\FloatBarrier
+\section{Mac Users}
+\subsection{Terminal.app}
+\paragraph{}The Mac operating system comes from a strong UNIX legacy. As such, the required components to interact with Linux servers at UMBC are already installed and ready to go! You'll use the Terminal application to connect to UMBC's servers. You can easily find the Terminal by navigating to Applications $\,\to\,$ Utilities, as shown in \autoref{fig:macfinderterminal} or by using Spotlight by pressing \includegraphics[height=.75em]{Images/command.eps} Space and begin typing Terminal, as shown in \autoref{fig:macspotlightterminal}.
+
+\paragraph{}Once Terminal is open, type: \texttt{ssh userName@gl.umbc.edu} and press enter. Enter your password when prompted, and note that the password is shown. An example is shown in \autoref{fig:macterminalconnected}. For convenience, you can keep the Terminal icon in the Dock for future use. Right-Click on the Terminal icon, select Options $\,\to\,$ Keep in Dock, as shown in \autoref{fig:macterminaldock}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{Images/finder_terminal.png}
+\caption{Finding Terminal with Finder.}
+\label{fig:macfinderterminal}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{Images/spotlight_terminal.png}
+\caption{Searching for Terminal with Spotlight.}
+\label{fig:macspotlightterminal}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{Images/macos_terminal_ssh.png}
+\caption{Terminal showing the SSH connection.}
+\label{fig:macterminalconnected}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{Images/terminal_keep_in_dock.png}
+\caption{Keeping the Terminal icon in the Dock for future use.}
+\label{fig:macterminaldock}
+\end{figure}
+
+\FloatBarrier
+\subsection{CyberDuck}
+\paragraph{}CyberDuck is a graphical application for moving files between your Mac and other servers. It's available for download from \url{https://cyberduck.io/download/}.
+
+\begin{enumerate}
+    \item Download and install CyberDuck. You'll need to double-click the downloaded Zip file and drag-and-drop the CyberDuck application to the Applications directory.
+    \item Run CyberDuck
+    \item Click the icon to create a new connection. Make sure that the top pull-down menu says ``SFTP (SSH File Transfer Protocol)''. Enter ``gl.umbc.edu'' for the \texttt{Server} field, and your user name and password in the respective fields. Click ``Add to Keychain'' if you want Mac OS to store your password for future use. Click ``Connect''. An example is shown in \autoref{fig:maccyberduckconnect}.
+    \item The first time you connect, you'll be prompted to accept the server's SSH key, as shown in \autoref{fig:maccyberduckconnectfirsttime}. Check the box that says ``Always'', and click ``Allow''.
+    \item Now that you're connected, you'll see the files you have on the GL system, as shown in \autoref{fig:maccyberduckconnected}. You can drag-and-drop files to \& from the GL system.
+\end{enumerate}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{Images/macos_cyberduck_connect.png}
+\caption{Connecting to GL with CyberDuck.}
+\label{fig:maccyberduckconnect}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{Images/macos_cyberduck_firsttime.png}
+\caption{CyberDuck asking about the server's SSH key.}
+\label{fig:maccyberduckconnectfirsttime}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{Images/macos_cyberduck_connected.png}
+\caption{CyberDuck asking about the server's SSH key.}
+\label{fig:maccyberduckconnected}
+\end{figure}
+
+\FloatBarrier
+\section{Extras}
+\subsection{Shortcuts}
+\paragraph{}Left as an exercise to the reader, Putty, WinSCP, and CyberDuck allow shortcuts. This allows you to easily reconnect to the UMBC GL servers without having to re-type the server name and your credentials.
+
+\subsection{SSH Keys}
+\paragraph{}Even after connecting for the first time, you may get a message about accepting SSH keys. This is expected for two reasons:
+
+\begin{enumerate}
+    \item The GL system consists of a few different Linux servers, and the GL system decided at connect time which one you'll be connecting to. For our purposes, it doesn't matter which you use, as they all will have your files, and all contain the programs we need.
+    \item Sometimes, especially after an update on the server side, the SSH keys may change. It's not a cause for concern.
+\end{enumerate}
 
 \end{document}
