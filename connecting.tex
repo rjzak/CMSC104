@@ -22,6 +22,8 @@
 \usepackage{placeins}
 \usepackage{fancyhdr}
 \usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{tikz}
 \pagestyle{fancy}
 \usepackage[letterpaper, margin=1in]{geometry}
 \geometry{letterpaper}
@@ -38,13 +40,16 @@
 \cfoot{\thepage}
 \rfoot{}
 \lfoot{Linux @ UMBC}
-\AtEndDocument{\vfill \footnotesize{Last updated 22 Aug 2020} \hfill \LaTeX}
+\AtEndDocument{\vfill \footnotesize{Last updated 31 Aug 2020} \hfill \LaTeX}
 
 \begin{document}
 
-\section{Windows Users}
+\tableofcontents
+
+\section{Connecting}
+\subsection{Windows Users}
 \FloatBarrier
-\subsection{Putty}
+\subsubsection{Putty}
 \paragraph{}Putty is a Windows program which provides access to the command line interface on a UNIX system, which includes Linux. It's not the only program which can be used for this, but it's the easiest to use and most convenient.
 
 \begin{enumerate}
@@ -76,7 +81,7 @@
 \end{figure}
 
 \FloatBarrier
-\subsection{WinSCP}
+\subsubsection{WinSCP}
 \paragraph{}Putty allows you to enter commands on the Linux command line interface, and WinSCP allows you to transfer files to and from the Linux environment using the familiar drag-and-drop interface.
 
 \begin{enumerate}
@@ -108,8 +113,8 @@
 \end{figure}
 
 \FloatBarrier
-\section{Mac Users}
-\subsection{Terminal.app}
+\subsection{Mac Users}
+\subsubsection{Terminal.app}
 \paragraph{}The Mac operating system comes from a strong UNIX legacy. As such, the required components to interact with Linux servers at UMBC are already installed and ready to go! You'll use the Terminal application to connect to UMBC's servers. You can easily find the Terminal by navigating to Applications $\,\to\,$ Utilities, as shown in \autoref{fig:macfinderterminal} or by using Spotlight by pressing \includegraphics[height=.75em]{Images/command.eps} Space and begin typing Terminal, as shown in \autoref{fig:macspotlightterminal}.
 
 \paragraph{}Once Terminal is open, type: \texttt{ssh userName@gl.umbc.edu} and press enter. Enter your password when prompted, and note that the password is shown. An example is shown in \autoref{fig:macterminalconnected}. For convenience, you can keep the Terminal icon in the Dock for future use. Right-Click on the Terminal icon, select Options $\,\to\,$ Keep in Dock, as shown in \autoref{fig:macterminaldock}.
@@ -143,7 +148,7 @@
 \end{figure}
 
 \FloatBarrier
-\subsection{CyberDuck}
+\subsubsection{CyberDuck}
 \paragraph{}CyberDuck is a graphical application for moving files between your Mac and other servers. It's available for download from \url{https://cyberduck.io/download/}.
 
 \begin{enumerate}
@@ -176,7 +181,7 @@
 \end{figure}
 
 \FloatBarrier
-\section{Extras}
+\subsection{Extras}
 \subsection{Shortcuts}
 \paragraph{}Left as an exercise to the reader, Putty, WinSCP, and CyberDuck allow shortcuts. This allows you to easily reconnect to the UMBC GL servers without having to re-type the server name and your credentials.
 
@@ -187,5 +192,105 @@
     \item The GL system consists of a few different Linux servers, and the GL system decided at connect time which one you'll be connecting to. For our purposes, it doesn't matter which you use, as they all will have your files, and all contain the programs we need.
     \item Sometimes, especially after an update on the server side, the SSH keys may change. It's not a cause for concern.
 \end{enumerate}
+
+\FloatBarrier
+\section{Common Linux Commands}
+\paragraph{Prompt}Once you're connected to the Linux server, you're presented with a command prompt. The prompt can look different depending on a few factors.
+
+\begin{itemize}
+\item {\color{red}31/Aug 21:55:45} {\color{green}rjzak@oryx-pro}:{\color{blue}{\raise.17ex\hbox{$\scriptstyle\sim$}}}\$
+\item \texttt{[rzak1@linux3 {\raise.17ex\hbox{$\scriptstyle\sim$}}] \$}
+\item \texttt{sh-5.0 \$}
+\item \texttt{\$}
+\end{itemize}
+
+\paragraph{}All of these are examples of the Linux command prompt. What's interesting is that this is something which can be customized to display a variety of things, or can be extremely minimalistic and show you nothing. The first two indicate that the user name is \texttt{rjzak} and \texttt{rzak1} respectively. The first one has been customized to show the date, in addition to the user name and current location. Do you notice the {\raise.17ex\hbox{$\scriptstyle\sim$}} character? That is the shortcut for the user's home directory on the server. The symbol \texttt{\$} shows the end of the command prompt, and commands you type will appear here.
+
+\subsection{Navigation}
+\begin{itemize}
+    \item \texttt{cd {\raise.17ex\hbox{$\scriptstyle\sim$}}}: Chane directory back to your home directory.
+    \item \texttt{cd dirName}: Change to the directory called ``dirName''.
+    \begin{itemize}
+        \item \texttt{[rzak1@linux1 {\raise.17ex\hbox{$\scriptstyle\sim$}}]\$ cd /usr/sbin}
+        \item \texttt{[rzak1@linux1 sbin]\$}
+    \end{itemize}
+    \item \texttt{pwd}: Print working directory. Where are you?
+    \begin{itemize}
+        \item \texttt{[rzak1@linux1 sbin]\$ pwd}
+        \item \texttt{/usr/sbin}
+    \end{itemize}
+    \item \texttt{mkdir dirName}: Creates a directory called ``dirName''.
+    \item \texttt{rm filename.ext}: Deletes a file called ``filename.ext''.
+    \item \texttt{rm -r dirName}: Deletes a directory called ``dirName''. Note the \texttt{-r} option, it deletes the directory and everything contained within.
+    \item \texttt{ls}: Get a listing of everything in a directory.
+    \item \texttt{ls -lah}: Get a listing of everything in a directory, showing file sizes and creation time. Example:
+    \begin{verbatim}
+$ ls -lah Resume.pdf 
+-rw-r--r-- 1 rjzak rjzak 97K Dec  5  2012 Resume.pdf\end{verbatim}
+    \begin{itemize}
+        \item My resume is 97 kilobytes in size, and hasn't been updated since 2012!
+    \end{itemize}
+\end{itemize}
+
+\FloatBarrier
+\subsubsection{File Systems}
+\paragraph{}To better understand navigating, let's discuss what a file system is. A file system is the organization of files \& directories on a physical disk, and how this information is made available to the user of the machine, and to other applications which may be running. This layout forms a tree of files \& directories inside a directory, and it's not clear from looking at it if there is one of many hard drives used. This is in contrast to Windows, which uses drive labels, such as \texttt{A:} for a 3.5'' floppy drive (recognized today as ``the save icon''), \texttt{B:} for the ancient 5.24'' floppy drive, \texttt{C:} for the first hard drive, \texttt{D:} for the second hard drive, or optical disc, and further drives if attached to the computer.
+
+\paragraph{}Example:
+\begin{itemize}
+    \item \texttt{sh-5.0 \$ mount}
+    \begin{itemize}
+        \item \texttt{/dev/sdb3 on / type ext4 (rw,relatime,errors=remount-ro,stripe=64,data=ordered)
+}
+        \item \texttt{/dev/sdb2 on /boot type ext4 (rw,relatime,stripe=64,data=ordered)}
+        \item \texttt{/dev/sda1 on /datafs type ext4 (rw,nodev,noexec,relatime,stripe=256,data=ordered)}
+    \end{itemize}
+    \item \texttt{sh-5.0 \$ df -h}
+    \begin{verbatim}
+    Filesystem      Size  Used Avail Use% Mounted on
+    /dev/sdb3       917G  454G  417G  53% /
+    /dev/sdb2       923M  163M  698M  19% /boot
+    /dev/sda1        39T   28T  9.3T  75% /datafs
+    \end{verbatim}
+    \item What does it mean?
+    \begin{itemize}
+        \item The root directory is the hard drive from \texttt{/dev/sdb3}. Physical devices are files in Unix.
+        \item The file system used here is called \texttt{ext4}, which is how the actual data on the physical hard drive is organized. There are many different types of file systems, and with Linux and Unix, they're very similar between different operating systems and their variations. Wikipedia has an article here: \url{https://en.wikipedia.org/wiki/File_system}.
+        \item The \texttt{df -h} shows the amount of free and used disk space, and \texttt{-h} means to show the results in a human-readable display, using MB, GB, TB instead of very large numbers which are harder to interpret. 923 M (for megabytes, MB, is equal to 967,835,648 bytes, which is easier to read and comprehend at a glance?
+    \end{itemize}
+\end{itemize}
+
+\FloatBarrier
+\begin{figure}
+\include{UnixFS}
+\caption{A basic Unix filesystem layout}
+\label{fig:unixfs}
+\end{figure}
+
+\FloatBarrier
+\subsection{Miscellaneous}
+\begin{itemize}
+    \item \texttt{uptime}: How long has the machine been running?
+    \begin{itemize}
+        \item \texttt{[rzak1@linux1 {\raise.17ex\hbox{$\scriptstyle\sim$}}]\$ uptime}
+        \item \texttt{22:18:45 up 14 days, 37 min, 25 users,  load average: 0.24, 1.23, 1.13}
+    \end{itemize}
+    \item \texttt{file filename.ext}
+    \begin{verbatim}
+$ file myProgram resume
+myProgram: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked
+resume: PDF document, version 1.4\end{verbatim}
+    \item What does it mean?
+    \begin{itemize}
+        \item \texttt{ELF} is the Executable and Linkable Format, the file format used by most Unix systems, including Linux. Wikipedia link: \url{https://en.wikipedia.org/wiki/Executable\_and\_Linkable\_Format}.
+        \item \texttt{x86-64} shows that the program is 64-bit and runs on Intel processors, the most common processor in consumer computers.
+        \item The \texttt{file} command can determine the type of file even when the file extension is missing, showing that my resume is actually a PDF file.
+    \end{itemize}
+    \item \texttt{uname -a}: Show the version of the Kernel (the brains of the operating system)
+    \begin{verbatim}
+$ uname -a
+Linux linux1.gl.umbc.edu 5.7.14-200.fc32.x86_64 #1 SMP Fri Aug 7 23:16:37 UTC 2020 x86_64
+x86_64 x86_64 GNU/Linux\end{verbatim}
+\end{itemize}
 
 \end{document}
