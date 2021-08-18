@@ -47,6 +47,8 @@
 \tableofcontents
 
 \section{Connecting}
+\paragraph{Before you begin} There are many examples of commands which are to be typed into a command prompt or entered into a dialog box. Use common sense, and think before you enter commands. Don't blindly copy and paste commands expecting that something useful will result.
+
 \subsection{Windows Users}
 \FloatBarrier
 \subsubsection{Putty}
@@ -268,6 +270,22 @@ $ ls -lah Resume.pdf
 \end{figure}
 
 \FloatBarrier
+\subsection{Files}
+\begin{itemize}
+    \item \texttt{head}: Show the beginning of a file. Optionally see the first XX lines by typing \texttt{head -n XX file.txt}.
+    \item \texttt{tail}: Show the end of a file. Optionally see the last XX lines by typing \texttt{tail -n XX file.txt}, or monitor the file by typing \texttt{tail -f file.txt}.
+    \item \texttt{xxd}: Show the contents of a binary file. Works well when used with \texttt{head} or \texttt{tail}, such as \texttt{xxd someFile.bin | head -n 2} to see the first two lines of the binary file.
+\end{itemize}
+
+\FloatBarrier
+\subsection{Submit}
+\paragraph{}Many computer science courses use the \texttt{submit} system to receive assignments from students.
+\begin{itemize}
+    \item \texttt{submit cs104\_1234 proj1 file1.c file2.txt...}: Submit the files for, in this case ``proj1'' to the course listed. The course names and assignments will be provided by your instructor and is \textbf{DIFFERENT FOR EACH COURSE AND SECTION!}
+    \item \texttt{submitls cs104\_1234 proj1}: List the files that you've submitted for your course and assignment. Note the important bold notice above.
+\end{itemize}
+
+\FloatBarrier
 \subsection{Miscellaneous}
 \begin{itemize}
     \item \texttt{uptime}: How long has the machine been running?
@@ -293,4 +311,85 @@ Linux linux1.gl.umbc.edu 5.7.14-200.fc32.x86_64 #1 SMP Fri Aug 7 23:16:37 UTC 20
 x86_64 x86_64 GNU/Linux\end{verbatim}
 \end{itemize}
 
+\FloatBarrier
+\section{Trying Linux on your device}
+\paragraph{}Linux, like many things, is best learned by using it often. If you are interested in learning how to use Linux, you might want to try running Linux on your own machine instead of connecting to UMBC. This will also show you the graphical interface, which you're missing out on when using SSH. Linux is free and open source software (FOSS), so trying it on your own machine doesn't cost anything.
+
+\paragraph{}Being proficient with Linux, or at least having some experience with Linux, is a worthwhile and sought-after skill. This is something worth learning and putting on your resume. While Windows may be the dominant operating system for desktops at home and in the office, Linux is popular in a few domains which include: software development, high performance computing, embedded systems, automotive, life sciences, oil \& gas exploration, weather modeling, computer networking, forensics, cybersecurity, and more.
+
+\begin{enumerate}
+    \item Download an install a \textit{hypervisor}, which is the software which runs a virtual machine. VirtualBox is recommended since it's free, easy to use, and runs on most operating systems. Download it from \url{http://virtualbox.org/} and install.
+    \item Pick a \textit{distribution} to test. Ubuntu or Linux Mint are recommended, since they're easy to install and get running.
+    \begin{itemize}
+        \item Ubuntu: \url{http://ubuntu.com/}
+        \item Linux Mint: \url{https://linuxmint.com/}
+        \item When you decide on which distribution, look for a link that says Download, and find a link for an ISO file (ends with .iso). 
+    \end{itemize}
+    \item Create a new Virtual Machine
+    \begin{enumerate}
+        \item Click the new VM icon
+        \item Pick the operating system
+        \item Show VirtualBox where the ISO file is you downloaded.
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Virtual Machine}
+\paragraph{}The easiest option is to install Linux in a virtual machine (VM). You can install Linux into a new VM, or you can find pre-made VMs available for your use. It's best to install Linux into a VM yourself so you have a deeper understanding and appreciation for Linux and how it works, but it's your choice.
+
+\FloatBarrier
+\subsection{Linux on Windows 10}
+\paragraph{}Recent versions of Windows 10 allow for the installation of Microsoft's Windows Subsystem for Linux (WSL). It's esentially a virtual machine, but with a custom Linux kernel which communicates with the Windows kernel. Installing WSL requires a Microsoft account and signing in to the Microsoft app store.
+
+\begin{enumerate}
+    \item Open the Microsoft Windows app store and search for Linux. \autoref{fig:wslsearchlinux} shows an example of what this looks like.
+    \item Select Ubuntu.
+    \item Click install. It download and installs quickly. Soon you'll see a notification just like \autoref{fig:wslinstalled}.
+    \item In the notification in the prior step, or from the Ubuntu app in the start menu, launch Ubuntu. For the first run, you'll see another installation screen, as shown in \autoref{fig:wslinstallparttwo}.
+    \item After secondary installation completes, pick a user name and password, and you've got Linux on Windows! See \autoref{fig:wslinstallcomplete}.
+    \item Customize your WSL:
+    \begin{itemize}
+        \item Run \texttt{sudo apt-get update} and \texttt{sudo apt-get dist-upgrade} to make sure it's fully up-to-date.
+        \item To install compilers and software development tools, run \texttt{sudo apt-get install build-essential}.
+        \item You should be able to run \texttt{nano} to create text files, which include source code and Makefiles.
+        \item Navigate to \texttt{/mnt/c/} to access drive \texttt{C:} from Linux. This shows how you can access your regular home directory, or other locations on \texttt{C:} from WSL. It makes it easier to move data around. See \autoref{fig:wsldrivec}.
+        \item You can directly SSH to UMBC from WSL, no Putty needed!
+    \end{itemize}
+\end{enumerate}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.6]{Images/WSL/a.png}
+    \caption{Search for Linux}
+    \label{fig:wslsearchlinux}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.6]{Images/WSL/b.png}
+    \caption{Ubuntu installed successfully}
+    \label{fig:wslinstalled}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.8]{Images/WSL/c.png}
+    \caption{Ubuntu installation part two}
+    \label{fig:wslinstallparttwo}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.64]{Images/WSL/d.png}
+    \caption{Ubuntu installed}
+    \label{fig:wslinstallcomplete}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.64]{Images/WSL/e.png}
+    \caption{Access drive C: from WSL}
+    \label{fig:wsldrivec}
+\end{figure}
+
+\FloatBarrier
 \end{document}
