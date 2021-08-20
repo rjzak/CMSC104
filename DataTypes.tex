@@ -3,16 +3,20 @@
 \usepackage{xcolor}
 \usepackage{ulem} % strikeout
 
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
 %Information to be included in the title page:
-\title{Sample title}
-\author{Anonymous}
-\institute{Overleaf}
-\date{2014}
+\title{Data Types}
+\author{Richard Zak}
+\institute{UMBC}
+\date{2021}
 \begin{document}
 
 %\frame{\titlepage}
 
 \begin{frame}
+Consider these numbers in memory. To the computer, what do they represent?
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
 \hline
@@ -50,7 +54,7 @@ Order & 0x00 & 0x00
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
 \hline
- \color{red}\texttt{0x00} & \color{blue}\texttt{0x01} & \color{green}\texttt{0x02} & \color{red}\texttt{0x03} & \color{blue}\texttt{0x04} & \color{green}\texttt{0x05} & \color{red}\texttt{0x06} & \color{blue}\texttt{0x07} &
+ \tikz[baseline, remember picture] \node[anchor=base] (t1) {\color{red}\texttt{0x00}}; & \color{blue}\texttt{0x01} & \color{green}\texttt{0x02} & \color{red}\texttt{0x03} & \color{blue}\texttt{0x04} & \color{green}\texttt{0x05} & \color{red}\texttt{0x06} & \color{blue}\texttt{0x07} &
  \color{green}\texttt{0x08} \\
 \hline 
 \end{tabular}
@@ -60,7 +64,7 @@ Order & 0x00 & 0x00
 \begin{tabular}{c r r}
 Index & Little Endian & Big Endian \\
 \hline
-0 & 0 & 0 \\
+0\tikz[remember picture] \node[coordinate,anchor=west] (n1) {}; & 0 & 0 \\
 1 & 1 & 1 \\
 2 & 2 & 2 \\
 3 & 3 & 3 \\
@@ -72,9 +76,13 @@ Index & Little Endian & Big Endian \\
 \end{tabular}
 \end{table}
 
+\begin{tikzpicture}[remember picture,overlay]   %% use here too
+        \path[draw=red,thin,->] -- ([xshift=-1mm] n1.west) to (t1.south);
+\end{tikzpicture}
+
 \end{frame}
 
-\begin{frame}{Integer - 16 bits, 2 bytes}
+\begin{frame}{Short Integer - 16 bits, 2 bytes}
 
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
@@ -96,12 +104,12 @@ Order & 0x0100 & 0x0001
 
 \end{frame}
 
-\begin{frame}{Array of Integers}
+\begin{frame}{Array of Short Integers}
 
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
 \hline
- \color{red}\texttt{0x00} & \color{red}\texttt{0x01} & \color{blue}\texttt{0x02} & \color{blue}\texttt{0x03} & \color{green}\texttt{0x04} & \color{green}\texttt{0x05} & \color{red}\texttt{0x06} & \color{red}\texttt{0x07} &
+ \color{red}\texttt{0x00} & \color{red}\texttt{0x01} & \tikz[baseline, remember picture] \node[anchor=base] (t1){\color{blue}\texttt{0x02}}; & \color{blue}\texttt{0x03} & \color{green}\texttt{0x04} & \color{green}\texttt{0x05} & \color{red}\texttt{0x06} & \color{red}\texttt{0x07} &
  \sout{\texttt{0x08}} \\
 \hline 
 \end{tabular}
@@ -112,15 +120,19 @@ Order & 0x0100 & 0x0001
 Index & Little Endian & Big Endian \\
 \hline
  0 & 256 & 1 \\
- 1 & 770 & 515 \\
+ 1\tikz[remember picture] \node[coordinate,anchor=west] (n1) {}; & 770 & 515 \\
  2 & 1284 & 1029 \\
  3 & 1798 & 1543
 \end{tabular}
 \end{table}
 
+\begin{tikzpicture}[remember picture,overlay]   %% use here too
+        \path[draw=red,thin,->] -- ([xshift=-2mm,yshift=1mm] n1.west) -- ([xshift=-30pt,yshift=30pt]n1.west) node[above left]{}  -- (t1.south);
+\end{tikzpicture}
+
 \end{frame}
 
-\begin{frame}{Long Integer - 32 bits, 4 bytes}
+\begin{frame}{Integer - 32 bits, 4 bytes}
 
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
@@ -142,7 +154,7 @@ Order & 0x03020100 & 0x00010203
 
 \end{frame}
 
-\begin{frame}{Array of Long Integers}
+\begin{frame}{Array of Integers}
 
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
@@ -164,7 +176,7 @@ Index & Little Endian & Big Endian \\
 
 \end{frame}
 
-\begin{frame}{Long Long Integer - 64 bits, 8 bytes}
+\begin{frame}{Long Integer - 64 bits, 8 bytes}
 
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
