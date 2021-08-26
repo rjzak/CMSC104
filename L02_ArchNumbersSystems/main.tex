@@ -5,10 +5,21 @@
 \usepackage{hyperref} % Hyperlinks
 \hypersetup{pdfpagemode=FullScreen}
 
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
 \usetheme{Boadilla}
 \title{Lecture 2: Architecture \& Number Systems}
 \author{UMBC CMSC 104}
-\date{L2}
+\date{Th 02 Sept 2021}
 
 \begin{document}
 
@@ -215,7 +226,329 @@ Topics:
 \end{frame}
 
 \begin{frame}{Number Systems}
+    \begin{itemize}
+        \item The most elementary ``number system'' is unary: ``I have \textit{this} many things''.
+        \item An interesting problem: If you had $1+1+1$ things, and you gave away $1+1+1$ of them, how would you answer the question: ``How many do you have left?''
+        \item Unary counting is not a symbolic number system.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Unary Numbers Are Not Practical}
+    \includegraphics[scale=0.2]{L02_ArchNumbersSystems/L2_p22.png}
+\end{frame}
+
+\begin{frame}{Number Systems}
+    \begin{itemize}
+        \item The on \& off states of the transistors in RAM can be thought of as the values 1 \& 0, respectively.
+        \item Therefore, thinking about how information is stored in RAM requires knowledge of the binary (base 2) number system.
+        \item Let's review decimal (base 10) first.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Decimal Number System}
+    \begin{itemize}
+        \item The decimal number system is a positional number system.
+    \end{itemize}
     
+    \begin{columns}
+        \column{0.4\textwidth}
+            \begin{tabular}{ c c c c }
+                \thead{5} & \thead{6} & \thead{2} & \thead{1} \\ 
+                $10^3$ & $10^2$ & $10^1$ & $10^0$
+            \end{tabular}
+        \column{0.6\textwidth}
+            \begin{tabular}{ l l l l l }
+                1 & X & $10^0$ & = & 1 \\ 
+                2 & X & $10^1$ & = & 20 \\
+                6 & X & $10^2$ & = & 600 \\
+                5 & X & $10^3$ & = & 5000
+            \end{tabular}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{The Decimal Number System}
+    \begin{itemize}
+        \item The decimal number system is also known as base 10. The values of the positions are calculated by taking 10 to some power.
+        \item Why is the base 10 for decimal numbers?
+        \begin{itemize}
+            \item Because we use 10 digits, the digits 0 though 9.
+        \end{itemize}
+        \item The decimal number system, and other number systems, are \textit{symbolic representations} of concrete quantities.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Binary Number System}
+    \begin{itemize}
+        \item The binary number system is also known as base 2. The values of the positions are calculated by taking 2 to some power.
+        \item Why is the base 2 for binary numbers?
+        \begin{itemize}
+            \item Because we use 2 digits, the digits 0 and 1.
+            \item Because the underlying circuit is either off or on; or open or closed. There's no other state.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Binary Number System}
+    \begin{itemize}
+        \item The binary number system is also a positional number system.
+        \item Instead of using ten digits, $0\rightarrow9$, the binary system uses only two digits, 0 and 1.
+        \item Example, going back to the number 5621 from the decimal example:
+    \end{itemize}
+    \\ ~~ \\
+    \begin{tabular}{ l l l l l l l l l l l l l }
+        \thead{1} & \thead{0} & \thead{1} & \thead{0} & \thead{1} & \thead{1} & \thead{1} & \thead{1} & \thead{1} & \thead{0} & \thead{1} & \thead{0} & \thead{1} \\
+        $2^{12}$ & $2^{11}$ & $2^{10}$ & $2^9$ & $2^8$ & $2^7$ & $2^6$ & $2^5$ & $2^4$ & $2^3$ & $2^2$ & $2^1$ & $2^0$ \\
+        4096 & & 1024 & & 256 & 128 & 64 & 32 & 16 & & 4 & 1
+    \end{tabular}
+\end{frame}
+
+\begin{frame}{Converting from Binary to Decimal}
+    \begin{columns}
+        \column{0.6\textwidth}
+            \begin{tabular}{l l l l l l l l}
+                 \thead{0} & \thead{1} & \thead{0} & \thead{0} & \thead{1} & \thead{1} & \thead{0} & \thead{1} \\
+                 $2^7$ & $2^6$ & $2^5$ & $2^4$ & $2^3$ & $2^2$ & $2^1$ & $2^0$\tikz[remember picture] \node[coordinate,anchor=west] (n1) {};
+            \end{tabular}
+            \\ ~~ \\
+            \begin{tabular}{| l l |}
+                \hline
+                $2^0=1$ & $2^4=16$  \\
+                $2^1=2$ & $2^5=32$  \\
+                $2^2=4$ & $2^6=64$  \\
+                $2^3=8$ & $2^7=128$ \\
+                \hline
+            \end{tabular}
+        \column{0.4\textwidth}
+            \begin{tabular}{r r}
+                 \tikz[baseline, remember picture] \node[anchor=west] (t1){};$1X2^0$ & 1 \\
+                 $0X2^1$ & 0 \\
+                 $1X2^2$ & 4 \\
+                 $1X2^3$ & 8 \\
+                 $0X2^4$ & 0 \\
+                 $0X2^5$ & 0 \\
+                 $1X2^6$ & 64 \\
+                 $0X2^7$ & 0 \\
+                 \hline\hline
+                 & $77_{10}$
+            \end{tabular}
+    \end{columns}
+    \begin{tikzpicture}[remember picture,overlay]   %% use here too
+        \path[draw=red,thin,->] -- ([xshift=1mm] n1.west) to (t1.west);
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Converting from Binary to Decimal}
+    \begin{itemize}
+        \item Practice conversions:
+    \end{itemize}
+    \centering
+    \only<1> {
+        \begin{tabular}{r r}
+            \thead{Binary} & \thead{Decimal} \\
+             11101 & \\
+             1010101 & \\
+             100111 & \\
+             10010110 &
+        \end{tabular}
+    }
+    \only<2> {
+        \begin{tabular}{r r}
+            \thead{Binary} & \thead{Decimal} \\
+             11101 & 29 \\
+             1010101 & \\
+             100111 & \\
+             10010110 &
+        \end{tabular}
+    }
+    \only<3> {
+        \begin{tabular}{r r}
+            \thead{Binary} & \thead{Decimal} \\
+             11101 & 29 \\
+             1010101 & 85 \\
+             100111 & \\
+             10010110 &
+        \end{tabular}
+    }
+    \only<4> {
+        \begin{tabular}{r r}
+            \thead{Binary} & \thead{Decimal} \\
+             11101 & 29 \\
+             1010101 & 85 \\
+             100111 & 39 \\
+             10010110 &
+        \end{tabular}
+    }
+    \only<5> {
+        \begin{tabular}{r r}
+            \thead{Binary} & \thead{Decimal} \\
+             11101 & 29 \\
+             1010101 & 85 \\
+             100111 & 39 \\
+             10010110 & 150
+        \end{tabular}
+    }
+\end{frame}
+
+\begin{frame}{Geek Joke \#1}
+    \begin{itemize}
+        \item Seen on a T-shirt:
+    \end{itemize}
+    There are 10 kinds of people in the world: Those who understand binary, and those who don't.
+\end{frame}
+
+\begin{frame}{Converting from Decimal to Binary}
+    \begin{itemize}
+        \item Make a lit of the binary place values up to the number being converted.
+        \item Perform successive divisions by 2, placing the remainder of 0 or 1 in each of the positions from right to left.
+        \item Continue until the quotient is zero.
+        \item Example: $42_{10}$
+    \end{itemize}
+    \\ ~~ \\
+    \centering
+    \begin{tabular}{c l l l l l l}
+        \redout{\thead{64}} & \thead{32} & \thead{16} & \thead{8} & \thead{4} & \thead{2} & \thead{1} \\
+        & 1 & 0 & 1 & 0 & 1 & 0 \\
+        \redout{$2^6$} & $2^5$ & $2^4$ & $2^3$ & $2^2$ & $2^1$ & $2^0$
+    \end{tabular}
+\end{frame}
+
+\begin{frame}{Converting from Decimal to Binary}
+    \begin{itemize}
+        \item Practice conversions:
+    \end{itemize}
+    \centering
+    \only<1> {
+        \begin{tabular}{r r}
+            \thead{Decimal} & \thead{Binary} \\
+             59  & \\
+             82  & \\
+             137 & \\
+             175 &
+        \end{tabular}
+    }
+    \only<2> {
+        \begin{tabular}{r r}
+            \thead{Decimal} & \thead{Binary} \\
+             59  & 111011 \\
+             82  & \\
+             137 & \\
+             175 &
+        \end{tabular}
+    }
+    \only<3> {
+        \begin{tabular}{r r}
+            \thead{Decimal} & \thead{Binary} \\
+             59  & 111011 \\
+             82  & 1010010 \\
+             137 & \\
+             175 &
+        \end{tabular}
+    }
+    \only<4> {
+        \begin{tabular}{r r}
+            \thead{Decimal} & \thead{Binary} \\
+             59  & 111011 \\
+             82  & 1010010 \\
+             137 & 10001001 \\
+             175 &
+        \end{tabular}
+    }
+    \only<5> {
+        \begin{tabular}{r r}
+            \thead{Decimal} & \thead{Binary} \\
+             59  & 111011 \\
+             82  & 1010010 \\
+             137 & 10001001 \\
+             175 & 10101111
+        \end{tabular}
+    }
+\end{frame}
+
+\begin{frame}{Working with Large Numbers}
+    0 1 0 1 0 0 0 0 1 0 1 0 0 1 1 1 = ?
+    \\ ~~ \\
+    \begin{itemize}
+        \item Humans can't work well with binary numbers, there are too many digits!
+        \item Memory addresses, and other data, can be quite large. Therefore, we sometimes use the hexadecimal (base 16) and octal (base 8) number systems.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Hexadecimal Number System}
+    \only<1> {
+        \begin{itemize}
+            \item The hexadecimal number system is also known as base 16. The values of the positions are calculated by taking 16 to some power.
+            \item What is it base 16 for hexadecimal numbers?
+            \begin{itemize}
+                \item Because we use 16 symbols, the digits 0 through 9, and the letters A through F.
+            \end{itemize}
+        \end{itemize}
+    }
+    \only<2> {
+        \begin{tabular}{r c c | r c c}
+             \thead{Binary} & \thead{Decimal} & \thead{Hexadecimal} & \thead{Binary} & \thead{Decimal} & \thead{Hexadecimal}  \\
+             0    & 0 & 0 & 1010 & 10 & A \\
+             1    & 1 & 1 & 1011 & 11 & B \\
+             10   & 2 & 2 & 1100 & 12 & C \\
+             11   & 3 & 3 & 1101 & 13 & D \\
+             100  & 4 & 4 & 1110 & 14 & E \\
+             101  & 5 & 5 & 1111 & 15 & F \\
+             110  & 6 & 6 & 10000 & 16 & 10 \\
+             111  & 7 & 7 & 10001 & 17 & 11 \\
+             1000 & 8 & 8 &       &    & \\
+             1001 & 9 & 9 & 11011 & 27 & 1B
+        \end{tabular}
+    }
+    \only<3> {
+        \begin{itemize}
+            \item Example of a hexadecimal number and the values of the positions:
+        \end{itemize}
+        \\ ~~ \\
+        \begin{tabular}{c c c c c c c c}
+             \thead{3} & \thead{C} & \thead{8} & \thead{B} & \thead{0} & \thead{5} & \thead{1} & $\rightarrow63483985$ \\
+             $16^6$ & $16^5$ & $16^4$ & $16^3$ & $16^2$ & $16^1$ & $16^0$ & 
+        \end{tabular}
+    }
+\end{frame}
+
+\begin{frame}{The Octal Number System}
+    \begin{itemize}
+        \item Example of an octal number and the values of the positions:
+    \end{itemize}
+    \\ ~~ \\
+    \center{
+        \begin{tabular}{c c c c c c}
+             \thead{1} & \thead{3} & \thead{0} & \thead{0} & \thead{2} & \thead{4} \\
+             $8^5$ & $8^4$ & $8^3$ & $8^2$ & $8^1$ & $8^0$ 
+        \end{tabular}
+    }
+    \begin{itemize}
+        \item Binary equivalent:
+        \begin{itemize}
+            \item 1 011 000 000 010 100 $\rightarrow$ 1011000000010100
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Example of Equivalent Numbers}
+    \begin{tabular}{l l}
+         Binary:      & 1 1 0 1 0 0 0 0 1 0 1 0 0 1 1 1  \\
+         Octal:       & $150247_8$ (or O150247) \\
+         Decimal:     & $53414_{10}$ \\
+         Hexadecimal: & $D0A7_{16}$ (or 0xD0A7, or D0A7h)
+    \end{tabular}
+    \\ ~~ \\ ~~ \\
+    Notice that the number of digits decreases as the the base increases.
+\end{frame}
+
+\begin{frame}{Why Use Hexadecimal or Octal?}
+    \begin{itemize}
+        \item Use fewer characters
+        \item Can easily convert between non-decimal numbers
+        \begin{itemize}
+            \item Divide numbers into equal-sized sets of bits, then convert directly
+            \item \textit{Not} true of decimal to binary, hex, or octal
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \end{document}
