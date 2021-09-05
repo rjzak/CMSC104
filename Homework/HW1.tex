@@ -1,0 +1,119 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Homework 1},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Homework 1}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 04 September 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Homework 1: Homework Can Be Fun!}.
+\normalsize
+\\ ~~ \\
+\textbf{Due: Monday 13 September by 11:59PM}
+
+\section*{Objectives}
+\paragraph{}To continue familiarizing with the \texttt{nano} text editor, understanding how to use basic Unix commands (\texttt{cp}, \texttt{mv}, and \texttt{cat}), and reinforcing how to submit assignments. NOTE: Unless otherwise noted, be sure to hit Enter(PC) or return(Mac) after every command.
+
+\section*{Part 1: Original Joke or Motto}
+\begin{enumerate}
+    \item Login to GL and make sure you are in your home directory (\texttt{pwd}).
+    \item Type \texttt{nano joke.txt} to start a new file called ``joke.txt''.
+    \item Type your best (clean) joke or personal motto. Edit any mistakes using the \texttt{Backspace} or \texttt{Delete} key to backspace like you would in a normal word processor like Microsoft Word. When you get to the end of a line, hit the enter (PC) or return (Mac) key at a reasonable spot instead of letting the text wrap around to the next line. Remember that \texttt{nano} is simply a text editor and does not format things nicely for us.
+    \item Save your work as you go by pressing \texttt{CTRL-O} for ``write out.''
+    \item To exit nano, press \texttt{CTRL-X}. If you have made changes since you last saved, it will ask you if you want to save the file, so press \texttt{y} for yes, then pres enter (PC) or return (Mac) when prompted, to save the filename. It is highly advisable NOT to change the filename.
+    \item Use the command \texttt{cat joke.txt} to check that your joke or motto was correctly saved.
+    \item Have someone check if the joke is funny. If not, \texttt{rm joke.txt} and try another joke or motto.
+    \item Submit joke.txt.
+    \begin{verbatim}
+    [rzak1@linux1 ~]$ submit cmsc104_10600 hw1 joke.txt
+    \end{verbatim}
+    \item Check your submission to make sure the file was properly submitted. If there is no output, your submission didn’t go through so repeat step 8, making sure you are in the right directory with the file.
+    \begin{verbatim}
+    [rzak1@linux1 ~]$ submitls cmsc104_10600 hw1
+    \end{verbatim}
+\end{enumerate}
+
+\section*{Part 2: Welcome to Dad Jokes}
+\begin{enumerate}
+    \item Make a copy of your, ``joke.txt'', file and call it ``joke2.txt''.
+    \begin{verbatim}
+    [rzak1@linux1 ~]$ cp joke.txt joke2.txt
+    \end{verbatim}
+    \item Use \texttt{nano joke2.txt} to edit your ``joke2.txt'' file and add the following joke to the end of the file:
+    \begin{verbatim}
+    Why do ducks have webbed feet?
+    To stamp out fires.
+
+    Why do elephants have flat feet?
+    To stamp out flaming ducks!
+    \end{verbatim}
+    \item Save changes to the file by typing \texttt{CTRL-X} to Exit, \texttt{y} to agree to save, and hitting enter (PC) or return (Mac)to save using the provided file name.
+    \item Submit your new ``joke2.txt'' file.
+    \begin{verbatim}
+    [rzak1@linux1 ~]$ submit cmsc104_10600 hw1 joke2.txt
+    \end{verbatim}
+    \item Type logout to log out.
+\end{enumerate}
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item joke.txt is complete: 45 points
+    \item joke2.txt is complete: 45 points
+    \item typescript is complete and not garbled: 10 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}You should have already submitted the 2 joke files (joke.txt, joke2.txt) by following the instructions above.
+
+\paragraph{}Log back into your GL account. Use the \texttt{script} command to record yourself viewing your joke files using the cat command. Do not record yourself editing your files! Exit from script and submit your typescript file.
+\begin{verbatim}
+[rzak1@linux1 ~]$ script
+Script started, file is typescript
+[rzak1@linux1 ~]$ cat joke.txt
+NOTE: Your joke/motto should display here.
+[rzak1@linux1 ~]$ cat joke2.txt
+NOTE: Your joke/motto should display here, followed by the ducks/elephants joke.
+[rzak1@linux1 ~]$ exit
+exit
+Script done, file is typescript
+[rzak1@linux1 ~]$ submit cmsc104_10600 hw1 typescript
+\end{verbatim}
+\end{document}
