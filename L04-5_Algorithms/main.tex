@@ -1,0 +1,222 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Lecture 4-5: Algorithms}
+\author{UMBC CMSC 104}
+\date{Tu 09 Sept 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Algorithms
+\end{frame}
+
+\section*{Part 1}
+\begin{frame}{Topics}
+    \begin{itemize}
+        \item Definition of an Algorithm
+        \item Algorithm Examples
+        \item Syntax versus Semantics
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Problem Solving}
+    \begin{itemize}
+        \item Problem solving is the process of transforming the description of a problem into the solution of that problem.
+        \item We use our knowledge of the problem domain (requirements).
+        \item We rely on our ability to select and use appropriate problem-solving strategies, techniques, and tools.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithms}
+    \begin{itemize}
+        \item An \textbf{algorithm} is a step by step solution to a problem.
+        \item Why bother writing an algorithm?
+        \begin{itemize}
+            \item For your own use in the future.  You won’t have to rethink the problem.
+            \item So others can use it, even if they know very little about the principles behind how the solution was derived.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Examples of Algorithms}
+    \begin{itemize}
+        \item Washing machine instructions
+        \item How to make a peanut butter and jelly sandwich
+        \item A classic: finding the greatest common divisor (GCD) using Euclid’s Algorithm
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Washing Machine Instructions}
+    \begin{itemize}
+        \item Separate clothes into white clothes and colored clothes.
+        \item Add 1 cup of powdered laundry detergent to tub.
+        \item For white clothes:
+        \begin{itemize}
+            \item Set water temperature knob to HOT.
+            \item Place white laundry in tub.
+        \end{itemize}
+        \item For colors:
+        \begin{itemize}
+            \item Set water temperature knob to COLD.
+            \item Place colored laundry in tub.
+        \end{itemize}
+        \item Close lid and press the start button.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Observations About the Washing Machine Instructions}
+    \begin{itemize}
+        \item There are a finite number of steps.
+        \item We are capable of doing each of the instructions.
+        \item When we have followed all of the steps, the washing machine will wash the clothes and then will stop.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Refinement of our Algorithm Definition}
+    \begin{itemize}
+        \item Old definition:
+        \begin{itemize}
+            \item An algorithm is a step by step solution to a problem.
+        \end{itemize}
+        \item Adding to the definition based on our observations:
+        \begin{itemize}
+            \item An algorithm is a \underline{finite set} of \underline{executable instructions} which \underline{directs a terminating activity}.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{How to Make a Peanut Butter and Jelly Sandwich}
+    \begin{itemize}
+        \item Open a web browser
+        \item Go to \url{https://www.google.com}
+        \item Search for ``harvard how to make pbj sandwich''
+        \item Click any video (or \url{https://youtu.be/okkIyWhN0iQ})
+        \item Enjoy
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Final Version of the Algorithm Definition}
+    \begin{itemize}
+        \item Our old definition:
+        \begin{itemize}
+            \item An algorithm is a finite set of executable instructions that directs a terminating activity.
+        \end{itemize}
+        \item Final version:
+        \begin{itemize}
+            \item An algorithm is a finite set of \underline{unambiguous}, executable instructions which directs a terminating activity.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{History of Algorithms}
+    \begin{itemize}
+        \item The study of algorithms began as a subject in mathematics.
+        \item The search for algorithms was a significant activity of early mathematicians.
+        \item Goal: To find a single set of instructions that can be used to solve any problem of a particular type (a \textbf{general solution}).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Euclid's Algorithm}
+    \underline{Problem}: Find the largest positive integer which divides evenly into two given positive integers (the \textbf{greatest common divisor, GCD}). \\ ~~ \\
+    \underline{Algorithm}:
+    \begin{enumerate}
+        \item Assign $M$ and $N$ the values of the larger and smaller of the two positive integers, respectively.
+        \item Divide $M$ by $N$ and call the remainder $R$.
+        \item If $R$ is not zero, then assign $M$ the value of $N$, assign $N$ the value of $R$, and return to Step 2. Otherwise, the greatest common divisor is the value currently assigned to $N$.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Finding the GCD of 24 and 9}
+    \centering
+    \begin{tabular}{ | c | c | c |} \hline
+        $M$ & $N$ & $R$ \\ \hline
+        24  & \tikz[remember picture] \node[coordinate,anchor=west] (n1) {};9   & \tikz[remember picture] \node[coordinate,anchor=west] (s1) {};6   \\ \hline
+        9\tikz[remember picture] \node[coordinate,anchor=north] (n2) {};  & \tikz[remember picture] \node[coordinate,anchor=east] (s2) {};6\tikz[remember picture] \node[coordinate,anchor=north] (s3) {};   & 3   \\ \hline
+        6\tikz[remember picture] \node[coordinate,anchor=west] (s4) {};  & \color{red}3   & 0 \\ \hline
+    \end{tabular}
+    \begin{tikzpicture}[remember picture,overlay]
+        \path[draw=orange,thick,->] --  (n1.west) -- (n2.south);
+        \path[draw=orange,thick,->] --  (s1.west) -- (s3.north);
+        \path[draw=orange,thick,->] --  (s2.south) -- (s4.south);
+    \end{tikzpicture} \\
+    
+    \vfill
+    3 is the GCD of 24 and 9.
+\end{frame}
+
+\begin{frame}{Euclid's Algorithm (Cont'd)}
+    \begin{itemize}
+        \item Do we need to know the theory that Euclid used to come up with this algorithm in order to use it?
+        \item What do we need in order to find the GCD using this algorithm?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Idea Behind Algorithms}
+    Once an algorithm behind a task has been discovered, we can just use it.
+    \begin{itemize}
+        \item We don't need to understand the principles.
+        \item The task is reduced to following the instructions.
+        \item The intelligence needed is ``encoded in the algorithm.''
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithm Representation}
+    Syntax and Semantics \\ ~~ \\
+    \begin{itemize}
+        \item \textbf{Syntax} refers to the representation itself.
+        \item \textbf{Semantics} refers to the concept represented.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Contrasting Syntax and Semantics}
+    \begin{itemize}
+        \item Human languages have both syntax and semantics.
+        \item Syntax is the grammar of the language.
+        \item Semantics is the meaning.
+        \item Think about this sentence: \\ I walked to the corner grocery store.
+        \begin{itemize}
+            \item Is this sentence syntactically correct?
+            \item Is it semantically correct?
+        \end{itemize}
+        \pause \item How about: \\ I talked to the funny grocery store.
+        \pause \\ I grocery store walker corner to.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Semantics (Cont'd)}
+    \begin{itemize}
+        \item \underline{Conclusion}: A sentence may be syntactically correct, yet semantically incorrect.
+        \item This is also true of algorithms.
+        \item And this is also true of computer code (often called a bug).
+    \end{itemize}
+\end{frame}
+
+\section*{Part 2}
+\begin{frame}{Algorithms, Part 2}
+    Topics:
+    \begin{itemize}
+        \item Problem Solving Examples
+        \item Pseudocode
+        \item Control Structures
+    \end{itemize}
+\end{frame}
+
+\end{document}
