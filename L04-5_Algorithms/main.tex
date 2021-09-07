@@ -219,4 +219,229 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}{Problem Solving}
+    \begin{itemize}
+        \item Decode this sentence: Pdeo eo pda yknnayp wjosan.
+        \item We have just come up with a specific solution to a problem.
+        \item Can this solution be generalized?
+        \pause
+        \item Now that we know what algorithms are, we are going to try some problem solving and write algorithms for the problems.
+        \item We’ll start with step-by-step instructions that solve a particular problem and then write a generic algorithm that will solve any problem of that type.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Someone Stole a Cookie from the Cookie Jar}
+    \underline{Problem}: Momma had just filled the cookie jar when the 3 children went to bed.  That night one child woke up, ate half of the cookies and went back to bed.  Later, the second child woke up, ate half of the remaining cookies, and went back to bed.  Still later, the third child woke up, ate half of the remaining cookies, leaving 3 cookies in the jar.  How many cookies were in the jar to begin with?
+\end{frame}
+
+\begin{frame}{Specific Solution to the Cookie Problem}
+    First, we solve the specific problem to help us identify the steps.
+    \begin{itemize}
+        \item 3 cookies left $X$ 2 $=$ 6 cookies left before 3$^{rd}$ child
+        \item 6 $X$ 2 $=$ 12 cookies left before $2^{nd}$ child
+        \item 12 $X$ 2 $=$ 24 $=$ cookies left before $1^{st}$ child \\
+        ~~ ~~ ~~ ~~ ~~ ~~ = original number of cookies
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{A Generic Algorithm}
+    \only<1> {
+        What is a \textbf{generic algorithm} for this problem? \\
+        An algorithm that will work with \underline{any number of remaining cookies}
+        \begin{center}
+    				        AND
+    	\end{center}
+    	that will work with \underline{any number of children}.
+	}
+	\only<2> {
+	    What is a \textbf{generic algorithm} for a given problem? \\ ~~ \\
+	    
+	    An algorithm for solving the problem, that has been generalized to work with a variety of possible input parameters to produce input-specific solutions.
+	}
+\end{frame}
+
+\begin{frame}{Generic Algorithm for Cookie Problem}
+    \begin{itemize}
+        \item Get number of children.
+        \item Get number of cookies remaining.
+        \item While there are still children that have not raided the cookie jar, multiply the number of cookies by 2 and reduce the number of children by 1.
+        \item Display the original number of cookies.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Flowchart for Cookie Problem}
+    \centering
+    \include{L04-5_Algorithms/L5_algo_flowchart}
+\end{frame}
+
+\begin{frame}{Pseudocode}
+    \only<1> {
+        \begin{itemize}
+            \item When we broke down the previous problem into steps, we expressed each step as an English phrase.
+            \item We can think of this as writing \textbf{pseudocode} for the problem.
+            \item Typically, pseudocode is a combination of phrases and formulas.
+        \end{itemize}
+    }
+    \only<2> {
+        \begin{itemize}
+            \item Pseudocode is used in
+            \begin{itemize}
+                \item designing algorithms
+                \item communicating an algorithm to the customer
+                \item converting an algorithm to code (used by the programmer)
+                \item \textbf{debugging} logic (semantic) errors in a solution before coding (\textbf{hand tracing})
+            \end{itemize}
+            \item Let’s write the Cookie Problem algorithm using a more formal pseudocode and being more precise.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Improved Pseudocode}
+    \begin{verbatim}
+Display "Enter the number of children:  "
+Read <number of children>
+Display "Enter the number of cookies remaining:  "
+Read <cookies remaining>
+<original cookies> = <cookies remaining>
+While (<number of children>  >  0)
+    <original cookies> = <original cookies> X 2
+    <number of children> = <number of children> - 1
+End_While
+Display "Original number of cookies = ", <original cookies>
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{Observations}
+    \only<1> {
+        \begin{itemize}
+            \item Any \textbf{user prompts} should appear exactly as you wish the programmer to code them.
+            \item The destination of any output data should be stated, such as in ``Display'', which implies the screen.
+            \item Make the data items clear (e.g., surround them by $<$  and  $>$ ) and give them descriptive names.
+            \item Use formulas wherever possible for clarity and brevity.
+            \item Use keywords (such as Read and While) and use them consistently.  Accent them in some manner.
+        \end{itemize}
+    }
+    \only<2> {
+        \begin{itemize}
+            \item Use indentation for clarity of logic.
+            \item Avoid using code.  Pseudocode should not be programming language-specific.
+            \item Always keep in mind that you may not be the person translating your pseudocode into programming language code.  It must, therefore, be unambiguous.
+            \item You may make up your own pseudocode guidelines, but you MUST be consistent.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{Brian’s Shopping Trip}
+    \underline{Problem}:  Brian bought a belt for \$9 and a shirt that cost 4 times as much as the belt.  He then had \$10.  How much money did Brian have before he bought the belt and shirt?
+\end{frame}
+
+\begin{frame}{Specific Solution to Shopping Problem}
+    \centering
+    \begin{tabular}{r l}
+        $Start\$$ & $  =  Belt\$ + Shirt\$ + \$10$ \\
+        $Start\$$ & $  =  Belt\$ + (4 X Belt\$) + \$10$ \\
+	    $Start\$$ & $  =  9  +  (4 X 9)  +  10  =  \$55$
+    \end{tabular}
+\end{frame}
+
+\begin{frame}{Generic Algorithm for Shopping Problem}
+    \begin{itemize}
+        \item Now, let’s write a generic algorithm to solve any problem of this type.
+        \item What are the inputs to the algorithm?
+        \begin{itemize}
+            \item the cost of the first item (doesn’t matter that it’s a belt):  $<$item1 price$>$
+            \item the number to multiply the cost of the first item by to get the cost of the second item:  $<$multiplier$>$
+            \item the amount of money left at the end of shopping: $<$amount left$>$
+        \end{itemize}
+        \pause
+        \item What are the outputs from the algorithm?
+        \begin{itemize}
+            \item the amount of money available at the start of the shopping trip: $<$start amount$>$
+        \end{itemize}
+        \item Note that we may end up needing some intermediate variables.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Pseudocode}
+    \begin{verbatim}
+Display "Enter the price of the first item:  "
+Read <item 1 price>
+Display "Enter the multiplier:  "
+Read <multiplier>
+Display "Enter the amount left after shopping:  "
+Read <amount left>
+<item2 price> = <multiplier> X <item1 price>
+<start amount> = <item1 price> + <item2 price> +
+                            <amount left>
+Display "The starting amount was ", <start amount> 
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{Control Structures}
+    Any problem can be solved using only three logical \textbf{control structures}:
+    \begin{itemize}
+        \item Sequence
+        \item Selection
+        \item Repetition
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Sequence}
+    \begin{itemize}
+        \item A series of steps or statements that are executed in the order they are written.
+        \item Example:
+        \begin{verbatim}
+  Display "Enter two numbers:  "
+  Read <number1>
+  Read <number2>
+  <sum> = <number1> + <number2>
+  Display "sum = ", <sum>
+        \end{verbatim}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Selection}
+    \begin{itemize}
+        \item Defines one or more courses of action depending on the evaluation of a condition.
+        \item Synonyms: \textbf{conditional}, \textbf{branching}, \textbf{decision}.
+        \item Examples:
+    \end{itemize}
+    \begin{columns}
+        \column{0.4\textwidth}
+            \begin{verbatim}
+if (condition is true)
+    do something
+end_if
+
+
+            \end{verbatim}
+        \column{0.5\textwidth}
+            \begin{verbatim}
+if (condition is true)
+    do this
+else
+    do that
+end_if
+            \end{verbatim}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Selection}
+    A more complex example:
+    \begin{verbatim}
+DISPLAY "Enter number to invert"
+READ <my_num>
+If (<my_num> < 0)
+    DISPLAY "Don’t like negative numbers"
+    if (<my_num> < -999)
+        DISPLAY "... but I guess you really do!"
+    End_if
+Else_if (<my_num>  == 0)
+    <result> = 0
+Else
+    <result> = 1 / <my_num>
+End_if
+    \end{verbatim}
+\end{frame}
+
 \end{document}
