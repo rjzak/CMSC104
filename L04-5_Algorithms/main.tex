@@ -296,7 +296,7 @@
     }
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{Improved Pseudocode}
+\begin{frame}[fragile]\frametitle{Improved Pseudocode}\label{slide:cookieloop}
     \begin{verbatim}
 Display "Enter the number of children:  "
 Read <number of children>
@@ -443,5 +443,109 @@ Else
 End_if
     \end{verbatim}
 \end{frame}
+
+\begin{frame}[fragile]\frametitle{Repetition}
+    \begin{itemize}
+        \item Allows one or more statements to be repeated as long as a given condition is true.
+        \item Synonyms:  looping, iteration
+        \item Example:
+        \begin{verbatim}
+    While (condition is true)
+  		     do this
+  		End_while
+        \end{verbatim}
+        \item Notice the repetition structure in the Cookie Problem pseudocode on Slide \ref{slide:cookieloop}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Repetition}
+    More complex example (with mistakes)
+    \begin{verbatim}
+    DISPLAY "Enter number to compute factorial for"
+    READ <my_num>
+    
+    While (<my_num> > 0)
+        <factorial> = <factorial> * <my_num>
+        <my_num> = <my_num> - 1
+    End_while
+    
+    DISPLAY "The factorial of", <my_num>, " is ", <factorial>
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Repetition}
+    More complex example (with mistakes)
+    \begin{verbatim}
+    DISPLAY "Enter number to compute factorial for"
+    READ <my_num>
+    <factorial> = 1
+    
+    While (<my_num> > 0)
+        <factorial> = <factorial> * <my_num>
+        <my_num> = <my_num> - 1
+    End_while
+    
+    DISPLAY "The factorial of", <my_num>, " is ", <factorial>
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Repetition}
+    More complex example (with mistakes)
+    \begin{verbatim}
+    DISPLAY "Enter number to compute factorial for"
+    READ <my_num>
+    <factorial> = 1
+    <saved_my_num> = <my_num>
+    
+    While (<my_num> > 0)
+        <factorial> = <factorial> * <my_num>
+        <my_num> = <my_num> - 1
+    End_while
+    
+    <my_num> = <saved_my_num>
+    DISPLAY "The factorial of", <my_num>, " is ", <factorial>
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{Writing Algorithms from Scratch}
+    \begin{itemize}
+        \item Given a problem statement, we are going to write the corresponding generic algorithm for the solution.
+        \item We will use the following procedure:
+        \begin{itemize}
+            \item Determine the algorithm inputs and outputs
+            \item Complete the pseudocode
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section*{Algorithm Exercises}
+\begin{frame}{Warm-up: Simple Tip Calculator}
+    \underline{Problem}:  Write an interactive program to calculate the dollar amount of tip on a restaurant bill at the standard 15\% rate.
+    \\ ~~ \\
+	You should allow for changes in the total price of the bill. \\ ~~ \\
+	\underline{Tip:} Whenever getting user input, always check for invalid input. Sometimes bad input is accidental, sometimes it's malicious behaviour.
+\end{frame}
+
+\begin{frame}{Drawing a Rectangle}
+    \underline{Problem}:  Write an interactive program that will draw a solid rectangle of asterisks (*) of user-specified dimensions.  The program must also display the dimensions of the rectangle at the end. 
+\end{frame}
+
+\begin{frame}{General Tip Calculator}
+    \underline{Problem}:  Write an interactive program to calculate a table of dollar amounts of tip on a restaurant bill.  You should allow for changes in the total price of the bill. You should also ask the user for the range of tipping rates to calculate (ex: high or low amount, or 10\%, 15\%, or custom \%).
+    \\ ~~ \\
+    Error checking should be done to be sure that the amount of the bill is greater than 0, that the tip amount is between zero and one.
+\end{frame}
+%
+%\begin{frame}{Group Exercise}
+%    \begin{columns}
+%        \column{0.5\textwidth}
+%            \textbf{Drawing a Rectangle:} Write an interactive program that will draw a solid rectangle of asterisks (*) of user-specified dimensions.  The program must also display the dimensions of the rectangle.  Error checking must be done to be sure that the dimensions are greater than zero.
+%            \\ ~~
+%        \column{0.5\textwidth}
+%            \textbf{Tip Calculator:} Write an interactive program to calculate a table of dollar amounts of tip on a restaurant bill.  You should allow for changes in the total price of the bill. You should also ask the user for the range of tipping rates to calculate (i.e., low and high ends).  Error checking should be done to be sure that the amount of the bill is greater than 0.
+%    \end{columns}
+%    ~~ \\ ~~ \\
+%    \underline{Tip:} Whenever getting user input, always check for invalid input. Sometimes bad input is accidental, sometimes it's malicious behaviour.
+%\end{frame}
 
 \end{document}

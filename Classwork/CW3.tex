@@ -1,0 +1,101 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Classwork 3},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Classwork 3}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 08 September 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Classwork 3: Pseudocode Practice}.
+\normalsize
+\\ ~~ \\
+\textbf{In-class Date: Thursday  09 September}
+
+\section*{Objectives}
+\paragraph{}To become more familiar with writing pseudocode to solve problems.
+\paragraph{}NOTE: Unless otherwise noted, be sure to hit Enter (PC)or return (Mac) after every command!! At the end of the lab, you will use submit to turn in a transcript of your Linux session. %If you do not finish all the steps, just submit as much as you get done.
+
+\section*{Assignment: Solve with Pseudocode}
+\begin{enumerate}
+    \item Login to the UMBC Linux GL System
+    \item Use the nano Text Editor to Create a Pseudocode File. You will be using the \texttt{nano} text editor to create a file called ``pseudocode.txt''.  To create your pseudocode file, do the following.
+    \begin{itemize}
+        \item Go to your classwork 3 directory by typing: \texttt{cd cs104/cw3}
+        \item Enter the nano editor by typing:  nano pseudocode.txt
+        \item Simply type in the pseudocode to solve the 2 problems specified below (Drawing a Rectangle AND Tip Calculator). Put 10 blank lines between each set of pseudocode to separate the solutions. Edit any mistakes using the Backspace or Delete key to backspace like you would in a normal word processor like Microsoft Word. When you get to the end of a line, hit the enter (PC) or return (Mac) key at a reasonable spot instead of letting the text wrap around to the next line. Remember that \texttt{nano} is simply a text editor and does not format things nicely for us.
+        \item Save your work as you go by pressing ctrl-o for ``write out.''
+        \item To exit nano press ctrl-x. If you have made changes since you last saved, it will ask you if you want to save the file, so press y for yes, then enter(PC) or return(Mac) when prompted to save the filename. It is highly advisable NOT to change the filename.
+        \item You will know that you have exited nano and are again talking to the Linux system if you see the \verb|[rzak1@linux1 ~]$| prompt.
+        \item You can check that the file pseudocode.txt is in your directory by typing:  \texttt{ls}
+        \item The file will contain 2 different blocks of pseudocode, separated by 10 blank lines, to solve the following 2 problems:
+        \begin{itemize}
+            \item \underline{Drawing a Rectangle:} Write an interactive program that will draw a solid rectangle of asterisks (*) of user-specified dimensions (i.e. the user will tell you the height and width of the rectangle when you ask). The program must also display the dimensions of the rectangle after drawing it. Error checking must be done to be sure that the dimensions are greater than zero.
+            \item \underline{Tip Calculator:} Write an interactive program to calculate a table of dollar amounts of tip on a restaurant bill. You should allow for changes in the total price of the bill. You should also ask the user for the range of tipping rates to calculate (i.e. low and high ends). Error checking should be done to be sure that the amount of the bill is greater than 0.
+            \item NOTE: Be sure to put 10 blank lines between each block of pseudocode to keep them separate!
+        \end{itemize}
+    \end{itemize}
+    \item Submit your file to the GL system
+    \begin{verbatim}
+        [rzak1@linux1 cw3]$ submit cmsc104_10600 cw3 pseudocode.txt
+    \end{verbatim}
+    \item Check your submission
+    \begin{verbatim}
+        [rzak1@linux1 cw3]$ submitls cmsc104_10600 cw3
+    \end{verbatim}
+    \item Logout
+    \begin{verbatim}
+        [rzak1@linux1 cw3]$ exit
+    \end{verbatim}
+\end{enumerate}
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item rectangle drawing pseudocode has proper syntax: 20 points
+    \item rectange drawing pseudocode has proper logic: 20 points
+    \item tip calculator pseudocode has proper syntax: 20 points
+    \item tip calculator pseudocode has proper logic: 20 points
+    \item pseudocode text is clearly separated between solutions: 10 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}You should have already submitted the necessary file (``pseudocode.txt'') by following the instructions above.
+
+\end{document}
