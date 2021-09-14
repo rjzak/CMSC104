@@ -1,0 +1,116 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Practice Quiz 1 Answers},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+\usepackage{bbding} % For checkmark in itemize
+\newcommand*\tick{\item[\Checkmark]}
+\newcommand*\fail{\item[\XSolidBrush]}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Practice Quiz 1 Answers}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 13 September 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Practice Quiz 1 Answers}
+\normalsize
+
+\paragraph{}Please answer the following questions. Partial credit may be given for incomplete free response questions.
+
+\begin{enumerate}
+    \item Which programming language are we going to learn in this course?
+    \begin{itemize}
+        %\fail Python
+        \tick C
+        %\fail C++
+        %\fail Java
+    \end{itemize}
+    
+    \item Which operating systems are considered graphical?
+    \begin{itemize}
+        %\item Windows
+        %\item macOS
+        %\item Linux
+        \tick All of the above
+    \end{itemize}
+    
+    \item A keyboard is considered a type of \underline{~~input~~} device, while a hard drive is considered a type of \underline{~~input and output or storage~~} device.
+    
+    \item What does adding more RAM not always make computers faster? \\
+    \textit{RAM can make the computer faster for some programs, but for really intense programs, like modern video games, there's no substitute for a faster processor or better graphics card.}
+    
+    \item Convert the following numbers to binary:
+    \begin{itemize}
+        \item 57 \color{red}\textit{0011 1001} \color{black}{}
+        \item 0x104F \color{red}\textit{0001 0000 0100 1111} \color{black}{}
+    \end{itemize}
+    
+    \item What is the difference between the ? and * wild card characters? \\
+    \textit{? matches only one character, * matches zero or many characters}
+    
+    \item Which decimal number is equivalent to 101001 in binary?
+    \begin{enumerate}
+        \tick 41
+        %\item 26
+        %\item 37
+        %\item 53
+    \end{enumerate}
+    
+    \item Write pseudocode to prompt a user for gallons of gasoline used or filled, and miles driven. Then calculate and display the miles per gallon (MPG).
+    \begin{verbatim}
+        DISPLAY "Enter gallons of gasoline"
+        READ <galGas>
+        DISPLAY "Enter miles driven"
+        READ <miles>
+        <MPG> = <miles>/<galGas>
+        DISPLAY "Miles per gallon", <MPG>\end{verbatim}
+    
+    \item Provide three examples of I/O devices.
+    \begin{enumerate}
+        \item \color{red}\textit{Mouse} \color{black}{}
+        \item \color{red}\textit{Game controller} \color{black}{}
+        \item \color{red}\textit{Scanner} \color{black}{}
+    \end{enumerate}
+    
+    \item Explain why the following joke is funny: \\
+    ``There are 10 kinds of people in this world, those who understand binary and those who don't.'' \\
+    \textit{10 in binary equals 2 in decimal, and there's 2 kinds of people in this world.}
+\end{enumerate}
+
+
+\end{document}
