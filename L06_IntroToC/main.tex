@@ -1,0 +1,297 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Lecture 6: Intro to C}
+\author{UMBC CMSC 104}
+\date{Tu 21 Sept 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Introduction to C
+\end{frame}
+
+\begin{frame}{Introduction to C}
+    Topics
+    \begin{itemize}
+        \item Brief History of Programming Languages \& C
+        \item The Anatomy of a C Program
+        \item Compilation
+        \item Using the gcc Compiler
+        \item CMSC 104 C Program Standards \& Indentation Styles
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{History of Programming Languages \& C}
+    \only<1> {
+        \begin{itemize}
+            \item Machine code
+            \begin{itemize}
+                \item Enter raw sequences of binary patterns (opcodes) \\
+                1011010111001011 \\
+                1011010110101010
+            \end{itemize}
+            \item Assembly Language
+            \begin{itemize}
+                \item Provides human-readable syntax to machine code: \\
+                MOV R0, 5 \\
+                SUB R0, 2 \\
+                INC R0
+            \end{itemize}
+        \end{itemize}
+        \\ ~~ \\
+        \footnotesize{\url{https://en.wikipedia.org/wiki/Assembly_code\#Assembly_language}}
+    }
+    \only<2> {
+        Early high-level languages:
+        \begin{itemize}
+            \item COBOL
+            \begin{itemize}
+                \item SUBTRACT B FROM A GIVING C
+                \item MULTIPLY C BY 2 GIVING D
+            \end{itemize}
+            \item FORTRAN
+            \begin{itemize}
+                \item S1 = 3.0
+                \item S2 = 4.0
+                \item H = SQRT((S1*S2)+(S2*S2))
+            \end{itemize}
+            \item LISP
+            \begin{itemize}
+                \item (lambda (a) \\
+	            (mapcar (func '+) \\
+	            (cons (car (car a)) (car (cadr a)))))
+            \end{itemize}
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{History of C}
+    \begin{itemize}
+        \item Derived from... (wait for it...) ``B'' in 1972
+        \begin{itemize}
+            \item ``B'' (1969) was derived from \href{https://en.wikipedia.org/wiki/BCPL}{BCPL}
+        \end{itemize}
+        \item Design goals for C:
+        \begin{itemize}
+            \item Efficient
+            \item Close to the machine: control hardware, manipulate memory
+            \item Structured: sophisticated control flow and data structures
+        \end{itemize}
+        \item UNIX was re-developed in C in 1973
+        \begin{itemize}
+            \item First written in assembly for the PDP-11, which had 64 KB of memory.
+            \item UNIX, originally Unics: ``Uniplexed Information and Computing Service''\footnote{\url{https://en.wikipedia.org/wiki/Unix}}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Does Programming Language Choice Matter?}
+    Yes!
+    \begin{itemize}
+        \item Not all programming languages do the same thing or have the same capabilities.
+        \item Generally, use the best tool for the job.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Writing C Programs}
+    \begin{itemize}
+        \item A programmer uses a \textbf{text editor} to create \& modify code, which is completely different from a word processor.
+        \item Code is known as \textbf{source code}.
+        \item A file containing source code is sometimes known as a \textbf{source file}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Writing C Programs}
+    A super simple example:
+    \begin{lstlisting}[language=c,showspaces=false,keywordstyle=\color{magenta},stringstyle=\color{purple},basicstyle=\ttfamily\footnotesize,numberstyle=\tiny\color{codegray},commentstyle=\color{green},]
+    #include <stdio.h>
+    int main() {
+        printf("Hello, world!\n");
+        return 0;
+    }
+    \end{lstlisting}
+    After creating the code, the programmer invokes the compiler which turns code into a program.
+\end{frame}
+
+\begin{frame}{Stages of Compilation}
+    Stage 1: Preprocessing
+    \begin{itemize}
+        \item Main purposes:
+        \begin{itemize}
+            \item Centralise reused chunks of code
+            \item Allow ``extensions'' to the language
+            \item Make code more portable
+        \end{itemize}
+        \item Preformed by a program called the \textbf{preprocessor}.
+        \item Modifies source code in memory according to \textbf{preprocessor directives} embedded in the source code.
+        \item The code on disk is not modified.
+        \item Include, or header, files end with ``.h'' 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Stages of Compilation (cont'd)}
+    Stage 2: \textbf{Compilation}
+    \begin{itemize}
+        \item Performed by a program called the \textbf{compiler}.
+        \item Translated the preprocessor-modified source code into \textbf{object code}, or \textbf{machine code}.
+        \item Checks for \textbf{syntax errors} and \textbf{warnings}.
+        \item Saves the code to disk, depending on how the compiler was invoked.
+        \begin{itemize}
+            \item If any errors are generated, object code is not created.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Stages of Compilation (cont'd)}
+    Stage 3: \textbf{Linking}
+    \begin{itemize}
+        \item Combines the program object code with other object code to produce the executable file.
+        \item The other object code can come from the Run-Time Library, other libraries, or object files that you have created.
+        \item Saves the executable code to a disk file.  On the Linux system, that file is called \textbf{a.out} by default, if \texttt{-o $<$output\_name$>$} is not provided.
+        \begin{itemize}
+            \item If there are any linker errors, no executable file will be created.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{A Simple C Program}
+    \begin{lstlisting}[language=c,showspaces=false,keywordstyle=\color{magenta},stringstyle=\color{purple},basicstyle=\ttfamily\footnotesize,numberstyle=\tiny\color{codegray},commentstyle=\color{green},]
+    /* Filename: hello.c
+     * Author: Brian Kernighan & Dennis Ritchie
+     * Date written: 1978
+     * Description: This program prints the
+     *               greeting "Hello, World!"
+     */
+    #include  <stdio.h>
+    int main() {
+     printf("Hello, World!\n");
+     return 0;
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Anatomy of a C Program}
+    \begin{verbatim}
+    program header comment \\
+
+    preprocessor directives (if any) \\
+    
+    int main() \{ \\
+    ~~~~     statement(s) \\
+    ~~~~      return 0; \\
+    \}
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{Program Header Content}
+    \begin{itemize}
+        \item A comment is descriptive text used to help a reader of the program understand its content.
+        \item All comments must begin with the characters  /*  and end with the characters  */
+        \item These are called comment delimiters
+        \item The program header comment always comes first.
+        \item While not required technically, they are required as part of the coding style.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Preprocessor Directives}
+    \begin{itemize}
+        \item Lines that begin with a \# in column 1 are called \textbf{preprocessor directives} (commands).
+        \item Example: the \texttt{\#include <stdio.h>} directive causes the preprocessor to include a copy of the standard input/output header file ``stdio.h'' at this point in the code.
+        \item This header file was included because it contains information about the \textbf{printf()} function that is used in this program, which displays text to the user.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{int main()}
+    \begin{itemize}
+        \item Every program must have a \textbf{function} called main. This is where program execution begins.
+        \item main() is placed in the source code file as the first function for readability.
+        \item The \textbf{reserved word} ``int'' indicates that main() returns an integer value.
+        \item The parentheses following ``main'' indicate that it is a function.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Function Body}
+    \begin{itemize}
+        \item A left brace (curly bracket) \{ begins the \textbf{body} or \textbf{definition} of every function.  A corresponding right brace \} ends the function body.
+        \item The style is to place these braces on separate lines in column 1 and to indent the entire function body 3 to 4 spaces.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{printf("Hello, world!\n");}
+    \begin{itemize}
+        \item This line is a C \textbf{statement}.
+        \item It is a \textbf{call} to the function \textbf{printf()} with a single \textbf{argument (parameter)}, namely the string ``Hello, World!\textbackslash n''.
+        \item Even though a string may contain many characters, the string itself should be thought of as a single quantity.
+        \item Notice that this line ends with a semicolon. All statements in C end with a semicolon.
+        \item Also notice the character ``\textbackslash n''. It is the \textbf{new line character}, and represents one character despite being made up of a two characters. It ensures that the output which comes afterward is on the line below the current line.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{return 0;}
+    \begin{itemize}
+        \item The function main() must return an integer value, so there needs to be a statement to indicate this value.
+        \item Returning zero lets the operating system know that the program exited normally.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Using the C compiler at UMBC}
+    On the GL system at UMBC, use the \texttt{gcc} command to compile your code.
+    \begin{itemize}
+        \item All code \textbf{MUST} compile correctly on the GL system to receive credit for assignments!
+        \begin{itemize}
+            \item You may optionally work on assignments locally, but compile, test, and submit on GL.
+            \item macOS users: install Xcode; Windows users: install the Windows Subsystem for Linux.
+        \end{itemize}
+        \item Optionally use the additional command -o output\_name to change the default output file name.
+        \begin{itemize}
+            \item \texttt{gcc main.c -o hw1} compiles the code in main.c into an executable called ``hw1''
+            \item \texttt{gcc main.c} compiles the code in main.c into an executable called ``a.out''
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Invoking the gcc Compiler}
+    At the prompt, type: \texttt{gcc -Wall program.c -o program}
+    \begin{itemize}
+        \item \texttt{program.c} is the C program source
+        \item \texttt{-Wall} turns on all compiler warnings
+        \item There are many other options for \texttt{gcc}, run \texttt{gcc --help} to see for yourself.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Result: Your Executable}
+    \begin{itemize}
+        \item If there are no errors, the command produces an \textbf{executable file}, which is one that can be executed (or run).
+        \item On Linux or Mac, there isn't a file extension; on Windows, the program would end with \texttt{.exe}
+        \item To run your program, type \texttt{./program}, or \texttt{./a.out} if you didn't use the \texttt{-o} option.
+        \item Although we call this process ``compiling a program'', what actually happens is more complicated.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Good Programming Practices}
+    \begin{itemize}
+        \item C programming standards and indentation styles are available on Blackboard
+        \item You are expected to conform to these standards for all programming projects in this class. Part of the grade is based on the coding style.
+        \item Good practices ensures that you and others can read your code, including when you revisit your code, possibly years later.
+    \end{itemize}
+\end{frame}
+
+\end{document}
