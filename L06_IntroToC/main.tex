@@ -83,6 +83,61 @@
     }
 \end{frame}
 
+\begin{frame}[fragile]{Assembly Example}
+    \begin{columns}
+        \column{0.4\textwidth}
+            \begin{verbatim}
+int square(int num) {
+    return num * num;
+}
+            \end{verbatim}
+        \column{0.5\textwidth}
+            \footnotesize
+            \begin{verbatim}
+push    rbp
+mov     rbp, rsp
+mov     DWORD PTR [rbp-4], edi
+mov     eax, DWORD PTR [rbp-4]
+imul    eax, eax
+pop     rbp
+ret
+            \end{verbatim}
+    \end{columns}
+    \vfill
+    Intel 64-bit
+\end{frame}
+
+\begin{frame}[fragile]{Assembly Example}
+    \begin{columns}
+        \column{0.4\textwidth}
+            \begin{verbatim}
+int square(int num) {
+    return num * num;
+}
+            \end{verbatim}
+        \column{0.5\textwidth}
+            \footnotesize
+            \begin{verbatim}
+sub     sp, sp, #16
+str     w0, [sp, 12]
+ldr     w0, [sp, 12]
+mul     w0, w0, w0
+add     sp, sp, 16
+ret
+            \end{verbatim}
+    \end{columns}
+    \vfill
+    ARM 64-bit
+\end{frame}
+
+\begin{frame}{Assembly}
+    \begin{itemize}
+        \item ... is specific to the type of processor
+        \item ... is generally only used when your algorithm has to be as fast as possible
+        \item ... is much more difficult \& tedious than C.
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{History of C}
     \begin{itemize}
         \item Derived from... (wait for it...) ``B'' in 1972
@@ -94,6 +149,7 @@
             \item Efficient
             \item Close to the machine: control hardware, manipulate memory
             \item Structured: sophisticated control flow and data structures
+            \item Unlike Assembly, C is mostly portable between systems
         \end{itemize}
         \item UNIX was re-developed in C in 1973
         \begin{itemize}
@@ -151,7 +207,7 @@
     Stage 2: \textbf{Compilation}
     \begin{itemize}
         \item Performed by a program called the \textbf{compiler}.
-        \item Translated the preprocessor-modified source code into \textbf{object code}, or \textbf{machine code}.
+        \item Translated the preprocessor-modified source code into \textbf{object code}, or \textbf{machine code}. Turning the code into assembly is part of this process.
         \item Checks for \textbf{syntax errors} and \textbf{warnings}.
         \item Saves the code to disk, depending on how the compiler was invoked.
         \begin{itemize}
