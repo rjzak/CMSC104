@@ -1,0 +1,219 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Homework 2},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Homework 2}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 20 September 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Homework 2: More Practice with Linux} \includegraphics[scale=0.07]{Images/Tux.png}
+\normalsize
+\\ ~~ \\
+\textbf{Due: Tuesday 28 September by 11:59PM}
+
+\section*{Objectives}
+\paragraph{}To become more familiar with navigating the Linux operating system, and understand how to use basic Unix commands. This assignment builds on the work which was done in Classwork 2.
+
+\section*{Assignment: Exploring Unix Commands}
+\paragraph{}The commands used in this assignment: \texttt{cat}, \texttt{cd}, \texttt{ls}, \texttt{mkdir}, \texttt{mv}, \texttt{pwd}, \texttt{rm}, \texttt{rmdir}, \texttt{tree}. With practice, you'll remember what these commands do and when to use them, which will be important for subsequent assignments.
+
+\begin{enumerate}
+    \item Log in to GL.
+    \item Change directory to your \texttt{hw2} directory, and make sure you are there.
+    \begin{verbatim}
+        [rzak1@linux1 ~]$ cd ~/cs104/hw2
+        [rzak1@linux1 hw2]$ pwd
+        /afs/umbc.edu/users/r/z/rzak1/home/cs104/hw2
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Create a new directory called ``Personal''. Verify that the directory exists.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ mkdir Personal
+        [rzak1@linux1 hw2]$ ls
+        Personal
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Move to the ``Personal'' directory. Verify that you are there.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ cd Personal
+        [rzak1@linux1 Personal]$ pwd
+        /afs/umbc.edu/users/r/z/rzak1/home/cs104/hw2/Personal
+        [rzak1@linux1 Personal]$\end{verbatim}
+    \item Use the \texttt{nano} text editor to create a file called ``things2do.txt''.
+    \begin{verbatim}
+        [rzak1@linux1 Personal]$ nano things2do.txt\end{verbatim}
+    \item Once you've opened the file, type in the following:
+    \begin{verbatim}
+        1. Finish homework 2.
+        2. Do a few push-ups
+        3. Figure out where my pet tarantula went (maybe this should be #1)\end{verbatim}
+    \item Save the file and exit nano.
+    \item Move back to the homework 2 directory. Verify that you are there.
+    \begin{verbatim}
+        [rzak1@linux1 Personal]$ cd ..
+        [rzak1@linux1 hw2]$ pwd
+        /afs/umbc.edu/users/r/z/rzak1/home/cs104/hw2
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Start a transcript of your Unix session. \textbf{Do not} skip this step!
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ script
+        Script started, file is typescript
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item List the contents of the homework 2 directory. It should contain the ``Personal'' subdirectory and a placeholder for the transcript you've just started.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ ls
+        Personal typescript
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item List the contents of ``Personal'', which should only contain the file ``things2do.txt''.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ ls Personal
+        things2do.txt
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Display the contents of ``things2do.txt''
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ cat Personal/things2do.txt
+        NOTE: The contents of your file should display here.
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Create a new subdirectory called ``PersonalBackup''. Verify that it exists.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ pwd
+        /afs/umbc.edu/users/r/z/rzak1/home/cs104/hw2
+        [rzak1@linux1 hw2]$ mkdir PersonalBackup
+        [rzak1@linux1 hw2]$ ls
+        Personal  PersonalBackup  typescript
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Copy the file ``things2do.txt'' from ``Personal'' to ``PersonalBackup''. \\
+    \textit{Make sure you have the slash at the end, or the computer will think you're trying to copy the file to a new file called PersonalBackup, and not into the directory called PersonalBackup}.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ cp Personal/things2do.txt PersonalBackup/
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Look at the contents of ``PersonalBackup'', it should contain ``things2do.txt''
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ ls PersonalBackup
+        things2do.txt
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Try to delete the subdirectory ``Personal''. Notice that this won't work right away.
+    \begin{enumerate}
+        \item Delete ``things2do.txt'' from ``Personal''
+        \item List the contents of ``Personal'' to make sure it's empty.
+        \item Delete ``Personal''.
+        \item List the contents of the directory to make sure ``Personal'' has been deleted.
+    \end{enumerate}
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ rmdir Personal
+        rmdir: `Personal/': Directory not empty
+        [rzak1@linux1 hw2]$ rm Personal/things2do.txt
+        rm: remove regular file `Personal/things2do.txt'? y
+        [rzak1@linux1 hw2]$ ls Personal
+        [rzak1@linux1 hw2]$ rmdir Personal
+        [rzak1@linux1 hw2]$ ls
+        PersonalBackup  typescript
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Move ``things2do.txt'' from ``PersonalBackup'' to your current working directory. \\
+    \textit{Note the period at the end of the command, which refers to your current directory.}
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ mv PersonalBackup/things2do.txt .
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Look at the contents of your ``hw2'' directory to be sure that ``things2do.txt'' is there.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ ls
+        PersonalBackup  things2do.txt  typescript
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Look at the contents of ``PersonalBackup'' to be sure that ``things2do.txt'' is not there.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ ls PersonalBackup
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Delete ``PersonalBackup``
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ rmdir PersonalBackup
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Move back to your ``cs104'' directory and show all files and directories that you have created.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ cd ..
+        [rzak1@linux1 ~/cs104]$ tree
+        NOTE: You should see all your classwork and homework directories, 
+        along with the files you created for this assignment, in a tree-like structure.
+        [rzak1@linux1 ~/cs104]$\end{verbatim}
+    \item Now you have to stop the recording of the transcript of your Unix session.
+    \begin{verbatim}
+        [rzak1@linux1 ~/cs104]$ exit
+        exit
+        Script done, file is typescript
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Check that you have a file named ``typescript''.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ ls
+        things2do.txt  typescript
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Check that the file is not empty.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ cat typescript
+        NOTE: The contents of your file should display here.
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \textit{Optionally, check the size of the file using the ``ls -l'' command:}
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ ls -l typescript
+        -rw-r--r-- 1 rzak1 rzak 160 Jul  5 13:48 typescript
+        [rzak1@linux1 hw2]$\end{verbatim}
+    \item Submit your ``things2do.txt'' and ``typescript'' files.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ submit cmsc104_10600 hw2 things2do.txt typescript\end{verbatim}
+    \item Double-check that your files were submitted using the \texttt{submitls} command:
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ submitls cmsc104_10600 hw2
+        drwxr-xr-x  2 rzak1 rpc 2048 Sep  1 21:51 .
+        drwxr-xr-x 23 rzak1 rpc 2048 Sep  1 21:49 ..
+        -rw-r--r--  1 rzak1 rpc   54 Sep 15 21:48 things2do.txt
+        -rw-r--r--  1 rzak1 rpc  160 Sep 15 21:51 typescript\end{verbatim}
+    \item Disconnect from GL.
+    \begin{verbatim}
+        [rzak1@linux1 hw2]$ exit\end{verbatim}
+\end{enumerate}
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item things2do.txt is complete: 50 points
+    \item typescript is complete and not garbled: 20 points
+    \item tree in typescript shows proper directory structure: 30 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}You should have already submitted the two necessary files (things2do.txt and typescript) by following the instructions above.
+
+\end{document}
