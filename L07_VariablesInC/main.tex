@@ -1,0 +1,323 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Lecture 7: Variables in C}
+\author{UMBC CMSC 104}
+\date{Th 23 Sept 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Variables in C
+\end{frame}
+
+\begin{frame}{Variables in C}
+    Topics:
+    \begin{itemize}
+        \item Naming Variables
+        \item Declaring Variables
+        \item Using Variables
+        \item The Assignment Statement
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{What Are Variables in C?}
+    \begin{itemize}
+        \item \textbf{Variables} in C have the same meaning as variables in algebra. That is, they represent some unknown, or variable, value. \\
+        \centering{
+        $x = a + b$ \\
+        $x + 2 = 3(y-5)$}
+        \item Remember that variables in algebra are represented by a single alphabetic character. In C, that's not usually the case.
+    \end{itemize}
+\end{frame}
+
+\section*{Naming Variables}
+\begin{frame}{Legal Identifiers in C}
+    \begin{itemize}
+        \item Another name for a variable in C is an identifier.
+        \item Variables in C may be given representations containing multiple characters, but there are rules for these representations.
+        \item Legal or valid variable names in C:
+        \begin{itemize}
+            \item May only consist of letters, digits, and underscores.
+            \item May be as long as you like, but only the first 31 characters are significant.
+            \item May not begin with a number.
+            \item May not be a C \textbf{reserved word (keyword)}.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Reserved Words (Keywords) in C}
+    \centering
+    \begin{tabular}{l l l l}
+        auto   & break     & int      & long   \\ [5pt]
+        case    & char     & register & return \\ [5pt]
+        const   & continue & short    & signed \\ [5pt]
+        default & do       & sizeof   & static \\ [5pt]
+        double  & else     & struct   & switch \\ [5pt]
+        enum    & extern   & typedef  & union  \\ [5pt]
+        float   & for      & unsigned & void   \\ [5pt]
+        goto    & if       & volatile & while
+    \end{tabular}
+\end{frame}
+
+\begin{frame}{CMSC104 Naming Conventions}
+    C programmers generally agree on the following \textbf{conventions} for naming variables:
+    \begin{itemize}
+        \item Begin variable names with lowercase letters.
+        \item Use meaningful identifiers (name)
+        \item Separate ``words'' within identifiers with underscores or mixed upper and lower case. \\
+        ~~ ~~ Example: surfaceArea, surface\_area, surface\_Area
+        \item Be consistent!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Case Sensitivity}
+    C is \textbf{case sensitive}
+    \begin{itemize}
+        \item It matters whether a variable name is uppercase or lowercase.
+        \item These are all different: \\
+        ~~ ~~ area \\
+        ~~ ~~ Area \\
+        ~~ ~~ AREA \\
+        ~~ ~~ ArEa
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Legal Identifiers vs. Naming Conventions}
+    \begin{itemize}
+        \item \textbf{Legal identifiers} refer to the restrictions C places on naming identifiers, such as not beginning with a number.
+        \item \textbf{Naming conventions} refer to the standards you must follow for this course, such as all variable names must be lowercase. But this isn't technically required by the compiler.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Which are Legal Identifiers?}
+    \centering
+    \only<1> {
+        \begin{tabular}{l l}
+            AREA & 3D \\ [5pt]
+            lucky*** & num45 \\ [5pt]
+            Last-Chance & \#values \\ [5pt]
+            x\_yt3 & pi \\ [5pt]
+            num\$ & \%done \\ [5pt]
+            area\_under\_the\_curve
+        \end{tabular}
+    }
+    \only<2> {
+        \begin{tabular}{l l}
+            AREA & \sout{3D} \\ [5pt]
+            \sout{lucky***} & num45 \\ [5pt]
+            \sout{Last-Chance} & \sout{\#values} \\ [5pt]
+            x\_yt3 & pi \\ [5pt]
+            \sout{num\$} & \sout{\%done} \\ [5pt]
+            area\_under\_the\_curve
+        \end{tabular}
+    }
+    \only<3> {
+        Why? \hfil
+        \begin{itemize}
+            \item * means something specific, which we'll get to later.
+            \item How is the compiler supposed to know the difference between the hyphen in a variable name vs. subtraction?
+            \item \%, \$, \#, \$, (, ), {, }, etc are not allowed to be in a variable name.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{Which Follow the CMSC104 Naming Conventions?}
+    \centering
+    \only<1> {
+        \begin{tabular}{l l}
+            Area & person1 \\ [5pt]
+            Last\_Chance & values \\ [5pt]
+            x\_yt3 & pi \\ [5pt]
+            finaltotal & numChildren \\ [5pt]
+            area\_under\_the\_curve
+        \end{tabular}
+    }
+    \only<2> {
+        \begin{tabular}{l l}
+            \sout{Area} & person1 \\ [5pt]
+            \sout{Last\_Chance} & values \\ [5pt]
+            x\_yt3 & pi \\ [5pt]
+            \sout{finaltotal} & numChildren \\ [5pt]
+            area\_under\_the\_curve
+        \end{tabular}
+    }
+\end{frame}
+
+\section*{Declaring Variables}
+\begin{frame}{Declaring Variables}
+    \only<1> {
+        \begin{itemize}
+            \item Before using a variable, you must give the compiler some information about the variable. You must \textbf{declare} it.
+            \item The \textbf{declaration statement} includes the \textbf{data type} of the variable.
+            \item Examples: \\
+            ~~ ~~ int meatballs; \\
+            ~~ ~~ float area;
+        \end{itemize}
+    }
+    \only<2> {
+        When we declare a variable:
+        \begin{itemize}
+            \item Space in RAM is set aside to hold a value of the specified \textbf{data type}.
+            \item That space is associated with the variable \textbf{name}.
+            \item That space is associated with a unique \textbf{address}.
+        \end{itemize}
+        \include{L07_VariablesInC/L07_declaring}
+    }
+\end{frame}
+
+\begin{frame}{More About Variables}
+    C has three basic predefined data types:
+    \begin{itemize}
+        \item Integers (whole numbers)
+        \begin{itemize}
+            \item \textbf{int}, long int (or just long), short int (or just short)
+            \item Always positive: unsigned (unsigned int, unsigned long, unsigned short)
+        \end{itemize}
+        \item Floating point (real numbers)
+        \begin{itemize}
+            \item \textbf{float}, \textbf{double}
+        \end{itemize}
+        \item Characters
+        \begin{itemize}
+            \item \textbf{char}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section*{Using Variables}
+\begin{frame}{Using Variables: Initialization}
+    Variables may be given initial values, or \textbf{initialized}, when declared. \\
+    \include{L07_VariablesInC/L07_initializing}
+    
+    Why is the character `A' stored as a number? Because computers can only handle numbers.
+    \url{https://www.asciitable.com/} shows a mapping of integers to character values.
+\end{frame}
+
+\begin{frame}{Using Variables: Initialization (cont'd)}
+    Do not ``hide'' the initialization.
+    \begin{itemize}
+        \item Put the variables on a separate line
+        \item A comment is always a good idea
+        \item Examples: \\
+        ~~ ~~ int height; ~~ ~~ /* rectangle height */ \\
+        ~~ ~~ int width = 6; ~ /* rectangle width */ \\
+        ~~ ~~ int area; ~~ ~~ ~~ /* rectangle area */ \\
+        ~~ ~~ NOT int height, width = 6, area;
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Using Variables: Assignment}
+    \begin{itemize}
+        \item Variables have values assigned to them through the use of the \textbf{assignment statement}.
+        \item Such a statement uses the \textbf{assignment operator =}
+        \item This operator \underline{does not} denote equality. It assigns the value of the right hand side of the statement (the \textbf{expression}) to the variable on the left hand side.
+        \item Examples: \\
+        ~~ ~~ diameter = 5.9; \\
+        ~~ ~~ area = length * width;
+        \item Only the single variable name may appear on the left of the assignment operator.
+    \end{itemize}
+\end{frame}
+
+\section*{The Assignment Statement}
+\begin{frame}[fragile]{Example: Declaration \& Assignment}
+    \begin{columns}
+        \column{0.6\textwidth}
+            int inches, feet, fathoms;
+            \only<2> {
+                ~~ \\
+                fathoms = 7; \\
+                feet = 6 * fathoms; \\
+                inches = 12 * feet; \\
+            }
+        \column{0.4\textwidth}
+            \only<1> {
+                \include{L07_VariablesInC/L07_assignment}
+            }
+            \only<2> {
+                \include{L07_VariablesInC/L07_assignment_2}
+            }
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Enhancing the Example}
+    \begin{itemize}
+        \item What if the depth was really 6.75 fathoms? Our program, as is, couldn't handle it.
+        \item Unlike integers, floating point numbers can contain numbers after the decimal point.
+        \item Let's also ask the user for input instead of \textbf{hard-coding} values in the program.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Enhanced Program}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    #include <stdio.h>
+    int main() {
+        float inches, feet, fathoms;
+        printf("Enter the depth in fathoms: ");
+        scanf("%f", &fathoms);
+        feet = 6.0 * fathoms;
+        inches = 12.0 * feet;
+        printf("Its depth at sea:\n");
+        printf("\t%1.2f fathoms\n", fathoms);
+        printf("\t%1.2f feet\n", feet);
+        printf("\t%1.2f inches\n", inches);
+        return 0;
+    }
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Final ``Clean'' Program}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    #include <stdio.h>
+    int main() {
+        float inches;  /* number of inches deep */
+        float feet;    /* number of feet deep */
+        float fathoms; /* number of fathoms deep */
+        
+        /* Ask the user for the depth */
+        printf("Enter the depth in fathoms: ");
+        scanf("%f", &fathoms);
+        
+        /* Convert depth from fathoms to inches */
+        feet = 6.0 * fathoms;
+        inches = 12.0 * feet;
+        
+        /* Display the results */
+        printf("Its depth at sea:\n");
+        printf("\t%1.2f fathoms\n", fathoms);
+        printf("\t%1.2f feet\n", feet);
+        printf("\t%1.2f inches\n", inches);
+        return 0;
+    }
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Good Programming Practices}
+    \begin{itemize}
+        \item Place a comment before each logical ``chunk'' of code describing what it does.
+        \item Do not place a comment on the same line as code (with the exception of variable declarations).
+        \item Use spaces around all assignment and arithmetic operators.
+        \item Use blank lines to enhance readability.
+        \item Place a blank line between the last variable declaration and first executable statement of the program.
+        \item Indent the body of the program three or four spaces -- be consistent!
+    \end{itemize}
+\end{frame}
+
+\end{document}
