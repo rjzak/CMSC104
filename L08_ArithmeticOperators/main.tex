@@ -1,0 +1,224 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Lecture 8: Arithmetic Operators}
+\author{UMBC CMSC 104}
+\date{Th \sout{23} 30 Sept 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Arithmetic Operators
+\end{frame}
+
+\begin{frame}{Arithmetic Operators}
+    Topics:
+    \begin{itemize}
+        \item \hyperlink{sec:athricop}{Arithmetic Operators}
+        \item \hyperlink{sec:assignop}{Assignment Operators}
+        \item \hyperlink{sec:evalarithexp}{Evaluating Arithmetic Expressions}
+        \item \hyperlink{sec:opprec}{Operator Precedence}
+        \item \hyperlink{sec:incprog}{Incremental Programming}
+    \end{itemize}
+\end{frame}
+
+\section*{Arithmetic Operators}\label{sec:athricop}
+\begin{frame}{Arithmetic Operators in C}
+    \begin{itemize}
+        \item Binary Operators:
+        \begin{itemize}
+            \item \texttt{new\_value = height + margin;}
+            \item \texttt{area = length * width;}
+        \end{itemize}
+        \item Unary Operators:
+        \begin{itemize}
+            \item \texttt{new\_value = -old\_value;}
+            \item \texttt{negation = !true\_value;}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Arithmetic Operators in C}
+    \begin{tabular}{l l l}
+        Name & Operator & Example  \\ \hline
+        Addition & + & num1 + num2 \\
+        Subtraction & - & initial - spent \\
+        Multiplication & * & fathoms * 6 \\
+        Division & / & sum / count \\
+        Modulus & \% & m\%n
+    \end{tabular}
+\end{frame}
+
+\section*{Assignment Operators}\label{sec:assignop}
+\begin{frame}{Types \& Promotion}
+    \begin{itemize}
+        \item Can mix types in numerical expressions
+        \item Hierarchy of types:
+        \begin{itemize}
+            \item By precision: int $\rightarrow$ float
+            \item By size: short $\rightarrow$ long
+        \end{itemize}
+        \item Lower size or precision is \textit{promoted} to greater size or precision before operation is applied.
+        \item Result is also of the promoted type.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Types \& Promotion}
+\begin{verbatim}
+int num_sticks = 5;
+double avg_stick_length = 4.5;
+double total_length;
+
+total_length = num_sticks * avg_stick_length;
+\end{verbatim} ~~ \\
+\texttt{num\_sticks} would be converted to double precision, then multiplied by \texttt{avg\_stick\_length}.
+\end{frame}
+
+\section*{Evaluating Arithmetic Expressions}\label{sec:evalarithexp}
+\begin{frame}{Division}
+    \only<1> {
+        \begin{itemize}
+            \item If both operands of a division expression are integers, you will get an integer answer. Fractional portions are discarded.
+            \item Examples:
+            \begin{itemize}
+                \item $17/5 = 3$
+                \item $4/3 = 1$
+                \item $35/9 = 3$
+            \end{itemize}
+        \end{itemize}
+    }
+    \only<2> {
+        \begin{itemize}
+            \item Division where at least one operand is a floating point number will produce a floating point answer.
+            \item Examples:
+            \begin{itemize}
+                \item $17.0 / 5 = 3.4$
+                \item $4/3.2 = 1.25$
+                \item $35.2/9.1 = 3.86813$
+            \end{itemize}
+            \item What happens? The integer operand is temporarily converted to a floating point, then the division is performed.
+        \end{itemize}
+    }
+    \only<3> {
+        Given: \texttt{int my\_integer = 5, my\_product;}, what is \texttt{my\_product}>
+        \begin{itemize}
+            \item \texttt{my\_product = (my\_integer / 2) * 2.0;}
+            \item \texttt{my\_product = (my\_integer / 2.0) * 2.0;}
+        \end{itemize}
+    }
+\end{frame}
+
+
+\begin{frame}{Division by Zero}
+    \begin{itemize}
+        \item Division by zero is mathematically undefined.
+        \item If you have division by zero in a program, it will cause a \textbf{fatal error}. Your program will terminate execution and give an error message.
+        \item \textbf{Non-fatal} errors do not cause program termination, just incorrect results.
+    \end{itemize}
+    
+    \vfill
+    \footnotesize{Technically, it's the operating system which terminates the program and shows the error message.}
+\end{frame}
+
+\begin{frame}{Modulus}
+    \begin{itemize}
+        \item The expression \texttt{m\%n} yields the integer remainer after \texttt{m} is divided by \texttt{n}.
+        \item Modulus is an integer operation -- both operands must be integers.
+        \item Examples:
+        \begin{itemize}
+            \item 17 \% 5 = 2
+            \item 6 \% 3 = 0
+            \item 9 \% 2 = 1
+            \item 5 \% 8 = 5
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Uses for Modulus}
+    \begin{itemize}
+        \item Used to determine if an integer is even or odd:
+        \begin{itemize}
+            \item \texttt{5 \% 2 == 1 /* odd */}
+            \item \texttt{4 \% 2 == 0 /* even */}
+        \end{itemize}
+        \item Modulus by 2 of an integer results in a 1 if odd, or zero if even.
+        \item It's used to see if some number is divisible by another.
+        \begin{itemize}
+            \item \texttt{25 \% 5 == 0 /* divisible by 5 */}
+            \item \texttt{49 \% 7 == 0 /* divisible by 7 */}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section*{Operator Precedence}\label{sec:opprec}
+\begin{frame}{Rules of Operator Precedence}
+    \begin{tabular}{l l}
+        Operator(s) & Precedence \& Associativity \\ \hline
+        ( ) & Evaluated first. If \textbf{nested (embedded)}, innermost first. \\
+        & If on the same level, left to right. \\
+        * / \% & Evaluated second. If there are several, evaluated left to right. \\
+        + - & Evaluated third. If there are several, evaluated left to right. \\
+        = & Evaluated latest, right to left.
+    \end{tabular}
+\end{frame}
+
+\begin{frame}{Using Parentheses}
+    \begin{itemize}
+        \item Use parentheses to change the order in which an expression is evaluated. \\
+        ~~ ~~ ~~ ~~ ~~ $a + b * c$: \\ 
+        $b*c$ first, then $a$ is added
+        \item If you wanted $a + b$ to be done first: \\
+        ~~ ~~ ~~ ~~ ~~ $(a + b) * c$
+        \item Also use parentheses to clarify a complex expression, which improves readability.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Practice with Evaluating Expressions}
+    Given: \texttt{int a = 1, b = 2, c = 3, d = 4;}, evaluate:
+    \begin{itemize}
+        \item $a + b - d + d$
+        \item $a * b / c$
+        \item $1 + a * b \% c$
+        \item $e = b = d + c / b - a$
+    \end{itemize}
+\end{frame}
+
+\section*{Incremental Programming}\label{sec:incprog}
+\begin{frame}{Good Programming Practice}
+    \begin{itemize}
+        \item It's best not to take the \textbf{``big bang'' approach} to coding.
+        \item Use an \textbf{incremental approach} by writing your code in incomplete, yet working, pieces.
+        \item For example, for your projects:
+        \begin{itemize}
+            \item Don't write the whole program at once.
+            \item Just write enough to display the user prompt on the screen.
+            \item Get that part working first (compile and run).
+            \item Next, write the part that gets the value from the user, and just print it out.
+            \item Get that part working first (compile and run).
+            \item Next, change the code so you use the value in a calculation. Print answer.
+            \item Get that part working first (compile and run).
+            \item Repeat until the requirements are complete.
+        \end{itemize}
+        \item This also helps you find any semantic errors sooner.
+        \item Always have a working version of your program!
+    \end{itemize}
+\end{frame}
+
+\end{document}
