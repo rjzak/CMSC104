@@ -1,0 +1,171 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Classwork 4},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Classwork 5}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 03 October 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Classwork 5: Blackjack Strategy}.
+\normalsize
+\\ ~~ \\
+\textbf{In-class Date: Tuesday 05 October}
+
+\section*{Objectives}
+\paragraph{}Practice using \texttt{if} statements.
+
+\section*{Assignment Hit or Stand}
+\paragraph{}For this assignment, you will write a program that tells the user to ``hit'' or ``stand'' in a game of Blackjack (also known as Twenty-one).
+\paragraph{}Blackjack is a casino card game where the objective is to have the cards you are dealt total up as close to 21 as possible. If you go over 21 (a bust), you lose. The cards are from a standard deck (most casinos use several decks at once). Cards 2-10 have the values shown. Face cards (Jack, Queen, and King) have value 10. An Ace is either 1 or 11, whichever is to your advantage.
+\paragraph{}Each player is initially dealt two cards face up. The dealer is given 1 card face up and 1 card face down. Then, each player gets one turn to ask for as many extra cards as desired, one at a time. To receive another card, the player ``hits''. When no more cards are wanted, the player ``stands''. Wikipedia has a more comprehensive description of the game \url{https://en.wikipedia.org/wiki/Blackjack}.
+\paragraph{}The strategy that you will implement is a rather simple one. You will probably lose money slowly in a casino if you follow this strategy. (If you don't follow a strategy like this one, you will lose money \textit{quickly}).
+\begin{itemize}
+    \item If your cards total 17 or higher, always stand regardless of what the dealer is showing in their face-up card.
+    \item If your cards total 11 or lower, always hit.
+    \item If your cards add up to 13 to 16 (inclusive), hit if the dealer is showing 7 or higher, otherwise stand.
+    \item If your cards add up to 12, hit unless the dealer is showing 4 to 6 (inclusive). In that case, stand.
+\end{itemize}
+
+\paragraph{}The sample runs of your program should look like this:
+\begin{verbatim}
+[rzak1@linux1 cw5]$ gcc -Wall blackjack.c
+[rzak1@linux1 cw5]$ ./a.out
+Here's some advice for blackjack.
+Tell me which card the dealer is showing.
+Enter 2-9, 10 (Jack, Queen, King) or 11 (Ace): 7
+What is the combined total of your hand? 12
+You should: Hit
+[rzak1@linux1 cw5]$ ./a.out
+Here's some advice for blackjack.
+Tell me which card the dealer is showing.
+Enter 2-9, 10 (Jack, Queen, King) or 11 (Ace): 5
+What is the combined total of your hand? 12
+You should: Stand
+[rzal1@linux1 cw5]$ ./a.out
+Here's some advice for blackjack.
+Tell me which card the dealer is showing.
+Enter 2-9, 10 (Jack, Queen, King) or 11 (Ace): 11
+What is the combined total of your hand? 19
+You should: Stand
+[rzak1@linux1 cw5]$ 
+\end{verbatim}
+
+\section*{Notes}
+\begin{itemize}
+    \item Please name your program \texttt{blackjack.c}.
+    \item You will use lots of \texttt{if} statements. For ease of debugging, make sure that you indent your program properly. Always, use curly braces, { and }, even when the body of the \texttt{if} or \texttt{else} part only has a single statement.
+    \item Use \texttt{\&\&} for logical AND and \texttt{\textbar\textbar} for logical OR.
+    \item You may have to use \texttt{if} statements inside another \texttt{if} statement.
+\end{itemize}
+
+\subsection*{Starter Code}
+\paragraph{}Use this code to help you get started.
+\begin{verbatim}
+/**************************************
+** File:    blackjack.c
+** Author:   <myName>
+** Date:    <theDate>
+** Section:  01-LEC (10600)
+** E-mail:   <myEmailAddress>
+**
+** This file contains an example program for Classwork 5.
+** The program will give advice to a player on whether to
+** hit or stand in a game of blackjack based on what cards
+** they have and what card the dealer is showing.
+**************************************/
+
+#include<stdio.h>
+
+int main() {
+   int dealerFaceUpCard;   /* value of dealer's face up card */
+   int handTotal;          /* total value of player's two cards */
+
+   // Game intro prompt - greet the user
+
+   // Prompt for dealer face up card
+   
+   // While loop until valid value (2 - 11) is given
+   while (dealerFaceUpCard < 2 || dealerFaceUpCard > 11) {
+      
+   }
+
+   // Prompt for user's hand total
+   
+   // While loop until valid value (4 - 22) is given
+   while (handTotal < 4 || handTotal > 22) {
+      
+   }
+
+   // If user's cards total 17 or higher, always stand;
+   // else if user's cards total 11 or higher, always hit;
+   // else if user's cards add up to 13 to 16 (inclusive),
+   //   if dealer is showing 7 or higher, hit;
+   //   else stand;
+   // else if user's cards add up to 12,
+   //   if dealer is showing 4 to 6 (inclusive), stand;
+   //   else hit;
+
+   return 0;
+}
+\end{verbatim}
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item Header comment: 2 points
+    \item Body comments: 3 points
+    \item Compiles: 30 points
+    \item Correct logic: 55 points
+    \item typescript: 10 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}Use the \texttt{script} command to record yourself compiling and running your program several times with different hit/stand results. (Do not record yourself editing your program!) \textbf{Exit from script.} Submit your program and the typescript file.
+\begin{verbatim}
+[rzal1@linux1 cw5]$ submit cmsc104_10600 cw5 blackjack.c typescript
+\end{verbatim}
+
+\subsection*{Verify}
+\paragraph{}Make sure you submitted your assignment correctly.
+\begin{verbatim}
+[rzal1@linux1 cw5]$ submitls cmsc104_10600 cw5
+\end{verbatim}
+
+\end{document}

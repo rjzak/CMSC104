@@ -1,0 +1,327 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Lecture 10: While Loops}
+\author{UMBC CMSC 104}
+\date{Tu 05 October 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    While Loops
+\end{frame}
+
+\section*{Introduction}
+\begin{frame}{The While Looping Structure}
+    Topics:
+    \begin{itemize}
+        \item The \texttt{while} Loop
+        \item Program Versatility
+        \begin{itemize}
+            \item Sentinel Values and Priming Reads
+        \end{itemize}
+        \item Checking User Input Using a While Loop
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Review: Repetition Structure}
+    \begin{itemize}
+        \item A \textbf{repetition structure} allows the programmer to specify that an action is to be repeated while some condition remains true.
+        \begin{itemize}
+            \item The condition be a single expression or several expressions joined with an \texttt{and} \&\& statement or an \texttt{or} \textbar\textbar statement(s). 
+        \end{itemize}
+        \item There are three repetition structures in C:
+        \begin{enumerate}
+            \item \texttt{while}: runs for zero or many times
+            \item \texttt{for}: runs for a predetermined number of times
+            \item \texttt{do-while}: runs for one or many times
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\section*{The While Loop}
+\begin{frame}[fragile]{The while Repetition Structure}
+\begin{verbatim}
+while( condition ) {
+    statement(s)
+}
+\end{verbatim}
+The braces are not required if the loop body contains only a single statement. However, as with \texttt{if} statements, they are a good idea and are required by the CMSC 104 C Coding Standards.
+\end{frame}
+
+\begin{frame}[fragile]{Example - Remember This?}
+\begin{verbatim}
+while( children > 0 ) {
+    children = children - 1;
+    cookies = cookies * 2;
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Good Programming Practice}
+    \begin{itemize}
+        \item Always place braces around the body of a \texttt{while} loop.
+        \item Advantages:
+        \begin{itemize}
+            \item Easier to read
+            \item You won't forget to add the braces if you have to add statements to the loop body
+            \item Reduces the chance of a semantic error
+        \end{itemize}
+        \item Indent the body of a while loop by 3 or 4 spaces -- be consistent!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example - Getting Intended Input}
+\begin{verbatim}
+while( input < 0 )
+    scanf("%d", &input);
+
+printf("Finally, got something positive\n");
+\end{verbatim}
+
+\footnotesize What's missing here from the coding standards?
+\end{frame}
+
+\begin{frame}[fragile]{Example - Getting Intended Input (More Clear)}
+\begin{verbatim}
+while( input < 0 )
+    printf("Enter a positive number: ");
+    scanf("%d", &input);
+
+printf("Finally, got something positive\n");
+\end{verbatim}
+
+\footnotesize What's missing here from the coding standards?
+\end{frame}
+
+\begin{frame}[fragile]{Closer to CMSC104 Coding Standards}
+\begin{verbatim}
+#include <stdio.h>
+int main() {
+    int number;
+    printf("Enter a positive number: ");
+    scanf("%d", &number);
+    while( number < 0 ) {
+        printf("\nThat's incorrect. Try again.\n")
+        printf("Enter a positive number: ");
+        scanf("%d", &input);
+    }
+
+    printf("You entered: %d\n", number);
+    return 0
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Another while Loop Example}
+    \begin{itemize}
+        \item \underline{Problem:} Write a program which calculates the average exam grade for a class of ten students.
+        \item What are the program inputs?
+        \begin{itemize}
+            \item the exam grades
+        \end{itemize}
+        \item What are the program outputs?
+        \begin{itemize}
+            \item the average exam grade
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Pseudocode}
+\begin{verbatim}
+<total> = 0
+<grade_counter> = 1
+While( <grade_counter> <= 10 )
+    Display "Enter a grade: "
+    Read <grade>
+    <total> = <total> + <grade>
+End_While
+<average> = <total> / 10
+Display "Class average is: ", <average>
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{C Code}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+int main() {
+    int counter, grade, total;
+    float average;
+    while(counter <= 10) {
+        printf("Enter a grade: ");
+        scanf("%d", &grade);
+        total = total + grade;
+        counter = counter + 1;
+    }
+    average = total / 10.0;
+    printf("Class average: %1.2f\n", average);
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\section*{Program Versatility}
+\begin{frame}{Versatile?}
+    \begin{itemize}
+        \item How versatile is this program?
+        \item It only works with class sizes of 10.
+        \item We would like it to work with any class size.
+        \item Better ways
+        \begin{itemize}
+            \item Ask the user for the number of students in the class, and use that as the condition in the while loop, and to compute the average.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{New Pseudocode}
+\begin{verbatim}
+<total> = 0
+<grade_counter> = 1
+Display "Enter the number of students:"
+Read <num_students>
+While( <grade_counter> <= <num_students> )
+    Display "Enter a grade: "
+    Read <grade>
+    <total> = <total> + <grade>
+End_While
+<average> = <total> / <num_students>
+Display "Class average is: ", <average>
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{New C Code}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+int main() {
+    int num_students, counter, grade, total;
+    float average;
+    printf("Enter the number of students: ");
+    scanf("%d", &num_students);
+    while(counter <= num_students) {
+        printf("Enter a grade: ");
+        scanf("%d", &grade);
+        total = total + grade;
+        counter = counter + 1;
+    }
+    // We can convert num_students to a float to get a
+    // proper floating point average result!
+    average = total / float(num_students);
+    printf("Class average: %1.2f\n", average);
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Why Bother to Make it Easier?}
+    \begin{itemize}
+        \item Why do we write programs?
+        \begin{itemize}
+            \item So the user can perform some task
+        \end{itemize}
+        \item The more versatile the program, the more difficult it is to write. But it is more \underline{usable}!
+        \item The more complex the ask, the more difficult it is to write. But that is often what the user needs.
+        \item Always consider the user, don't assume anything on their part.
+    \end{itemize}
+\end{frame}
+
+\subsection*{Sentinel Value \& Priming}
+\begin{frame}{Using a Sentinel Value}
+    \begin{itemize}
+        \item Instead of asking the user for the number of students, we could allow the user to continually enter grades, using a special value to indicate that this task is finished.
+        \item This special value is called the \textbf{sentinel value}.
+        \item We have to make sure the value chosen for the sentinel value isn't a legal value. For example, we can't use 0 as the sentinel value because it's possible that a student earned a zero on the exam.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Priming Read}
+    \begin{itemize}
+        \item When we use a sentinel value to control a while loop, we have to get the first value from the user before we encounter the loop so that it will be tested and the loop can be entered.
+        \item This is known as the \textbf{priming read}.
+        \item We have to give significant thought to the initialization of variables, the sentinel value, and getting into the loop.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{New Pseudocode}
+\begin{verbatim}
+<total> = 0
+<grade_counter> = 0
+Display "Enter a grade:"
+Read <grade>
+While( <grade> >= 0 )
+    <total> = <total> + <grade>
+    <grade_counter> = <grade_counter> + 1
+    Display "Enter a grade: "
+    Read <grade>
+End_While
+<average> = <total> / <grade_counter>
+Display "Class average is: ", <average>
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{New C Code}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+int main() {
+    int counter = 0, grade, total;
+    float average;
+    printf("Enter a grade: ");
+    scanf("%d", &grade);
+    // Loop while grade values aren't negative
+    while(grade >= 0) {
+        total = total + grade;
+        counter = counter + 1;
+        printf("Enter a grade: ");
+        scanf("%d", &grade);
+    }
+    average = total / float(counter);
+    printf("Class average: %1.2f\n", average);
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{New C Code - Better}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+int main() {
+    int counter = 0, grade, total;
+    float average;
+    printf("Enter a grade: ");
+    scanf("%d", &grade);
+    // Loop while grade values aren't negative
+    while(grade >= 0) {
+        total = total + grade;
+        counter = counter + 1;
+        printf("Enter a grade: ");
+        scanf("%d", &grade);
+    }
+    if (counter == 0) { // Avoid a divide by zero error
+        printf("No grades entered.\n");
+    } else {
+        average = total / float(counter);
+        printf("Class average for %d students: %1.2f\n",
+            counter, average);
+    }
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\end{document}
