@@ -125,7 +125,7 @@ int main() {
     }
 
     printf("You entered: %d\n", number);
-    return 0
+    return 0;
 }
 \end{verbatim}
 \end{frame}
@@ -162,7 +162,7 @@ Display "Class average is: ", <average>
 \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
 #include <stdio.h>
 int main() {
-    int counter, grade, total;
+    int counter = 0, grade, total = 0;
     float average;
     while(counter <= 10) {
         printf("Enter a grade: ");
@@ -210,7 +210,7 @@ Display "Class average is: ", <average>
 \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
 #include <stdio.h>
 int main() {
-    int num_students, counter, grade, total;
+    int num_students, counter = 0, grade, total = 0;
     float average;
     printf("Enter the number of students: ");
     scanf("%d", &num_students);
@@ -279,7 +279,7 @@ Display "Class average is: ", <average>
 \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
 #include <stdio.h>
 int main() {
-    int counter = 0, grade, total;
+    int counter = 0, grade, total = 0;
     float average;
     printf("Enter a grade: ");
     scanf("%d", &grade);
@@ -301,7 +301,7 @@ int main() {
 \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
 #include <stdio.h>
 int main() {
-    int counter = 0, grade, total;
+    int counter = 0, grade, total = 0;
     float average;
     printf("Enter a grade: ");
     scanf("%d", &grade);
