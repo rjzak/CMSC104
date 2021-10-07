@@ -37,7 +37,7 @@
 \cfoot{\thepage}
 \rfoot{\input{semester}}
 \lfoot{CMSC 104 Section 01}
-\AtEndDocument{\vfill \footnotesize{Last modified: 03 October 2021}}
+\AtEndDocument{\vfill \footnotesize{Last modified: 07 October 2021}}
 \AtEndDocument{\rfoot{\input{semester}}}
 \renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
 
@@ -135,7 +135,7 @@ int main() {
    }
 
    // If user's cards total 17 or higher, always stand;
-   // else if user's cards total 11 or higher, always hit;
+   // else if user's cards total 11 or lower, always hit;
    // else if user's cards add up to 13 to 16 (inclusive),
    //   if dealer is showing 7 or higher, hit;
    //   else stand;
