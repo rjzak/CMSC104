@@ -1,0 +1,119 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Practice Quiz 2},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Practice Quiz 2}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 09 October 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Practice Quiz 2}
+\normalsize
+
+\paragraph{}Please answer the following questions. Partial credit may be given for incomplete free response questions.
+
+\begin{enumerate}
+    \item What is the last stage of compilation?
+    \begin{enumerate}
+        \item Compilation
+        \item Reading input
+        \item Preprocessing
+        \item Linking
+    \end{enumerate}
+    
+    \item Which of the following allows the operating system to know the code completed successfully?
+    \begin{enumerate}
+        \item \texttt{\#include<stdio.h>}
+        \item \texttt{int main()}
+        \item \texttt{return 0;}
+        \item A comment block
+    \end{enumerate}
+    
+    \item The \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} is the operator with the lowest (always computed last) precedence and its associativity is \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~}.
+    
+    \item Write C code to prompt the user for a total mortgage price (float), and percent down payment (integer), then print the total loan amount (float). Use the following calculations: \\
+    \texttt{totalLoanAmount = mortgagePrice - (mortgagePrice * percentDown/100.0);}
+    
+    \item With the following variables being integers, \texttt{a = -3, b = 2, c = 6, d = 1}, calculate the resulting numerical values for each of the following expressions. Extra credit: Include if the statement is also true or false.
+    \begin{itemize}
+        \item \texttt{d + c \% b - a}
+        \item \texttt{b / c * a - d}
+        \item \texttt{c \% (d - a) + b}
+    \end{itemize}
+    
+    \item Explain the difference between the = (assignment) operator and the == (equality) operator when used in a conditional expression. \textit{Hint: It's a gotcha!}
+    
+    \item Which of the following is \underline{NOT} a valid variable name per CMSC 104 Coding Standards?
+    \begin{enumerate}
+        \item \texttt{heightInInches}
+        \item \texttt{3width}
+        \item \texttt{is\_it\_raining}
+        \item \texttt{Last\_Chance}
+    \end{enumerate}
+    
+    \item Where should you declare/link all external libraries?
+    \begin{enumerate}
+        \item Before \texttt{int main()}
+        \item First thing inside \texttt{int main()}
+        \item As you need them in the code
+        \item In a separate .c file
+    \end{enumerate}
+    
+    \item What is the output of the following code?
+    \begin{verbatim}
+int num1 = 1;
+int num2 = 1;
+int sum = num1 + num2;
+
+printf("%d + %d = %d\n", num1, num2, sum);
+num1 = num2;
+num2 = sum;
+sum = num1 + num2;
+printf("%d + %d = %d\n", num1, num2, sum);
+num1 = num2;
+num2 = sum;
+sum = num1 + num2;
+printf("%d + %d = %d\n", num1, num2, sum);
+\end{verbatim}
+
+    \item Write pseudocode for a nested if-else if-else structure to report what year you are in college based on the number of credits you have accrued. Up to 30 credits is considered Freshman, up to 60 credits is considered Sophomore, up to 90 credits is considered Junior, up to 120 credits is considered Senior, and anything else is considered Super Senior. Extra Credit: Write proper C code (not full .c file, just the if-else if-else blocks).
+\end{enumerate}
+
+\end{document}
