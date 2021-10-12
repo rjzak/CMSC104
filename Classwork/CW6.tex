@@ -1,0 +1,190 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Classwork 6},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Classwork 6}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 11 October 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Classwork 6: I Am Thinking of a Number}.
+\normalsize
+\\ ~~ \\
+\textbf{In-class Date: Tuesday 12 October}
+
+\section*{Objectives}
+\paragraph{}Practice writing a program that uses if statements and a while loop.
+
+\section*{The Assignment}
+\paragraph{}Write a program to play the game ``I'm thinking of a number.'' The program will play the role of the person who has the ``secret'' number. Your program should prompt the user to guess a number. If user's guess is incorrect, your program should say whether the guess is too high or too low, and try again.
+
+\subsection*{Example Compilation and Execution}
+\begin{verbatim}
+[rzak1@linux1 cw6]$ gcc -Wall thinking.c
+[rzak1@linux1 cw6]$ ./a.out
+I'm thinking of a number between 1 and 100.
+Guess my number.
+Your guess? 13
+Too low!
+Your guess? 20
+Too low!
+Your guess? 35
+Too low!
+Your guess? 99
+Too high!
+Your guess? 74
+Too high!
+Your guess? 45
+Too low!
+Your guess? 84
+Too high!
+Your guess? 60
+Too low!
+Your guess? 70
+Too high!
+Your guess? 65
+Too high!
+Your guess? 63
+Too low!
+Your guess? 64
+You got it!
+[rzak1@linux1 cw6]$ 
+\end{verbatim}
+
+\subsection*{Starter Code}
+\paragraph{}Use this code to help you get started. You must use a while loop in your program which terminates when the user guesses the correct number. Warn the user if they enter a number less than 1 or a number greater than 100. Notice how the starting point file uses \texttt{\#define} to define a constant \texttt{SECRET\_NUMBER} that holds the number your program is ``thinking'' of. That way, if you want/need to change the secret number, you only have to change it in one place.
+\begin{verbatim}
+/**************************************
+** File:  thinking.c
+** Author: <myName>
+** Date:  <todaysDate>
+** Section: 01-LEC (10600)
+** E-mail: <myEmailAddress>
+**
+** This file contains the main program for <assignment>.
+** <Explain what the assignment is asking you to do here.>
+**************************************/
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+// Constant value to use if you don't want to do any Extra Credit
+#define SECRET_NUMBER 24
+
+int main() {
+   // Variable to use without any Extra Credit embellishments
+   int guess;         /* user's guess */
+
+   // Variable(s) to use for the Extra Credit embellishments
+   int min;           /* lowest number of range to guess */
+   int max;           /* highest number of range to guess */
+   int secretNumber;  /* number to guess */
+
+   // EC1: Seed the random number generator
+
+   // EC2: Prompt for minimum value of range to guess
+
+   // EC2: Prompt for maximum value of range to guess
+   
+   // EC2: Ensuring max > min
+
+   // EC1 & EC2: Generate secret number within range
+
+   // Prompt user to guess number
+   // NOTE: Need to use min and max instead of 1 and 100 for EC
+
+   // While loop until user guesses the secret number
+   // NOTE: Need to use secretNumber instead of SECRET_NUMBER for EC
+   // If user's guess is not in range, display "Guess must be between low and high!\n",
+   // replacing low and high accordingly
+   // else if user's guess is greater than secret number, display "Too high!\n"
+   // else if user's guess is less than secret number, display "Too low!\n"
+      
+   // Prompt user for new guess
+      
+   // end of while loop
+   
+   // The user guessed the secret number, display "You got it!\n"
+
+   return 0;
+}
+\end{verbatim}
+
+\subsection*{Extra Credit}
+\paragraph{}Try to do the following embellishments:
+
+\paragraph{Option 1:}Instead of picking the same secret number each time, use a pseudo-random generator function. To do so, you must include the following header files:
+\begin{verbatim}
+#include <stdlib.h>
+#include <time.h>
+\end{verbatim}
+The first statement in your main function should set the random seed, as follows: \texttt{srandom(time(0));}
+
+\paragraph{}The time function returns the number of seconds since 00:00:00 UTC, January 1, 1970. So, each run of the program (started more than 1 second apart) will set then random seed to a different value.
+
+\paragraph{}Now each call to the function \texttt{random()} will return a pseudo-random number\footnote{\url{https://en.wikipedia.org/wiki/Pseudorandom\_number\_generator}} as an int value. To convert this into a number that is within the range of allowed numbers, use the \% mod operator: \texttt{n = random() \% 100 + 1;} Then no matter what random returns, the variable n is assigned a number between 1 and 100.
+
+\paragraph{Option 2:}Ask the user for the range of numbers from which to choose the secret number (instead of always choosing a number between 1 and 100). This will affect how you implement Option 1.
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item Typescript: 15 points
+    \item Header comments: 2 points
+    \item Body comments: 3 points
+    \item Compiles: 30 points
+    \item Proper logic: 50 points
+    \item EC1: +5 points
+    \item EC2: +5 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}Use the script command to record yourself compiling and running your program several times with different number guesses. (Do not record yourself editing your program!) Exit from script. Submit your program and the typescript file.
+\begin{verbatim}
+[rzak1@linux1 cw6]$ submit cmsc104_10600 cw6 thinking.c typescript
+\end{verbatim}
+
+\subsection*{Verify}
+\paragraph{}Make sure you submitted the assignment correctly.
+\begin{verbatim}
+[rzal1@linux1 cw6]$ submitls cmsc104_10600 cw6
+\end{verbatim}
+
+\end{document}
