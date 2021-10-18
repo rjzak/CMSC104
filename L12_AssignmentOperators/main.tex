@@ -1,0 +1,247 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Lecture 12: Assignment Operators}
+\author{UMBC CMSC 104}
+\date{Tu 19 October 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Assignment Operators
+\end{frame}
+
+\frame{\tableofcontents}
+
+\section{Increment and Decrement Operators}
+\begin{frame}{Increment and Decrement Operators}
+    \begin{itemize}
+        \item The \textbf{increment operator}: ++
+        \item The \textbf{decrement operator}: --
+        \item Precedence: lower than () but higher than * / \%
+        \item Associativity: right to left
+        \item Increment and decrement operators can only be applied to variables, not to constants or expressions.
+    \end{itemize}
+\end{frame}
+
+\subsection{Increment Operator}
+\begin{frame}{Increment Operator}
+    \begin{itemize}
+        \item If we want to add one to a variable, we can use: \textbf{count = count + 1;}
+        \item Programs often contain statements that increment variables, so to save on typing, C provides these shortcuts:
+        \begin{itemize}
+            \item \texttt{count++;}
+            \item \texttt{++count;}
+        \end{itemize}
+        \item Both do the same thing, they change the value of \texttt{count} by adding one to it.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Post-increment Operator}
+    \begin{itemize}
+        \item The position of the \texttt{++} determines when the value is incremented. If the \texttt{++} is after the variable, then the incrementing is done last (a \textbf{postincrement}).
+        \begin{verbatim}
+int amount, count;
+count = 3;
+amount = 2 * count++;
+        \end{verbatim}
+        \item The value of \texttt{amount} gets the value of $2 * 3$, and then 1 gets added to count.
+        \item After executing the last line, \texttt{amount} is 6 and \texttt{count} is 4.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Pre-increment Operator}
+    \begin{itemize}
+        \item If the \texttt{++} is before the variable, then the incrementing is done first (a \textbf{preincrement}).
+        \begin{verbatim}
+int amount, count;
+count = 3;
+amount = 2 * ++count;
+        \end{verbatim}
+        \item The value of \texttt{count} is incremented first, then \texttt{amount} gets the value of $2 * 4$.
+        \item After executing the last line, \texttt{amount} is 8 and \texttt{count} is 4.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Code Example Using ++}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+int i = 1;
+// Count from 1 to 10
+while(i < 11) {
+    printf("%d\n", i);
+    i++; // same as ++i
+}
+\end{lstlisting}
+or...
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+int i;
+// Count from 1 to 10
+for(i = 0; i < 11; i++) {
+    printf("%d\n", i);
+}
+\end{lstlisting}
+\end{frame}
+
+\subsection{Decrement Operator}
+\begin{frame}{Decrement Operator}
+    \begin{itemize}
+        \item If we want to subtract one from a variable, we can say: \texttt{count = count - 1};
+        \item Programs often contain statements which decrement variables, so to save on typing, C provides these shortcuts:
+        \begin{itemize}
+            \item \texttt{count--;}
+            \item \texttt{--count;}
+        \end{itemize}
+        \item Both do the same thing, they change the value of \texttt{count} by subtracting one from it, much like \text{++}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Post-decrement Operator}
+    \begin{itemize}
+        \item The position of the \texttt{--} determines when the value is decremented. If the \texttt{--} is after the variable, then the decrementing is done last (a \textbf{postdecrement}).
+\begin{verbatim}
+int amount, count;
+count = 3;
+amount = 2 * count--;
+\end{verbatim}
+        \item The value for \texttt{amount} gets the value of $2 * 6$, and then 1 gets subtracted from \texttt{count}.
+        \item After executing the last line, \texttt{amount} is 6 and \texttt{count} is 2.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Pre-decrement Operator}
+    \begin{itemize}
+        \item If the \texttt{--} is before the variable, then the decrementing is done first (a \textbf{predecrement}).
+        \begin{verbatim}
+int amount, count;
+count = 3;
+amount = 2 * --count;
+        \end{verbatim}
+        \item The value of \texttt{count} gets decremented, then \texttt{amount} gets the value of $2 * 2$.
+        \item After executing the last line, \texttt{amount} is 4 and \texttt{count} is 2.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Code Example Using - -}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+int i = 10;
+// Count from 10 to 1
+while(i > 1) {
+    printf("%d\n", i);
+    i--; // same as --i
+}
+\end{lstlisting}
+or...
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+int i;
+// Count from 10 to 1
+for(i = 10; i > 0; i--) {
+    printf("%d\n", i);
+}
+\end{lstlisting}
+\end{frame}
+
+\subsection{Practice}
+\begin{frame}{Practice}
+    Given: \texttt{int a = 1, b = 2, c = 3}, \\
+    Evaluate: \texttt{++a * b - c-- =} 
+    \pause
+    \texttt{-1} \\ What are the new values of \texttt{a}, \texttt{b}, and \texttt{c}? \\
+    \pause
+    \texttt{a == 2}, \texttt{b == 2}, \texttt{c == 2} \\ ~~ \\
+    \pause
+    Evaluate: \texttt{++b / c * a =} 
+    \pause
+    \texttt{2} \\ What are the new values of \texttt{a}, \texttt{b}, and \texttt{c}? \\
+    \pause
+    \texttt{a == 2}, \texttt{b == 3}, \texttt{c == 2}
+\end{frame}
+
+\section{Assignment Operators}
+\begin{frame}{Assignment Operators}
+    \begin{tabular}{l l}
+        Statement & Equivalent Statement \\ \hline
+        a = a + 2; & a += 2; \\
+        a = a - 3; & a -= 3; \\
+        a = a * 2; & a *= 2; \\
+        a = a / 4; & a /= 4; \\
+        a = a \% 2; & a \%= 2; \\
+        b = b + (c + 2); & b += c + 2; \\
+        b = b * (e - 5); & b *= e-5;
+    \end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Code Example Using /= and ++}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+
+int main() {
+    int num, temp, digits = 0;
+    temp = num = 4327;
+    while(temp > 0) {
+        printf("%d\n", temp);
+        temp /= 10;
+        digits++;
+    }
+    printf("There are %d digits in %d.\n", digits, num);
+    return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\subsection{Practice}
+\begin{frame}{Practice}
+    Given: \texttt{int i = 1, j = 2, k = 3, m = 4;} \\
+    \begin{tabular}{l | l}
+        Expression & Value \\ \hline
+        i += j + k      & \visible<2->{\texttt{i = 6, j = 2, k = 3, m = 4}}    \\
+        j *= k = m + 5  & \visible<3->{\texttt{i = 6, j = 18, k = 9, m = 4}}   \\
+        k -= m /= j * 2 & \visible<4->{\texttt{i = 6, j = 18, k = -9, m = 18}} \\
+    \end{tabular}
+\end{frame}
+
+\section{Debugging Tips}
+\begin{frame}{Debugging Tips}
+    \begin{itemize}
+        \item Trace your code by hand (a \textbf{hand trace}), keeping track of the value of each variable.
+        \item Insert temporary \texttt{printf()} statements so you can see what your program is doing.
+        \begin{itemize}
+            \item Confirm that the correct value(s) have been read in.
+            \item Check the results of arithmetic computations immediately after they are performed.
+        \end{itemize}
+        \item Remember to remove your debugging statements before submitting assignments, and that your program still works after their removal.
+    \end{itemize}
+\end{frame}
+
+\section{Exercise: Finding Prime Numbers}
+\begin{frame}{In-class Exercise}
+    Use nested loops to write a prime number calculator.
+    \begin{itemize}
+        \item Determine whether each member of a range of numbers is prime by attempting to divide it evenly by each of the smaller numbers.
+        \item Strategy:
+        \begin{itemize}
+            \item Prompt user for upper limit, testing all numbers from 2 to this limit.
+            \item Outer loop: iterate over all numbers from 2 to this limit, testing each in an inner loop to see if it's prime.
+            \item Inner loop: Iterate over all numbers from 2 to the one less than the number being tested.
+            \item At the end of an inner loop, if you were never able to evenly divide the number, then it is prime \& print it to the user.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\end{document}
