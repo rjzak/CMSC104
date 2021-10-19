@@ -162,7 +162,7 @@ for(i = 10; i > 0; i--) {
     Given: \texttt{int a = 1, b = 2, c = 3}, \\
     Evaluate: \texttt{++a * b - c-- =} 
     \pause
-    \texttt{-1} \\ What are the new values of \texttt{a}, \texttt{b}, and \texttt{c}? \\
+    \texttt{1} \\ What are the new values of \texttt{a}, \texttt{b}, and \texttt{c}? \\
     \pause
     \texttt{a == 2}, \texttt{b == 2}, \texttt{c == 2} \\ ~~ \\
     \pause
@@ -210,9 +210,9 @@ int main() {
     Given: \texttt{int i = 1, j = 2, k = 3, m = 4;} \\
     \begin{tabular}{l | l}
         Expression & Value \\ \hline
-        i += j + k      & \visible<2->{\texttt{i = 6, j = 2, k = 3, m = 4}}    \\
-        j *= k = m + 5  & \visible<3->{\texttt{i = 6, j = 18, k = 9, m = 4}}   \\
-        k -= m /= j * 2 & \visible<4->{\texttt{i = 6, j = 18, k = -9, m = 18}} \\
+        i += j + k      & \visible<2->{\texttt{i = 6, j = 2,  k = 3, m = 4}} \\
+        j *= k = m + 5  & \visible<3->{\texttt{i = 6, j = 18, k = 9, m = 4}} \\
+        k -= m /= j * 2 & \visible<4->{\texttt{i = 6, j = 18, k = 9, m = 0}} \\
     \end{tabular}
 \end{frame}
 
