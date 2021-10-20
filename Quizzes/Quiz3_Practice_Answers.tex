@@ -1,0 +1,194 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Practice Quiz 3 Answers},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Practice Quiz 3 Answers}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 19 October 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Practice Quiz 3 Answers}
+\normalsize
+
+\paragraph{}Please answer the following questions. Partial credit may be given for incomplete free response questions.
+
+\begin{enumerate}
+    \item Fill in the blanks:
+    \begin{itemize}
+        \item A(n) \underline{~~ event ~~}-controlled loop does not know how many times it will iterate.
+        \item A(n) \underline{~~ counter ~~}-controlled loop knows when the condition will be true.
+        \item A(n) \underline{~~ sentinel ~~} value can terminate a loop (value type, not \texttt{break;}).
+        \item A(n) \underline{~~ variable ~~} can initialize a loop.
+    \end{itemize}
+    
+    \item Complete the program below so that it will print out numbers 4 through 10, 1 per line.
+    \begin{verbatim}
+#include<stdio.h>
+int main() {
+    int num;
+    for(num = 4; num <= 10; num++) {
+        printf("%d\n", num);
+    }
+    return 0;
+}
+    \end{verbatim}
+    
+    \item Fill in the blank in each of the following statements:
+    \begin{itemize}
+        \item To exit a loop with the condition (\texttt{number == 0}), \texttt{number} must be \underline{greater} than 0.
+        \item To exit a loop with the condition (\texttt{number != 0}), \texttt{number} must be \underline{greater or less} than 0.
+        \item Loop \underline{~~ modification ~~} is done to change the value of a loop control variable.
+        \item A do-while loop will always iterate at \underline{~~ least ~~} one time.
+    \end{itemize}
+    
+    \item Write C code to give an example of an event-controlled loop and an example of a counter-controlled loop, and make sure you do not show infinite loop. \\
+    \underline{Event-controlled}:
+    \begin{verbatim}
+int num;
+scanf("%d", &num):
+while(num < 0) {
+    printf("%d is negative, enter a positive integer: ");
+    scanf("%d", &num);
+}
+    \end{verbatim}
+    \underline{Counter-controlled}:
+    \begin{verbatim}
+int num;
+for(num = 0; num <= 10; num += 2) {
+    printf("%d\n", num);
+}
+    \end{verbatim}
+    
+    \item Describe logic issues with the following code:
+\begin{verbatim}
+do {
+    printf("Is the introduction over (y/n)? ");
+    scanf("%c%c", &reply, &cr);
+    if (reply == 'n' && reply == 'N') {
+        printf("Do what you want.\n");
+    }
+} while (reply != 'y' && reply != 'Y');
+\end{verbatim}
+\begin{itemize}
+        \item Variables not declared
+        \item Reply can't be both 'y' AND 'Y'
+    \end{itemize}
+
+    \item Discuss when you would use a for loop vs a while loop or a do-while loop, and give a pseudocode example for each. \\
+    For loops are typically for counter-controlled loops when you know how many times a loop should run. While and do-while loops are typically for event-controlled loops when you need to either reach a sentinel value or make some condition false to break the loop. 
+    \begin{verbatim}
+For example:
+int num;
+for(num = 1; num <= 10; num = num + 1) {
+    printf(“%d\n”, num);
+}
+
+While example:
+while(not edge) {
+    run();
+}
+
+Do-While example:
+do {
+    run();
+} while (not edge);
+    \end{verbatim}
+    
+    \item Which type(s) of loops would you use in each of the following situations?
+    \begin{itemize}
+        \item Asking the user if the song is over. \\
+            \textbf{while, do-while}
+        \item Counting how many times it takes the user to guess the program's number. \\
+            \textbf{while, do-while}
+        \item Asking the user to enter six classwork grades so far. \\
+            \textbf{for}
+        \item Printing the 16 steps of the Cupid Shuffle. \\
+            \textbf{for}
+    \end{itemize}
+    
+    \item How are the loops controlled (event or counter) in the following situations?
+    \begin{itemize}
+        \item Asking the user if the program has guessed their number or not. \\
+            \textbf{event}
+        \item Printing the name of each of the 20 students in the class. \\
+            \textbf{counter}
+        \item Asking the user for an unknown number of class grades. \\
+            \textbf{event}
+        \item Counting how many times it takes the user to guess the program's number. \\
+            \textbf{event}
+    \end{itemize}
+    
+    \item What is the output of the following code?
+    \begin{verbatim}
+int heightCounter, height = 2, widthCounter, width = 4;
+int totalStars = 0;
+
+heightCounter = 0;
+while (heightCounter < height) {
+   widthCounter = 0;
+   while (widthCounter < width) {
+      printf("*");
+      widthCounter = widthCounter + 1;
+      totalStars = totalStars + 1;
+   }
+   printf("\n");
+   heightCounter = heightCounter + 1;
+}
+    \end{verbatim}
+    \begin{verbatim}
+Output:
+****
+****
+    \end{verbatim}
+    
+    \item Convert the following numbers to hexadecimal (pay attention, not all are decimals).
+    \begin{itemize}
+        \item 14 \\
+            \textbf{0x0E}
+        \item 010110 \\
+            \textbf{0x16}
+        \item 001100 \\
+            \textbf{0x0C}
+        \item 017 (octal) \\
+            \textbf{0x0F}
+    \end{itemize}
+\end{enumerate}
+
+\end{document}
