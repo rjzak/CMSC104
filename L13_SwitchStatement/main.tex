@@ -153,8 +153,8 @@ switch(day) {
     case 3: printf("Wednesday\n"); break;
     case 4: printf("Thursday\n"); break;
     case 5: printf("Friday\n"); break;
-    case 0:
-    case 6: printf("Saturday\n"); break;
+    case 0: /* cascade to the next case statement */
+    case 6: printf("Weekend\n"); break;
     default: printf("Error - invalid day.\n");
 }
 \end{lstlisting}
@@ -206,7 +206,7 @@ switch(day) {
 int main() {
     char ch;
     printf("Enter a character: ");
-    scanf("%s", &ch);
+    scanf("%c", &ch);
     printf("The value of %c is %d.\n", ch, ch);
     return 0;
 }
@@ -229,7 +229,7 @@ int main() {
 int main() {
     char ch;
     printf("Enter a character: ");
-    ch = getchar(); /*  same as scanf("%s", &ch);  */
+    ch = getchar(); /*  same as scanf("%c", &ch);  */
     printf("The value of %c is %d.\n", ch, ch);
     return 0;
 }
@@ -257,7 +257,7 @@ int main ( ) {
      scanf("%c", &ch);
      scanf("%c", &newline); /* grab the newline character */
      printf("The value of %c is %d.\n", ch, ch);
-     printf(“Enter another character: ");
+     printf("Enter another character: ");
      scanf("%c", &ch);
      scanf("%c", &newline); 
      printf("The value of %c is %d.\n", ch, ch);
