@@ -1,0 +1,279 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Lecture 13: Switch}
+\author{UMBC CMSC 104}
+\date{Tu 26 October 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Switch Statements
+\end{frame}
+
+\frame{\tableofcontents}
+
+\section{Multiple Selection}
+\begin{frame}[fragile]{Multiple Selection}
+    So far, we have only seen \textbf{binary selection}.
+    \begin{verbatim}
+if(age >= 18) {
+    printf("Vote!\n"); // Either this...
+} else {
+    printf("Maybe next election.\n"); // .. or this
+}
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{Multiple Selection}
+    \begin{itemize}
+        \item Sometimes it is necessary to \textbf{branch} into more than two directions.
+        \item We do this via \textbf{multiple selection}.
+        \item The multiple selection mechanism in C is the \textbf{switch} statement.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Selection - if}
+    \begin{verbatim}
+if (day == 0)
+    printf("Sunday\n");
+if (day == 1)
+    printf("Monday\n");
+if (day == 2)
+    printf("Tuesday\n");
+if (day == 3)
+    printf("Wednesday\n");
+if (day == 4)
+    printf("Thursday\n");
+if (day == 5)
+    printf("Friday\n");
+if (day == 6)
+    printf("Saturday\n");
+if (day > 6 || day < 0)
+    printf("Invalid day.\n");
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Selection - if-else}
+    \begin{verbatim}
+if (day == 0)
+    printf("Sunday\n");
+else if (day == 1)
+    printf("Monday\n");
+else if (day == 2)
+    printf("Tuesday\n");
+else if (day == 3)
+    printf("Wednesday\n");
+else if (day == 4)
+    printf("Thursday\n");
+else if (day == 5)
+    printf("Friday\n");
+else if (day == 6)
+    printf("Saturday\n");
+else (day > 6 || day < 0)
+    printf("Invalid day.\n");
+    \end{verbatim}
+\end{frame}
+
+\section{The switch Statement}
+\begin{frame}[fragile]{Multiple Selection - The switch Statement}
+    \begin{verbatim}
+switch(integer expression) {
+    case constant1:
+        statement(s);
+        break; // No break? We "cascade" to the next case
+    case constant2:
+        statement(s);
+        break;
+    ...
+    default:
+        statement(s);
+}
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{switch Statement Details}
+    \begin{itemize}
+        \item The last statement of each case in the switch statement should almost always be a \texttt{break}.
+        \item The \texttt{break} causes the program control to jump to the closing brace of the \texttt{switch} statement.
+        \item Without the \texttt{break}, the code flows to the next \texttt{case}. This is \textit{almost} never what you want, but \textit{might} be appropriate for some algorithms.
+        \item The \texttt{switch} statement will compile without a \texttt{default} case, but always consider using one. It might also help with debugging, to catch a situation that you might not expect, for example.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Good Programming Practices}
+    \begin{itemize}
+        \item Include a \texttt{default} case to catch invalid data.
+        \item Inform the user of the type of error that has occurred (ex: ``Error - invalid day''.). Errors should always be informative.
+        \item If appropriate and available, display the invalid value. Ex: invalid day number, appropriate to display, incorrect password, not appropriate.
+        \item If appropriate, terminate program execution \textit{after} displaying an informative error message.\
+        \begin{verbatim}
+            exit(1);
+        \end{verbatim}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Switch Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+switch(day) {
+    case 0: printf("Sunday\n"); break;
+    case 1: printf("Monday\n"); break;
+    case 2: printf("Tuesday\n"); break;
+    case 3: printf("Wednesday\n"); break;
+    case 4: printf("Thursday\n"); break;
+    case 5: printf("Friday\n"); break;
+    case 6: printf("Saturday\n"); break;
+    default: printf("Error - invalid day.\n");
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Switch Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+switch(day) {
+    case 1: printf("Monday\n"); break;
+    case 2: printf("Tuesday\n"); break;
+    case 3: printf("Wednesday\n"); break;
+    case 4: printf("Thursday\n"); break;
+    case 5: printf("Friday\n"); break;
+    case 0:
+    case 6: printf("Saturday\n"); break;
+    default: printf("Error - invalid day.\n");
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Why Use a Switch Statement?}
+    \begin{itemize}
+        \item A \texttt{switch} statement can be more efficient than an if-else.
+        \item A \texttt{switch} statement may also be more readable.
+        \item It is easier to add new cases to switch statement than to nested if-else statements.
+    \end{itemize}
+\end{frame}
+
+\section{The char Data Type}
+\begin{frame}[fragile]{The char Data Type}
+    \begin{itemize}
+        \item The \textbf{char} data type holds a single character, or \textbf{byte}.
+        \begin{verbatim}
+    char ch;
+        \end{verbatim}
+        \item Example assignments:
+        \begin{verbatim}
+    char grade, symbol;
+    grade = `B';
+    symbol = `£';
+        \end{verbatim}
+        \item The \texttt{char} is held as a one-byte integer in memory. The ASCII code\footnote{\url{https://www.asciitable.com/}} is what is actually stored, so we can use the \texttt{char} type as characters or integers, depending on the requirements of the algorithm we are implementing.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{The char Data Type}
+    \begin{itemize}
+        \item Use
+        \begin{verbatim}
+    scanf("%c", &ch);
+        \end{verbatim}
+        to read a single character into the variable \texttt{ch}, for example.
+        \item Use
+        \begin{verbatim}
+    printf("%c", ch);
+        \end{verbatim}
+        to display the value of a character variable.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{char Example}
+    \begin{verbatim}
+#include<stdio.h>
+int main() {
+    char ch;
+    printf("Enter a character: ");
+    scanf("%s", &ch);
+    printf("The value of %c is %d.\n", ch, ch);
+    return 0;
+}
+    \end{verbatim}
+    If the user would enter ``A'', the output would be: \\
+    \texttt{The value of A is 65.}
+\end{frame}
+
+\begin{frame}{The getchar() function}
+    \begin{itemize}
+        \item The \texttt{getchar()} function is found in the \texttt{stdio.h} library.
+        \item The \texttt{getchar()} function reads one character from \textbf{stdin} (the \textbf{standard input} buffer) and returns that character's ASCII value.
+        \item The value can be stored in either a character or integer variable.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{getchar() example}
+    \begin{verbatim}
+#include<stdio.h>
+int main() {
+    char ch;
+    printf("Enter a character: ");
+    ch = getchar(); /*  same as scanf("%s", &ch);  */
+    printf("The value of %c is %d.\n", ch, ch);
+    return 0;
+}
+    \end{verbatim}
+    If the user would enter ``A'', the output would be: \\
+    \texttt{The value of A is 65.}
+\end{frame}
+
+\begin{frame}{Problems with Reading Characters}
+    \begin{itemize}
+        \item When getting characters, whether using \texttt{scanf()} or \texttt{getchar()}, realize that you are reading only one character.
+        \item What will the user actually type? The character followed by pressing ENTER.
+        \item So, the user is actually entering two characters, their response \& the newline character.
+        \item Unless you handle this, the newline character will remain in the stdin stream causing problems the next time you want to read a character.  Another call to \texttt{scanf()} or \texttt{getchar()} will remove it.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Improved Character Example}
+    \begin{verbatim}
+#include <stdio.h>
+int main ( ) {
+     char ch, newline;
+
+     printf("Enter a character: ");
+     scanf("%c", &ch);
+     scanf("%c", &newline); /* grab the newline character */
+     printf("The value of %c is %d.\n", ch, ch);
+     printf(“Enter another character: ");
+     scanf("%c", &ch);
+     scanf("%c", &newline); 
+     printf("The value of %c is %d.\n", ch, ch);
+     return 0;
+}
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Additional Concerns with Garbage in stdin}
+    \begin{itemize}
+        \item When we were reading integers using \texttt{scanf()}, we didn't seem to have problems with the newline character, even though the user was typing ENTER after the integer.
+        \item That is because \texttt{scanf()} was looking for the next integer and ignored the newline (\textbf{whitespace}).
+        \item If we use \texttt{scanf("\%d", \&num);} to get an integer, the newline is still stuck in the input stream.
+        \item If the next item we want to get is a character, whether we use \texttt{scanf()} or \texttt{getchar()}, we will get the newline.
+        \item We have to take this into account and remove it.
+    \end{itemize}
+\end{frame}
+
+\end{document}

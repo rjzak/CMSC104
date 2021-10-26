@@ -1,0 +1,176 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Homework 6},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{placeins}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Homework 6}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 25 October 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Homework 6: I Will Guess Your Number}.
+\normalsize
+\\ ~~ \\
+\textbf{Due: Tuesday 02 November by 11:59PM}
+
+\section*{Objectives}
+\paragraph{}To gain more experience with \texttt{if} statements \& do-while loops.
+
+\FloatBarrier
+\section*{Assignment}
+\paragraph{}For this assignment, you will write a program that plays the other side of the game ``I'm thinking of a number'' from Classwork 6. This time, the user is thinking of a number and your program will ``guess''. The loop is the part of your program which ``knows'' that the user's number is between lowEnd and highEnd inclusively. Initially, \texttt{lowEnd} is 1 and \texttt{highEnd} is 100. Each time your program ``guesses'' the number half-way between \texttt{lowEnd} and \texttt{highEnd}. If the new guess is low, then the new guess becomes the new \texttt{lowEnd}. If the new guess is high, then the new guess becomes the new \texttt{highEnd}.
+
+\subsection*{Example Compilation and Execution}
+\begin{verbatim}
+[rzak1@linux1 hw6]$ gcc -Wall guess.c
+[rzak1@linux1 hw6]$ ./a.out
+Think of a number between 1 and 100.
+I will guess the number, then tell me if my guess is
+too high (enter 'h'), too low (enter 'l') or correct
+(enter 'y' for 'yes').
+
+Is it 50? [(h)igh, (l)ow, (y)es] h
+Is it 25? [(h)igh, (l)ow, (y)es] l
+Is it 37? [(h)igh, (l)ow, (y)es] l
+Is it 43? [(h)igh, (l)ow, (y)es] h
+Is it 40? [(h)igh, (l)ow, (y)es] h
+Is it 38? [(h)igh, (l)ow, (y)es] y
+Yay! I got it!
+[rzak1@linux1 hw6]$ 
+\end{verbatim}
+
+\subsection*{Starter Code}
+\begin{verbatim}
+/**************************************
+** File:  guess.c
+** Author: <myName>
+** Date:  <todaysDate>
+** Section: 02-LEC (10600)
+** E-mail: <myEmailAddress>
+**
+** This file contains the main program for <assignment>.
+** <Explain what the assignment is asking you to do here.>
+**************************************/
+
+#include <stdio.h>
+
+// Constant values to use if you don't want to do any Extra Credit
+#define LOW 1
+#define HIGH 100
+
+int main() {
+   // Variables to use without any Extra Credit embellishments
+   char response;  /* read in h/l/y answer from the user */
+   char cr;        /* read in carriage return, but don't really need to use */
+   int guess;      /* program's guess of user's secret number */
+
+   // Variable(s) to use for the Extra Credit embellishments
+   int min = LOW;        /* lowest number of user's range for program to guess */
+   int max = HIGH;       /* highest number of user's range for program to guess */
+
+   // EC: Prompt for minimum value of range to guess
+
+   // EC: Prompt for maximum value of range to guess
+   
+   // EC: Ensuring max > min
+
+
+   // Prompting user to choose a number within their provided range
+   printf("Think of a number between %d and %d.\n", min, max);
+   printf("I will guess the number, then tell me if my guess is\n");
+   printf("too high (enter 'h'), too low (enter 'l'), or correct\n");
+   printf("(enter 'y' for 'yes').\n\n");
+
+   // do-while loop to guess user's secret number
+   
+      // Guess a number in the middle of the range
+      
+
+      // Ask the user if guess is right
+      
+
+      // If user says guess is right, display "Yay! I got it!\n";
+      // else if user says guess is high, update highEnd to guess;
+      // else if user says guess is low, update lowEnd to guess;
+      // else display "[WARNING]: Invalid response, must be h/l/y!\n";
+      
+   // end do-while loop when user says yes or is cheating
+
+   // If lowEnd equals highEnd, accuse the player of cheating
+   
+
+   return 0;
+}
+\end{verbatim}
+
+\subsection*{Notes}
+\begin{itemize}
+    \item You must use a do-while loop in your program which terminates when the program guesses the user's number or when it detects cheating. You can detect cheating when the player doesn’t say \texttt{Y} even though your program is sure that it has the correct number (since \texttt{lowEnd} equals \texttt{highEnd}).
+    \item To read in a single character typed in by the user (e.g., the letter y), use the same command you did for Homework 5:
+    \begin{verbatim}
+scanf("%c%c", &reply, &cr);
+\end{verbatim}
+    \item Notice that in the starting point file there are two \verb|#define|s, \texttt{LOW} and \texttt{HIGH}. These are constant values for the min and max of the range that the user’s secret number is supposed to be.
+    \item To help with debugging, and to help you see what is happening with your do-while loop, print out the values of \texttt{lowEnd} and \texttt{highEnd} inside the do-while loop. Then comment out the print statement in your final version. 
+\end{itemize}
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item Header comments: 2 points
+    \item Body comments: 3 points
+    \item Compiles: 40 points
+    \item Guesses right number: 30 points
+    \item Detects cheating: 25 points
+    \item EC: +5 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}Use the \texttt{script} command to record yourself compiling and running your program three times with different numbers each time, cheating once! (Do not record yourself editing your program!) Exit from script. Submit your program and the typescript file.
+\begin{verbatim}
+    [rzak1@linux1 hw6]$ submit cmsc104_10600 hw6 guess.c typescript
+\end{verbatim}
+
+\subsection*{Verify Submission}
+\paragraph{}If you \textit{think} you submitted the assignment, but the \texttt{submitls} command doesn't show you your file names, then the files were \textbf{not} submitted and no grade will be given.
+\begin{verbatim}
+    [rzak1@linux1 hw6]$ submitls cmsc104_10600 hw6
+\end{verbatim}
+
+\end{document}
