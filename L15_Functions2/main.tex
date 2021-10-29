@@ -1,0 +1,146 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Lecture 14: Functions, Part 2}
+\author{UMBC CMSC 104}
+\date{Th 04 November 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Functions, Part 2
+\end{frame}
+
+\frame{\tableofcontents}
+
+\section{More Parameters, Return Values}
+\begin{frame}[fragile]{Functions Can Return Values}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/***********************************************************
+** averageTwo - calculates and returns the average of
+**              two numbers
+** Inputs:  num1 - an integer value
+**          num2 - an integer value
+** Outputs:  the floating point average of num1 and num2
+************************************************************/
+float AverageTwo(int num1, int num2) {
+	float average;   /* average of the two numbers */
+
+	average = (num1 + num2) / 2.0;
+	return average;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Using averageTwo()}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+
+float averageTwo(int num1, int num2);
+
+int main() {
+    float avg;
+    int value1 = 5, value2 = 8
+    avg = averageTwo(value1, value2);
+    printf("The average of %d and %d is %f\n", value1,
+        value2, avg);
+    return 0;
+}
+
+float AverageTwo(int num1, int num2) {
+	float average;   /* average of the two numbers */
+
+	average = (num1 + num2) / 2.0;
+	return average;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Parameter Passing}
+    \begin{itemize}
+        \item \textbf{Actual parameters} are the parameters that appear in the function call. \texttt{average = averageTwo(value1, value2);}
+        \item \textbf{Formal parameters} are the parameters which appear in the function header. \texttt{float averageTwo(int num1, int num2)}
+        \item Actual and formal parameters are matched by position. Each formal parameter receives the value of its corresponding actual parameter.
+        \item Corresponding actual and formal parameters do not have to have the same name, but they may.
+        \item Corresponding actual and formal parameters must be of the same data type, with some exceptions.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Local Variables}
+    \begin{itemize}
+        \item Functions only ``see'' (have access to) their own \textbf{local variables}. This includes \texttt{main()}.
+        \item Formal parameters are declarations of local variables. The values passed are assigned to those variables.
+        \item Other local variables can be declared within the function body.
+        \item Changes to the parameters by the function is allowed, but will not change the values of the parameters in the calling function.
+    \end{itemize}
+\end{frame}
+
+\section{Header Files}
+\begin{frame}{Header Files}
+    \begin{itemize}
+        \item Header files contain function prototypes for all of the functions found in the specified library.
+        \item They also contain definitions of constants and data types used in that library.
+        \item By reusing code, especially from the standard C library, you reduce the chance for errors while making the code easier to maintain (instead of re-implementing everything yourself)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Commonly Used Header Files}
+    \begin{tabular}{l l}
+        Header File & Contains Function Prototypes for: \\ \hline
+        stdio.h  & standard input/output library functions, file input/output \\
+        math.h   & math functions \\
+        stdlib.h & conversions of data types, allocating memory, other utilities \\
+        assert.h & creating assertions, ensuring certain conditions are met \\
+        complex.h & working with complex numbers \\
+        ctype.h  & functions for testing characters and data types \\
+        dirent.h & working with directories \\
+        errno.h  & error handling \\
+        limits.h & sizes of basic types \\
+        locale.h & translating programs into different human languages \\
+        stddef.h & working with different specific-sized data types \\
+        string.h & functions for working with strings \\
+        time.h   & getting date and time information \\
+        unistd.h & standard \underline{cross-Unix} \& \underline{Unix-like} operating systems functions \\
+                 & \textit{and there are a lot more!}
+    \end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Using Header Files}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+#include <stdlib.h> // for exit()
+#include <math.h>   // for sqrt()
+
+int main() {
+    float side1, side2, hypotenuse;
+    printf("Enter the lengths of the right triangle sides: ");
+    scanf("%f%f", &side1, &side2);
+    if (side1 <= 0 || side2 <= 0) {
+        exit(1);
+    }
+    hypotenuse = sqrt((side1*side1), (side2*side2));
+    printf("The hypotenuse = %f\n", hypotenuse);
+    return 0;
+}
+    \end{lstlisting}
+    
+\end{frame}
+
+\end{document}

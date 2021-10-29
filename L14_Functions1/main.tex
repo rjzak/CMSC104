@@ -1,0 +1,224 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Lecture 14: Functions, Part 1}
+\author{UMBC CMSC 104}
+\date{Tu 02 November 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Functions, Part 1
+\end{frame}
+
+\frame{\tableofcontents}
+
+\section{Concepts}
+\begin{frame}{Review of Structured Programming}
+    Structured programming is a problem solving strategy and a programming methodology that includes the following guidelines:
+    \begin{itemize}
+        \item The program uses only the sequence, selection, and repetition control structures.
+        \item The flow of control in the program should be as simple as possible.
+        \item The construction of a program embodies \textbf{top-down} design.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Review of Top-Down Design}
+    \begin{itemize}
+        \item Involves repeatedly \textbf{decomposing} a program into smaller problems.
+        \item Eventually leads to a collection of small problems\footnote{This is also seen in the Unix design philosophy \url{https://en.wikipedia.org/wiki/Unix_philosophy}} or tasks, each of which can be easily coded.
+        \item The \textbf{function} construct in C is used to write code for these small, simple programs.
+    \end{itemize}
+\end{frame}
+
+\section{Functions}
+\begin{frame}{Functions}
+    \begin{itemize}
+        \item A C program is made up of one or more functions, one of which is \texttt{main()}.
+        \item Execution always begins with \texttt{main()}, no matter where it is placed in the program. By convention, \texttt{main()} is located before all other functions.
+        \item When program control encounters a function name, the function is \texttt{called} (\texttt{invoked}).
+        \begin{itemize}
+            \item Program control passes to the function.
+            \item The function is executed.
+            \item Control is passed back to the calling function when finished.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Sample Function Call}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+
+int main() {
+    // printf is the name of a predefined function in stdio.h
+    // this is a function call
+    // "Hello, world!\n" is an argument which is passed to
+    //    printf()
+    printf("Hello, world!\n");
+    return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Functions Cont'd}
+    \begin{itemize}
+        \item We have used five predefined functions so far:
+        \begin{itemize}
+            \item \texttt{printf()}
+            \item \texttt{scanf()}
+            \item \texttt{getchar()}
+            \item \texttt{srandom()}, \texttt{random()} (CW 6)
+        \end{itemize}
+        \item Programmers can (and should) write their own functions.
+        \item Typically, each module in the design hierarchy of a program is implemented as a function.
+    \end{itemize}
+\end{frame}
+
+\subsection{Examples}
+\begin{frame}[fragile]{Sample Programmer-Designed Function}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+
+void PrintMessage();
+
+int main() {
+    PrintMessage();
+    return 0;
+}
+
+void PrintMessage() {
+    printf("A message for you:\n\n");
+    printf("Have a nice day!\n");
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Examining the PrintMessage()}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+
+void PrintMessage(void); // Function prototype
+
+int main() {
+    PrintMessage(); // Function call
+    return 0;
+}
+
+void PrintMessage(void) { // Function header
+
+    // Function body
+    printf("A message for you:\n\n");
+    printf("Have a nice day!\n");
+}
+    \end{lstlisting}
+\end{frame}
+
+\subsection{Function Components}
+\begin{frame}{The Function Prototype}
+    \begin{itemize}
+        \item It informs the compiler that there will be a function defined later.
+        \item This is needed because the function call is made before the definition -- the compiler uses it to see if the call is made properly.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Function Call}
+    \begin{itemize}
+        \item Passes program control to the function.
+        \item Must match the function prototype in name, number of arguments, and data types of the arguments.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Function Definition}
+    \begin{itemize}
+        \item Control is passed to the function by the function call. The statements within the function body will then be executed.
+        \item After the statements in the function have completed, control is passed back to the \textbf{calling function}, in this case, \texttt{main()}. The calling function doesn't have to be \texttt{main()}, a function can be called from another function.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{General Function Definition Syntax}
+    \begin{verbatim}
+type functionName(parameter_1, ..., parameter_n) {
+    variable declaration(s);
+    statement(s);
+    return varName; // if there is something to return
+}
+    \end{verbatim}
+    \begin{itemize}
+        \item If there are no parameters, either \texttt{functionName()} or \texttt{functionName(void)} is acceptable.
+        \item If the \textbf{function type} (\textbf{return type}) is void, a return statement is not required.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Using Input Parameters}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+
+void PrintMessage(int counter); // no return, receives int
+
+int main() {
+    int num;
+    printf("Enter an integer: ");
+    scanf("%d", &num);
+    PrintMessage(num); // one argument, type int
+    return 0;
+}
+
+void PrintMessage(int counter) { // no return, receives int
+    int i;
+    for(i = 0; i < counter; i++) {
+        printf("Have a nice day!\n");
+    }
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Function Comment}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/*************************************************************
+** PrintMessage - prints a message a specified number of times
+** Inputs:  counter - the number of times the message will be
+**                             printed
+** Outputs:  None
+/*************************************************************/
+void PrintMessage(int counter) {
+    int i;
+    for(i = 0; i < counter; i++) {
+        printf("Have a nice day!\n");
+    }
+}
+    \end{lstlisting}
+\end{frame}
+
+\section{Good Programming Practice}
+\begin{frame}{Good Programming Practice}
+    \begin{itemize}
+        \item A \textbf{function header comment} before the definition of a function is a good practice, and is required by the CMSC 104 Coding Standards.
+        \item Your header comments should be neatly formatted and contain the following information:
+        \begin{itemize}
+            \item Function name
+            \item Function description -- what it does
+            \item A list of any input parameters and their meanings
+            \item A list of any output parameters and their meanings
+            \item A description of any special conditions, if any.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\end{document}
