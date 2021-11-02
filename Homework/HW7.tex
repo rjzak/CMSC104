@@ -1,0 +1,151 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Homework 7},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{placeins}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Homework 7}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 02 November 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Homework 7: More Bar Graphs}.
+\normalsize
+\\ ~~ \\
+\textbf{Due: Tuesday 09 November by 11:59PM}
+
+\section*{Objectives}
+\paragraph{}More practice with nested \texttt{while} loops.
+
+\section*{Assignment}
+\paragraph{}This assignment is a continuation of Classwork 7. (NOTE: You must still submit Classwork 7 and Homework 7 separately.) For this homework assignment, embellish your program from Classwork 7 with the following features:
+\begin{itemize}
+    \item Since bar graphs do not make sense for negative numbers, add another inner while loop to your program that keeps pestering the user until they enter a number strictly greater than zero. NOTE: This means you’ll have to modify your if-else if-else block from Classwork 7.
+    \item After the \textit{outer} while loop terminates, print out the \textit{largest} number entered by the user.
+    \item After the \textit{outer} while loop terminates, print out the \textit{average} number entered by the user. Use a comment when you're doing this calculation to explain why you can calculate largest number inside of the outer while loop, but average is best computed outside of it.
+\end{itemize}
+
+\subsection*{Example Compilation and Execution}
+\begin{verbatim}
+[rzak1@linux1 hw7]$ gcc -Wall bar2.c
+[rzak1@linux1 hw7]$ ./a.out
+Enter a positive number (type 'quit' to end) 30
+******************************
+Enter a positive number (type 'quit' to end) 29
+*****************************
+Enter a positive number (type 'quit' to end) 17
+*****************
+Enter a positive number (type 'quit' to end) 28
+****************************
+Enter a positive number (type 'quit' to end) 50
+**************************************************
+Enter a positive number (type 'quit' to end) 67
+*******************************************************************
+Enter a positive number (type 'quit' to end) 36
+************************************
+Enter a positive number (type 'quit' to end) 19
+*******************
+Enter a positive number (type 'quit' to end) 17
+*****************
+Enter a positive number (type 'quit' to end) quit
+Sum = 293, Count = 9
+Largest number found = 67
+Average number found = 32.5556
+
+[rzak1@linux1 hw7]% ./a.out
+Enter a positive number (type 'quit' to end) -2
+*** -2 is not positive, re-enter. ***
+Enter a positive number (type 'quit' to end) 12
+************
+Enter a positive number (type 'quit' to end) 14
+**************
+Enter a positive number (type 'quit' to end) 9
+*********
+Enter a positive number (type 'quit' to end) 0
+*** 0 is not positive, re-enter. ***
+Enter a positive number (type 'quit' to end) -2
+*** -2 is not positive, re-enter. ***
+Enter a positive number (type 'quit' to end) 8
+********
+Enter a positive number (type 'quit' to end) quit
+Sum = 43, Count = 4
+Largest number found = 14
+Average number found = 10.75
+[rzak1@linux1 hw7]$ 
+\end{verbatim}
+
+\subsection*{Notes}
+\begin{itemize}
+    \item Make a \underline{copy} of your program from Classwork 7.
+    \begin{verbatim}
+[rzak1@linux1 ~]$ cp ~/cs104/cw7/bar.c ~/cs104/hw7/bar2.c
+    \end{verbatim}
+    \item Think about how to calculate the sum of the numbers entered by the user. Use a \texttt{float} variable so you get a floating-point value when you compute the average.
+    \item Since the numbers entered by the user must be positive, you can initialize the maximum value to zero. \textbf{Explain why this works in the variable declaration comment}.
+    \item Make sure that you handle the case where the user types in \textit{quit} without entering any numbers.
+    \item NOTE: You cannot use a \texttt{break} statement to break out of two nested while loops. A \texttt{break} statement in an inner while loop only breaks from the inner-most loop that contains the \texttt{break} statement. It will NOT exit from the outer loop. Instead, an option is to use another variable to keep track of when a \texttt{break} in the outer loop would be appropriate.
+\end{itemize}
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item Header comment: 2 points
+    \item Body comments: 3 points
+    \item Compiles: 40 points
+    \item Gets Max: 15 points
+    \item Gets Avg: 5 points
+    \item Gets Sum: 10 points
+    \item Gets Count: 10 points
+    \item Catches negative numbers: 15 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}Use the \texttt{script} command to record yourself compiling your program and running your program 3 times using different numbers. Use \texttt{exit} to terminate the recording. Only record yourself compiling and running your program. \textbf{DO NOT} record yourself editing your program. If you mistakenly start up \texttt{nano} while running script, just exit from script and start over. (The new typescript file will overwrite the old one.) When you are done, check the contents of your typescript file. Make sure it does not include you editing your program, and that it is not garbled. Then submit your program and typescript file.
+\begin{verbatim}
+[rzak1@linux1 hw7]$ cat typescript
+    NOTE: The contents of your file should display here.
+[cos1@linux1 hw7]$ submit cmsc104_10600 hw7 bar2.c typescript
+\end{verbatim}
+
+\subsection*{Verify Submission}
+\paragraph{}If you \textit{think} you submitted the assignment, but the \texttt{submitls} command doesn't show you your file names, then the files were \textbf{not} submitted and no grade will be given.
+\begin{verbatim}
+[rzak1@linux1 hw7]$ submitls cmsc104_10600 hw7
+\end{verbatim}
+
+\end{document}
