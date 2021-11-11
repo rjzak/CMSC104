@@ -1,0 +1,323 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,tikzmark}
+
+\usetheme{Boadilla}
+\title{Structs}
+\author{UMBC CMSC 104}
+\date{Th 11 November 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Custom Types
+\end{frame}
+
+\frame{\tableofcontents}
+
+\section{Intro}
+\begin{frame}{Intro}
+    \begin{itemize}
+        \item Up until now, we've only looked at individual variables (except strings, which are arrays).
+        \item We can make our own data types!
+        \begin{itemize}
+            \item Create a data type to model something
+            \item Return more than one variable from a function
+            \item Organize multiple related variables and keep track of them easily
+            \item Create other simple types.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{Structs}
+\begin{frame}[fragile]{Structs Example}
+    Structures (structs) are a \textbf{derived data type}, since they contain existing data types.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+
+// define structs before main()
+struct Dog { // struct name
+    char *breed; // fields that are part of the struct
+    unsigned int age;
+    char *name;
+    float weight;
+};
+
+int main() {
+    struct Dog my_dog; // creating a variable requires "struct"
+    my_dog.breed = "German Shepherd";
+    my_dog.age = 1;
+    my_dog.name = "Bruno";
+    my_dog.weight = 80.23;
+    return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Example (Cont'd)}
+    Functions can receive a struct as a parameter:
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+// function prototype
+void print_dog(struct Dog the_dog);
+
+// function body
+void print_dog(struct Dog the_dog) {
+    printf("%s weighs %1.2f pounds\n", the_dog.name,
+        the_dog.weight);
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+    Functions can return a struct:
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+// function prototype
+struct Dog get_dog();
+
+// function body
+struct Dog get_dog() {
+    struct Dog a_dog;
+    a_dog.name = "Fido";
+    a_dog.weight = 20;
+    return a_dog;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Nested structs!}
+    Just like with loops and if statements, we can have nested structs.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+struct PetType {
+    char *typeName;
+    unsigned int num_legs;
+    int is_mammal;
+};
+
+struct Pet {
+    char *name;
+    unsigned int age;
+    struct PetType type;
+};
+
+struct Pet my_pet;
+my_pet.name = "Spidey";
+my_pet.age = 1;
+my_pet.type.typeName = "tarantula";
+my_pet.type.num_legs = 8;
+my_pet.type.is_mammal = 0;
+printf("%s has %d legs.\n", my_pet.name, my_pet.type.num_legs);
+    \end{lstlisting}
+\end{frame}
+
+\subsection{typedef}
+\begin{frame}[fragile]{The typedef}
+    Using \texttt{typedef}, we can make the code slightly less verbose.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+typedef struct {
+    char *breed; // fields that are part of the struct
+    unsigned int age;
+    char *name;
+    float weight;
+} Dog; // struct name
+
+Dog my_dog; // no longer use "struct"
+my_dog.breed = "German Shepherd";
+my_dog.age = 1;
+my_dog.name = "Bruno";
+my_dog.weight = 80.23;
+    \end{lstlisting}
+\end{frame}
+
+\section{Enumerations}
+\begin{frame}{Enumerations}
+    \begin{itemize}
+        \item Enumerations (\texttt{enum}) allows creating a simple type which only allows pre-defined values.
+        \item Ideal for use with flag variables.
+        \begin{itemize}
+            \item Helps make code more readable.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+    Enums are treated as integers.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+
+enum Color {
+        Red,
+        Blue,
+        Orange,
+        Yellow,
+        Green
+};
+
+int main() {
+        enum Color mycolor;
+        mycolor = Red;
+        printf("Red: %d\n", mycolor);
+        return 0;
+}
+    \end{lstlisting}
+    Output: \texttt{Red: 0}
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+    Custom integer values can be defined for all or some of the possible values.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+
+enum Color {
+        Red = 72,
+        Blue = 34,
+        Orange = 0,
+        Yellow = 99,
+        Green = -1
+};
+
+int main() {
+        enum Color mycolor;
+        mycolor = Red;
+        printf("Red: %d\n", mycolor);
+        return 0;
+}
+    \end{lstlisting}
+    Output: \texttt{Red: 72}
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+    Custom integer values can be defined for the first item because the starting point for setting the subsequent values.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+
+enum Color {
+        Red = 72,
+        Blue,
+        Orange,
+        Yellow,
+        Green
+};
+
+int main() {
+        enum Color mycolor;
+        mycolor = Green;
+        printf("Green: %d\n", mycolor);
+        return 0;
+}
+    \end{lstlisting}
+    Output: \texttt{Green: 76}
+\end{frame}
+
+\begin{frame}[fragile]{Practical Example}
+    Let's revisit the rectangle drawing example.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+void draw_line(int width_size, int is_hollow) {
+    int i;
+    for(i = 0; i < width_size; i++) {
+        if (i == 0 || i == width_size - 1 || is_hollow == 0) {
+            printf("*");
+        } else {
+            printf(" ");
+        }
+    }
+    printf("\n");
+}
+    \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Practical Example}
+    Let's revisit the rectangle drawing example, now with an \texttt{enum}.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+enum LineType {
+    Hollow,
+    Solid
+};
+
+void draw_line(int width_size, enum LineType type) {
+    int i;
+    for(i = 0; i < width_size; i++) {
+        if (i == 0 || i == width_size - 1 || type == Solid) {
+            printf("*");
+        } else {
+            printf(" ");
+        }
+    }
+    printf("\n");
+}
+    \end{lstlisting}
+\end{frame}
+
+\subsection{typedef}
+\begin{frame}[fragile]{Enum \& typedef}
+    Let's revisit the rectangle drawing example, now with an \texttt{enum} and \texttt{typedef}.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+typedef enum {
+    Hollow,
+    Solid
+} LineType;
+
+void draw_line(int width_size, LineType type) {
+    int i;
+    for(i = 0; i < width_size; i++) {
+        if (i == 0 || i == width_size - 1 || type == Solid) {
+            printf("*");
+        } else {
+            printf(" ");
+        }
+    }
+    printf("\n");
+}
+    \end{lstlisting}
+\end{frame}
+
+\section{Good Programming Practice}
+\begin{frame}[fragile]{Good Programming Practice}
+    \begin{itemize}
+        \item Don't forget the semicolon at the end of the \texttt{struct} \& \texttt{enum} definitions.
+        \item Remember to use the format \texttt{variableName.fieldName} to access fields in a \texttt{struct}.
+        \item A \texttt{struct} cannot have itself as a field.
+        \begin{verbatim}
+struct Pet {
+    char *name;
+    unsigned int age;
+    struct Pet pets_pet; // compiler error
+};
+        \end{verbatim}
+        \item Comparison operators, like \texttt{==} and \texttt{!=}, cannot be done on structs, instead you have to check each field separately.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Good Programming Practice}
+    \begin{itemize}
+        \item Items in different \texttt{enum} statements must be unique.
+        \begin{verbatim}
+enum ColorA {
+    Red,
+    Blue
+};
+
+enum ColorB {
+    Red, // compiler error
+    Orange
+};
+        \end{verbatim}
+    \end{itemize}
+\end{frame}
+
+\end{document}
