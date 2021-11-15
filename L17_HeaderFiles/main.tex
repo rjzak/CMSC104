@@ -1,0 +1,140 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\usepackage{attachfile} % attach files
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes, tikzmark, positioning}
+
+\newcommand{\backupbegin}{
+   \newcounter{framenumberappendix}
+   \setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{framenumberappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumberappendix}} 
+}
+
+\usetheme{Boadilla}
+\title{Lecture 17: Header Files}
+\author{UMBC CMSC 104}
+\date{Tu 16 November 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Header Files
+\end{frame}
+
+\frame{\tableofcontents}
+
+\section{Creating Header Files}
+\begin{frame}{Why Use .h Files?}
+    \begin{itemize}
+        \item Allows us to organize parts of our programs.
+        \item Allows us to reuse functions we have written for earlier assignments, or different projects.
+    \end{itemize}
+\end{frame}
+
+\subsection{Separate Compilation}
+\begin{frame}[fragile]{.h Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#ifndef EXAMPLE_H__
+#define EXAMPLE_H__
+
+int plusfive(int x);
+
+#endif
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Corresponding .c Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include "example.h"
+
+int plusfive(int x) {
+    return x+5;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Main}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+#include "example.h"
+
+int main() {
+    int y = plusfive(3);
+    printf("y = %d\n", y);
+    return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Compiling}
+    \begin{verbatim}
+$ gcc -Wall main.c example.c -o example
+$ ./example
+y = 8
+$
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{What Goes in the .h?}
+    Typically, the .h file would contain:
+    \begin{itemize}
+        \item Function prototypes
+        \item Constants
+        \begin{itemize}
+            \item \texttt{\#define}, such as \texttt{\#define PI = 3.1415}
+            \item \texttt{const} values, such as \texttt{const float PI = 3.1415;}
+        \end{itemize}
+        \item Definitions for custom data types:
+        \begin{itemize}
+            \item Structs
+            \item Enumerations
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection{Header Guards}
+\begin{frame}{Header Guards}
+    \begin{itemize}
+        \item Did you notice the \texttt{\#ifndef EXAMPLE\_H\_\_}?
+        \item It prevents \texttt{gcc} from trying to use the contents of the header file twice.
+        \begin{itemize}
+            \item First time would be compiling \texttt{main.c}
+            \item Second time would be compiling \texttt{example.c}
+        \end{itemize}
+        \item The compiler isn't so smart, and it would complain about redefining \texttt{int plusfive()}, so we have to out-smart \texttt{gcc} by only letting it \textit{see} the function prototype once.
+        \begin{itemize}
+            \item The second time \texttt{gcc} would look at \texttt{example.h}, our variable \texttt{EXAMPLE\_H\_\_} would already be defined, so \texttt{gcc} would skip the contents of the file.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Makefiles}
+    \begin{itemize}
+        \item This discussion on separate compilation should remind you of Makefiles, from earlier in the semester.
+        \item For larger projects, using separate compilation and \texttt{make} can reduce the time it takes to compile your project by only compiling the pieces needed.
+        \begin{itemize}
+            \item \texttt{gcc -c main.c}
+            \item \texttt{gcc -c example.c}
+            \item \texttt{gcc main.o example.c -o example}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\end{document}
