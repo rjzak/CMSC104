@@ -1,0 +1,145 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Practice Quiz 4},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Practice Quiz 4}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 14 November 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Practice Quiz 4}
+\normalsize
+
+\paragraph{}Please answer the following questions. Partial credit may be given for incomplete free response questions.
+
+\begin{enumerate}
+    \item Fill in the blank in each of the following statements:
+    \begin{enumerate}
+        \item \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} statements deal with integer expressions.
+        \item \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} statements deal with conditional expressions.
+        \item \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} is usually the last statement in a \texttt{switch} statement.
+        \item \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} usually indicates an invalid value in a \texttt{switch} statement.
+    \end{enumerate}
+    
+    \item Write a \texttt{switch} statement for the character variable \texttt{letter}, which should be a value between `a' and `z'. When \texttt{letter} is `a', `e', `i', `o', or `u', tell the user that \texttt{letter} is a vowel. The default case should let the user know that \texttt{letter} is a consonant.
+    
+    \item Given: \texttt{int a = 1, b = 2, c = 3, d = 4;} what is the value for each of the following expressions? Treat each expression independently, each expression does not impact the result of the others.
+    \begin{itemize}
+        \item \texttt{++d \% b * c++ -a}
+        \item \texttt{c / d++ - a+ ++b}
+        \item \texttt{b * ++a / c++ +d}
+    \end{itemize}
+    
+    \item Given: \texttt{int a = 4, b = 3, c = 2, d = 1;} what is the value of the following calculations. Each expression impacts the result of the subsequent expressions. Indicate the ending value of the variables. \\
+    \texttt{a += d \% c;} \\
+    \texttt{b *= c /= a;} \\
+    \texttt{d -= a + 2;}
+    \begin{enumerate}
+        \item \underline{~~ ~~}
+        \item \underline{~~ ~~}
+        \item \underline{~~ ~~}
+        \item \underline{~~ ~~}
+    \end{enumerate}
+    
+    \item Describe the logic issues with this code snippet:
+    \begin{verbatim}
+int day = 5;
+switch (day) {
+    case 1:
+        printf("Monday\n");
+    case 2:
+        printf("Tuesday\n");
+        break;
+    case 3:
+        printf("Wednesday\n");
+        break;
+    case 4:
+        printf("Thursday\n");
+        break;
+    case 5:
+        printf("Friday\n");
+    default:
+        printf("Weekend\n");
+        break;
+}
+    \end{verbatim}
+    How would you correct the issues?
+    
+    \item Which assignment operator should be used for each scenario?
+    \begin{enumerate}
+        \item Combining ingredients in a recipe.
+        \item Calculating force equals mass times acceleration.
+        \item Determining students per teacher.
+        \item Determining if a number is even or odd.
+    \end{enumerate}
+    
+    \item Fill in the blank in each of the following statements:
+    \begin{enumerate}
+        \item A(n) \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} statement cannot handle conditional expressions.
+        \item A(n) \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} statement can handle more than just integer expressions.
+        \item An \texttt{if} statement may be \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} to read than a \texttt{switch} statement.
+        \item It's harder to add new cases to a(n) \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} statement.
+    \end{enumerate}
+    
+    \item What does the following code snippet do? Assume all required \texttt{\#include} statements exist.
+    \begin{verbatim}
+int numR=0, numS=0, numT=0, numL=0, numN=0, numE=0;
+int count, totalLetters = 25;
+char letter;
+
+srandom(time(0));
+for (count = 0; count < totalLetters; ++count) {
+   letter = "RSTLNE" [random() % 6];
+   switch (letter) {
+      case `R': ++numR; break;
+      case `S': ++numS; break;
+      case `T': ++numT; break;
+      case `L': ++numL; break;
+      case `N': ++numN; break;
+      default: ++numE; break;
+   }
+}
+    \end{verbatim}
+    Extra credit: Why is it okay for the \texttt{default} case to increment \texttt{numE}?
+    
+    \item Write a function which receives three integers and returns the average. Carefully consider your data type choice.
+\end{enumerate}
+
+\end{document}
