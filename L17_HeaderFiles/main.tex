@@ -117,6 +117,7 @@ $
         \begin{itemize}
             \item First time would be compiling \texttt{main.c}
             \item Second time would be compiling \texttt{example.c}
+            \item The value for the \texttt{\#ifndef} and \texttt{\#define} is typically the file name in capital letters, period replaced by underscore, and sometimes an underscore or two before and/or after. The actual value isn't so important as long as the value is only used for this purpose.
         \end{itemize}
         \item The compiler isn't so smart, and it would complain about redefining \texttt{int plusfive()}, so we have to out-smart \texttt{gcc} by only letting it \textit{see} the function prototype once.
         \begin{itemize}
@@ -132,7 +133,7 @@ $
         \begin{itemize}
             \item \texttt{gcc -c main.c}
             \item \texttt{gcc -c example.c}
-            \item \texttt{gcc main.o example.c -o example}
+            \item \texttt{gcc main.o example.o -o example}
         \end{itemize}
     \end{itemize}
 \end{frame}
