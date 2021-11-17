@@ -1,0 +1,458 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\usepackage{attachfile} % attach files
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes, tikzmark, positioning}
+
+\newcommand{\backupbegin}{
+   \newcounter{framenumberappendix}
+   \setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{framenumberappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumberappendix}} 
+}
+
+\usetheme{Boadilla}
+\title{Lecture 18: Arrays, Part I}
+\author{UMBC CMSC 104}
+\date{Tu 23 November 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Arrays, Part I
+\end{frame}
+
+\frame{\tableofcontents}
+
+\section{Data Types}
+\begin{frame}{Data Types}
+    \begin{itemize}
+        \item So far, we have seen only simple data types, such as int, float, and char.
+        \item Simple variables can hold only one value at any time during program execution, although that value may change.
+        \item A \textbf{data structure} is a data type that can hold multiple values, in a structured form, at the same time.  (Synonyms:  \textbf{complex data type}, \textbf{composite data type}).
+        \item The \textbf{array} is one kind of data structure.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{A Motivating Example}
+    \begin{itemize}
+        \item We want to write a program that will accept a collection of numerical grades, and then print out the mean grade.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{A Motivating Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+
+int main() {
+    int counter = 0;
+    float total = 0;
+    do {
+        scanf("%d", grade);
+        if (grade >= 0) {
+            total += grade;
+            counter++;
+        }
+    } while(grade >= 0);
+    float mean = total / counter;
+    printf("Mean for %d grades is %1.2f\n", counter, mean);
+    return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{A Motivating Example}
+    Now, the user wants us to print out the median grade:
+    \begin{itemize}
+        \item We don’t know in advance exactly how many grades we will be getting.
+        \begin{itemize}
+            \item (We can, however, enforce an upper limit on how many we can handle)
+        \end{itemize}
+        \item Can we do it ``in place'', as with calculating the mean?
+        \begin{itemize}
+            \item Unfortunately, no.
+        \end{itemize}
+        \item Can we do it with a collection of simple variables?
+        \begin{itemize}
+            \item No.
+        \end{itemize}
+        \item So, we need a special place to save all the input values.
+    \end{itemize}
+\end{frame}
+
+\section{Arrays}
+\begin{frame}{Arrays}
+    \only<1> {
+        \begin{itemize}
+            \item An array is a group of \underline{related data items} that all have the \underline{same data type}, and share a \underline{common name}.
+            \item Arrays can be of any data type we choose.
+            \item Arrays are \textit{static}, in that they remain the same size throughout program execution.
+            \item An array's data items are stored \textbf{contiguously} in memory.
+            \item Each of the data items is known as an \textbf{element} of the array. Each element can be accessed individually.
+        \end{itemize}
+    }
+    \only<2> {
+        \texttt{int numbers[5];}
+        \begin{itemize}
+            \item The name of this example array is ``numbers''.
+            \item This declaration sets aside a chunk of memory that is big enough to hold 5 integers.
+            \item It does not initialize those memory locations to 0 or any other value.  They contain garbage.
+            \item Initializing an array may be done with an array initializer, as in: \\ \texttt{int numbers[5] = \{5, 2, 6, 9, 3\};} \\
+            \texttt{numbers} $\rightarrow$
+            \begin{tabular}{|c|c|c|c|c|}
+                \hline
+                5 & 2 & 6 & 9 & 3 \\
+                \hline
+            \end{tabular}
+            \item Notice that \texttt{numbers} ``points'' to the data.
+        \end{itemize}
+    }
+    \only<3> {
+        \texttt{char name[5];}
+        \begin{itemize}
+            \item This example array is also known as a \textit{string}.
+            \item A string is an array of \texttt{char} elements, usually ending with a null terminator.
+            \item A string can also be initialized like this:\\ \texttt{char name[5] = \{`J', `o', `h', `n',`\textbackslash0'\};} \\ ~~ ~~ ~~ ~~ or: \\
+            \texttt{char name[5] = "John";} \\
+            \texttt{name} $\rightarrow$
+            \begin{tabular}{|c|c|c|c|c|}
+                \hline
+                `J' & `o' & `h' & `n' & `\textbackslash0' \\
+                \hline
+                74 & 111 & 104 & 110 & 0 \\
+                \hline
+            \end{tabular}
+            \item Notice that \texttt{name} ``points'' to the data, and the data is really stored as integers.
+        \end{itemize}
+    }
+\end{frame}
+
+\subsection{Array Elements}
+\begin{frame}[fragile]{Accessing Array Elements}
+    \begin{itemize}
+        \item Each element in an array has a \textbf{subscript} (\textbf{index}) associated with it.
+        \texttt{numbers} $\rightarrow$
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            5 & 2 & 6 & 9 & 3 \\
+            \hline
+        \end{tabular}
+        \item Subscript values are integers and always begin at zero.
+        \item Values of individual elements can be accessed by \textbf{indexing} into the array. For example: 
+        \begin{verbatim}
+printf("The third element is \%d.\n", numbers[2]);}\end{verbatim} ~~ ~~ would give the output: \\
+        \texttt{The third element is 6.}
+        \item A subscript can also be an expression which evaluates to an integer:
+        \begin{verbatim}
+numbers[(a + b) * 2]\end{verbatim}
+        \item Warning: If the index into the array is negative or too large, \underline{your program will crash}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Modifying Elements}
+    \begin{itemize}
+        \item Individual elements of an array can also be modified using subscripts. Example: \texttt{numbers[0] = 123;}
+        \item Initial values may be stored in an array using indexing, rather than using an array initializer. \\
+        \texttt{numbers[0] = 5;} \\
+        \texttt{numbers[1] = 2;} \\
+        \texttt{numbers[2] = 6;} \\
+        \texttt{numbers[3] = 9;} \\
+        \texttt{numbers[4] = 3;} \\
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Initializing Large Arrays}
+    \begin{itemize}
+        \item Some arrays can be quite large, and using an initializer can be impractical.
+        \item Large arrays are often intialized using a \texttt{for} loop.
+        \begin{verbatim}
+        for(i = 0; i < 1000; i++) {
+            numbers[i] = 0;
+        }
+        \end{verbatim}
+        \item Shortcut: if setting all elements to the same value, this is valid: \\
+        \texttt{int numbers[10] = \{0\};}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{More Declarations}
+    \texttt{int score[39], gradeCount[5];}
+    \begin{itemize}
+        \item Declares two arrays of type \texttt{int}.
+        \item Neither array has been initialized.
+        \item ``score'' contains 39 elements, representing each student.
+        \item ``gradeCount'' contains 5 elements, one for each possible grade letter.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Using \#define for Array Sizes}
+    \begin{verbatim}
+#define SIZE 39
+#define GRADES 5
+
+int main() {
+    int score[SIZE];
+    int gradeCount[GRADES];
+    
+    /* do some stuff */
+    
+    return 0;
+}
+    \end{verbatim}
+\end{frame}
+
+\section{Example Program}
+\begin{frame}{Example Using Arrays}
+    \underline{Problem:} Find the average test score and the number of each letter grade. \\
+    \underline{Design:} \\
+    \centering
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=5mm},
+        squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=3mm},
+        blanknode/.style={rectangle, draw=white!0, minimum size=0mm},
+        ]
+        %Nodes
+        \node[squarednode]  (heightfunc) [below=of mainnode] {\footnotesize{Print Instructions}};
+        %\node[squarednode]  (widthfunc) [right=4mm of heightfunc] {\footnotesize{Width function}};
+        \node[blanknode]    (midpoint)  [right=4mm of heightfunc] {};
+        \node[roundnode]    (mainnode)  [above=of midpoint]  {\footnotesize{main()}};
+        %\node[squarednode]  (solidline) [right=4mm of widthfunc]  {\footnotesize{Draw solid line}};
+        \node[squarednode]  (hollowline) [right=10mm of midpoint]  {\footnotesize{Calculate Average Score}};
+        
+        %Lines
+        \draw[->] (mainnode.south) -| (heightfunc.north);
+        %\draw[->] (mainnode.south) -| (widthfunc.north);
+        %\draw[->] (mainnode.south) -| (solidline.north);
+        \draw[->] (mainnode.south) -| (hollowline.north);
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+#define SIZE 39  /* number of tests */
+#define GRADES 5 /* number of letter grades, A-F */
+
+void PrintInstructions();
+float FindAverage(float sum, int quantity);
+
+int main() {
+    int i;                  /* loop counter */
+    int total;              /* total of all scores */
+    int score[SIZE];        /* student scores */
+    int gradeCount[GRADES]; /* counts of A's, B's, etc */
+    float average;          /* average score */
+    
+    /* Print instructions for the user */
+    PrintInstructions();
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    /* initialize counts to zero */
+    for(i = 0; i < GRADES; i++) {
+        gradeCount[i] = 0;
+    }
+    
+    /* fill array with scores */
+    for(i = 0; i < SIZE; i++) {
+        printf("Enter next score: ");
+        scanf("%d", &score[i]);
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    /* Calculate score total, count number of each grade */
+    for(i = 0; i < SIZE; i++) {
+        total += score[i];
+        switch(score[i] / 10) {
+            case 10:
+            case 9: gradeCount[4]++; break;
+            case 8: gradeCount[3]++; break;
+            case 7: gradeCount[2]++; break;
+            case 6: gradeCount[1]++; break;
+            default: gradeCount[0]++;
+        }
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    /* Calculate the average score */
+    average = FindAverage(total, SIZE);
+    
+    /* Print results */
+    printf("The class average is %.2f\n", average);
+    printf("There were %2d As\n", gradeCount[4]);
+    printf("           %2d Bs\n", gradeCount[3]);
+    printf("           %2d Cs\n", gradeCount[2]);
+    printf("           %2d Ds\n", gradeCount[1]);
+    printf("           %2d Fs\n", gradeCount[0]);
+    
+    return 0;
+} // end main()
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/******************************************************/
+** PrintInstructions - prints the user instructions
+** Inputs:  None
+** Outputs:  None
+/******************************************************/
+void PrintInstructions() {
+    printf("This program calculates the average score\n");
+    printf("for a class of 39 students. It also reports the\n");
+    printf("number of A's, B's, C's, D's, & F's. You will\n");
+    printf("be asked to enter the individual scores.\n");
+}
+    \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{``Clean'' Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/****************************************************/
+** FindAverage - calculates an average
+** Inputs:  sum - the sum of all values
+**          num - the number of values
+** Outputs:  the computed average
+/****************************************************/
+float FindAverage(float sum, int num) {
+    float average;   /* computed average */
+
+     if (num > 0) { / * error checking */
+          average = sum / num;
+     } else {
+          average = 0;
+    }
+    return average;
+}
+    \end{lstlisting}
+\end{frame}
+
+\subsection{Improvements}
+\begin{frame}{Improvements?}
+    \begin{itemize}
+        \item We're trusting the user to enter valid grades. Let's add input error checking.
+        \item If we aren't handling our array correctly, it's possible that we may be evaluating garbage rather than valid scores. We'll handle this by adding all the cases for F's (0 - 59) to our switch structure and using the default case for reporting errors.
+        \item We still have the ``magic numbers'' 4, 3, 2, 1, and 0 that are the quality points associated with grades. Let's use symbolic constants for these values, which reduces chances for errors by improving readability.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Improved Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+#define SIZE 39  /* number of tests */
+#define GRADES 5 /* number of letter grades, A-F */
+#define A 4      /* A's position in the grade count array */
+#define B 3      /* B's position */
+#define C 2      /* C's position */
+#define D 1      /* D's position */
+#define F 0      /* F's position */
+#define MAX 100  /* Maximum valid score */
+#define MIN 0    /* Minimum valid score */
+
+void PrintInstructions();
+float FindAverage(float sum, int quantity);
+
+int main() {
+    int i;                  /* loop counter */
+    int total;              /* total of all scores */
+    int score[SIZE];        /* student scores */
+    int gradeCount[GRADES]; /* counts of A's, B's, etc */
+    float average;          /* average score */
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Improved Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    /* Fill array with valid scores */
+    for(i = 0; i < SIZE; i++) {
+        printf("Enter next score: ");
+        scanf("%d ", &score [ i ] );
+        while( (score[i] < MIN)  ||  (score[i] > MAX) ) {
+            printf("Scores must be between");
+            printf("%d and %d\n", MIN, MAX);
+            printf("Enter next score: ");
+            scanf("%d", &score[i]);
+        }
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Improved Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    /* Calculate score total and count number of each grade */
+    for(i = 0; i < SIZE; i++) {
+        total += score [i];
+        switch(score[i ]/10) {
+            case 10 :
+            case   9 : gradeCount[A]++; break;
+            case   8 : gradeCount[B]++; break;
+            case   7 : gradeCount[C]++; break;
+            case   6 : gradeCount[D]++; break;
+            case   5 : case 4: case 3:
+            case   2 : case 1: case 0:
+                       gradeCount[F]++; break;
+            default : printf("Error, score %d is invalid.\n",
+                    score);
+        }
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Improved Example}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    /* Calculate the average score */
+    average = FindAverage(total, SIZE);
+    
+    /* Print results */
+    printf("The class average is %.2f\n", average);
+    printf("There were %2d As\n", gradeCount[A]);
+    printf("           %2d Bs\n", gradeCount[B]);
+    printf("           %2d Cs\n", gradeCount[C]);
+    printf("           %2d Ds\n", gradeCount[D]);
+    printf("           %2d Fs\n", gradeCount[F]);
+    
+    return 0;
+} // end main()
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Other Improvements?}
+    \begin{itemize}
+        \item Why is \texttt{main()} to large?
+        \item Couldn't we write functions to:
+        \begin{itemize}
+            \item Initialize an array to hold all zeroes?
+            \item Fill an array with the values entered by the user?
+            \item Count the grades and find the class average?
+            \item Print results?
+        \end{itemize}
+        \item Yes, arrays can be parameters to functions...
+    \end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,237 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Classwork 9},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Classwork 9}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 16 November 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Classwork 9: Simple Functions}.
+\normalsize
+\\ ~~ \\
+\textbf{In-class Date: Thursday 18 November}
+
+\section*{Objectives}
+\paragraph{}To practice implementing functions and passing arrays.
+
+\section*{Part 1: Counting Change}
+\paragraph{}For this part you will implement a simple function, called \texttt{countchange()}, that computes the value of a certain amount of change, given the number of coins of each kind.
+
+\subsection*{Example Compilation and Execution}
+\begin{verbatim}
+[rzak1@linux1 cw9]$ gcc -Wall countchange.c
+[cos1@linux1 cw9]$ ./a.out
+This program will compute the worth of your change.
+
+Enter number of quarters you have: 3
+Enter number of dimes you have: 2
+Enter number of nickels you have: 4
+Enter number of pennies you have: 3
+Your 3 quarters, 2 dimes, 4 nickels and 3 pennies are worth 118 cents.
+[rzak1@linux1 cw9]$ 
+\end{verbatim}
+
+\subsection*{Starter Code}
+\paragraph{}Use this code to help you get started.
+\begin{verbatim}
+/*****************************************
+** File:  countchange.c
+** Author: <myName>
+** Date:  <todaysDate>
+** Section: 01-LEC (10600)
+** E-mail: <myEmailAddress>
+**
+** This file contains the main program for part 1 of Classwork 9.
+** The program asks the user for a total number of 
+** quarters, dimes, nickels, and pennies, then
+** calculates and displays the total number of cents.
+*****************************************/
+
+#include <stdio.h>
+
+/*
+   The function prototype is written for you.
+   This prototype says that countchange() has four int parameters
+   and returns an int.
+*/
+
+int countchange(int , int , int , int );
+
+
+/* Don't change the main() function! */
+int main () {
+   int cents;
+   int quarters, dimes, nickels, pennies;
+
+   printf("This program will compute the worth of your change.\n\n");
+   printf("Enter number of quarters you have: ");
+   scanf("%d", &quarters);
+   printf("Enter number of dimes you have: ");
+   scanf("%d", &dimes);
+   printf("Enter number of nickels you have: ");
+   scanf("%d", &nickels);
+   printf("Enter number of pennies you have: ");
+   scanf("%d", &pennies);
+
+   cents = countchange(quarters, dimes, nickels, pennies);
+
+   printf("Your %d quarters, %d dimes, %d nickels and %d pennies", 
+      quarters, dimes, nickels, pennies);
+   printf(" are worth %d cents.\n", cents);
+
+   return 0;
+}
+/* end of main() function */
+
+
+/* Function countchange
+   
+   Computes the worth of the given number of quarters,
+   dimes, nickels and pennies.
+
+*/
+
+/* TODO: Implement your function here */
+\end{verbatim}
+
+\subsection*{Notes}
+\paragraph{}Below the main program, write the C code to implement the \texttt{countchange()} function. Give meaningful names to your parameters. To compute the total number of cents, use 25 for quarters, 10 for dimes, 5 for nickels and 1 for pennies. Be sure to use the += operator in your function.
+
+\section*{Part 2: Making Change}
+\paragraph{}For this part you will implement a simple function, called \texttt{makechange()}, that figures out how to make change for a given number of cents.
+
+\subsection*{Example Compilation and Execution}
+\begin{verbatim}
+[rzak1@linux1 cw9]$ gcc -Wall makechange.c
+[rzak1@linux1 cw9]$ ./a.out
+This program will figure out the change for you.
+
+Enter number of cents: 68
+Make change using 2 quarters, 1 dimes, 1 nickels and 3 pennies.
+[rzak1@linux1 cw9]$
+\end{verbatim}
+
+\paragraph{}In this example, the function \texttt{makechange()} determined that 2 quarters, 1 dime, 1 nickel and 3 pennies equals 68 cents. (This is the fewest number of coins you can have to make up 68 cents.) The function ``communicates'' this result to the main program using 4 reference parameters.
+
+\subsection*{Starter Code}
+\paragraph{}Use this code to help you get started.
+\begin{verbatim}
+/*****************************************
+** File:  makechange.c
+** Author: <myName>
+** Date:  <todaysDate>
+** Section: 01-LEC (10600)
+** E-mail: <myEmailAddress>
+**
+** This file contains the main program for part 2 of Classwork 9.
+** The program asks the user for a total number of cents
+** and makes change using quarters, dimes, nickels, and pennies.
+*****************************************/
+
+#include <stdio.h>
+
+/*
+   The function prototype is written for you.
+   This prototype says that makechange() has two parameters.
+   The first parameter is a normal int. The next
+   parameter is an integer array of length 4.
+*/
+
+void makechange(int , int []);
+
+/* Don't change the main() function!!! */
+int main () {
+   int cents;
+   int change[4];
+
+   printf("This program will figure out the change for you.\n\n");
+   printf("Enter number of cents: ");
+   scanf("%d", &cents);
+
+   makechange(cents, change);
+
+   printf("Make change using %d quarters, %d dimes, %d nickels and %d pennies.\n",
+      change[0], change[1], change[2], change[3]);
+
+   return 0;
+}
+/* end of main function */
+
+/* Function makechange
+   
+   Stores # of quarters, dimes, nickels and pennies
+   add up to n cents in the change array.
+*/
+
+/* TODO: Implement the function makechange() here: */
+\end{verbatim}
+
+\subsection*{Notes}
+\paragraph{}Below the main program, write the C code to implement the \texttt{makechange()} function. Give meaningful names to your parameters. Give the reference parameters names that immediately tell you they are array pointers to \texttt{int}.
+
+\paragraph{}To compute the number of quarters, dimes, nickels and pennies, you should use the integer division operator \texttt{/} and the modulus operator \texttt{\%}.
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item countchange.c header comment: 2 points
+    \item countchange.c body comments: 3 points
+    \item countchange.c compiles: 20 points
+    \item countchange.c counts change correctly: 25 points
+    \item makechange.c header comment: 2 points
+    \item makechange.c body comments: 3 points
+    \item makechange.c compiles: 20 points
+    \item makechange.c makes change correctly: 25 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}Use the \texttt{script} command to record yourself compiling and running your programs 3 times, using different numbers each time. (Do not record yourself editing your program!) Exit from \texttt{script}. Submit your programs and the typescript file.
+
+\begin{verbatim}
+[rzak1@linux1 cw9]$ submit cmsc104_10600 cw9 countchange.c makechange.c typescript
+\end{verbatim}
+
+\subsection*{Verify}
+\paragraph{}Make sure you submitted the assignment correctly.
+\begin{verbatim}
+[rzak1@linux1 cw9]$ submitls cmsc104_10600 cw9
+\end{verbatim}
+
+\end{document}
