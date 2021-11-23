@@ -1,0 +1,211 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Homework 9},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{placeins}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Homework 9}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 22 November 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Homework 9: Prime Functions}.
+\normalsize
+\\ ~~ \\
+\textbf{Due: Tuesday 30 November by 11:59PM} \\
+\textbf{Note:} Due to the Thanksgiving holiday, this assignment may be submitted up to two days late without penalty.
+
+\section*{Objectives}
+\paragraph{}More practice implementing functions.
+
+\section*{Assignment}
+\paragraph{}This assignment has two parts. In Part 1, you implement a function that checks if a number is prime. In Part 2, your function finds and returns a prime number greater than a given number.
+
+\subsection*{Part 1}
+\paragraph{}In Part 1, your assignment is to implement a function, called \texttt{isPrime()}, that checks if the parameter it is given is a prime number. Recall that a number is prime if it is only divisible by 1 and itself. By definition the number 1 is not prime. You can check if $n$ is divisible by $m$ using the modulus operator \texttt{\%} by checking whether $n \% m$ is zero. So, you simply have to iterate through all possible values of $m$ to determine whether $n$ is prime. (Actually, checking for $m$ up to square root of $n$ is sufficient.) If $n$ is indeed prime, then \texttt{isPrime(n)} must return 1. Otherwise, $n$ is composite and \texttt{isPrime(n)} must return 0.
+
+\subsubsection*{Example Compilation and Execution}
+\begin{verbatim}
+[rzak1@linux1 hw9]$ gcc -Wall isPrime.c -lm
+[rzak1@linux1 hw9]$ ./a.out
+Enter a number: 3
+Yes, 3 is prime.
+[rzak1@linux1 hw9]$ ./a.out
+Enter a number: 4
+No, 4 is not prime.
+[rzak1@linux1 hw9]$
+\end{verbatim}
+
+\subsubsection*{Starer Code}
+\begin{verbatim}
+/*****************************************
+** File:  isPrime.c
+** Author: <myName>
+** Date:  <todaysDate>
+** Section: 02-LEC (10600)
+** E-mail: <myEmailAddress>
+**
+** This file contains the main program for Part 1 of
+** Homework 9.
+** The program asks the user for a number and tells
+** them if it is prime.
+*****************************************/
+
+#include <stdio.h>
+#include <math.h>
+
+/* Function prototype */
+/* Don't change the function prototype! */
+
+int isPrime(int n) ;
+
+/* Do not change the main program!! */
+int main() {
+   int n ;
+
+   printf("Enter a number: ") ;
+   scanf("%d", &n) ;
+
+   if (isPrime(n)) {
+      printf("Yes, %d is prime.\n", n) ;
+   } else {
+      printf("No, %d is not prime.\n", n) ;
+   }
+   return 0 ;
+}
+
+/* End of main() */
+
+/* Add function comment header here. */
+
+/* Implement your isPrime() function here. */
+\end{verbatim}
+
+\subsection*{Part 2}
+\paragraph{}In Part 2, your assignment is to write a function \texttt{findPrime()} that finds the first prime number larger than the parameter $n$. Number theory tells us that there is always a prime number between $n$ and $2 \times n$. So, the search will always be successful. The first prime number is 2, so you can exit the function early if the user enters 1. Otherwise, you simply have to iterate through numbers bigger than $n$ until your \texttt{isPrime()} function from Part 1 tells you that you have found a prime.
+
+\subsubsection*{Example Compilation and Execution}
+\begin{verbatim}
+[rzak1@linux1 hw9]$ gcc -Wall findPrime.c -lm
+[rzak1@linux1 hw9]$ ./a.out
+Enter a number: 2
+3 is the first prime number greater than 2.
+[rzak1@linux1 hw9]$ ./a.out
+Enter a number: 4
+5 is the next prime number greater than 4.
+[rzak1@linux1 hw9]$
+\end{verbatim}
+
+\subsubsection*{Starter Code}
+\begin{verbatim}
+/*****************************************
+** File:  findPrime.c
+** Author: <myName>
+** Date:  <todaysDate>
+** Section: 02-LEC (10600)
+** E-mail: <myEmailAddress>
+**
+** This file contains the main program for Part 2 of
+** Homework 9.
+** The program asks the user for a number and tells
+** them the next prime number that comes after it.
+*****************************************/
+
+#include <stdio.h>
+#include <math.h>
+
+/* Function prototype */
+/* Do not change the function prototypes */
+
+int isPrime(int n) ;
+int findPrime(int n) ;
+
+/* Do not change the main program!! */
+int main() {
+   int n ;
+
+   printf("Enter a number: ");
+   scanf("%d", &n);
+
+   printf("%d is the first prime number greater than n.\n", findPrime(n));
+
+   return 0 ;
+}
+
+/* End of main() */
+
+/* Copy your isPrime() function here. */
+
+/* Add function header comment for findPrime() */
+
+/* Implement your findPrime function here. */
+\end{verbatim}
+
+\section*{Extra Credit}
+\paragraph{+10 points}Use separate compilation to organize your program. This means that Part 1 and Part 2 would each have their own \texttt{.c} and \texttt{.h} files, plus a separate \texttt{.c} with the \texttt{main()} function. That would mean a total of 6 files, and compiled without errors.
+\paragraph{+5}Build on to the separate compilation extra credit by using a Makefile. The Makefile would handle building both Part 1 and Part 2, and compile each \texttt{.c} file separately. That would be a total of 6 \textit{targets} in your Makefile, and compile properly without errors. Refer to the Makefile lecture on Blackboard for an example.
+\paragraph{Warning}If you do the extra credit, be sure to submit the extra files. If you only submit part, and your program doesn't compile, you will lose points.
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item Part 1 header comment: 2 points
+    \item Part 1 body comments: 3 points
+    \item Part 1 compiles: 20 points
+    \item Part 1 determines prime correctly: 25 points
+    \item Part 2 header comment: 2 points
+    \item Part 2 body comments: 3 points
+    \item Part 2 compiles: 20 points
+    \item Part 2 determines next prime correctly: 25 points
+    \item EC 1: +10 points
+    \item EC 2:  +5 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}Use the \texttt{script} command to record yourself compiling and running each program 3 times. (Do not record yourself editing your program!) Exit from \texttt{script}. Submit your programs and the typescript file. \underline{Note:} if you are doing the extra credit, there are more files to submit than what is listed below! All files must be submitted for any credit.
+\begin{verbatim}
+[rzak1@linux1 hw9]$ submit cmsc104_10600 hw9 isPrime.c findPrime.c typescript
+\end{verbatim}
+
+\subsection*{Verify Submission}
+\paragraph{}If you \textit{think} you submitted the assignment, but the \texttt{submitls} command doesn't show you your file names, then the files were \textbf{not} submitted and no grade will be given.
+\begin{verbatim}
+[rzak1@linux1 hw9]$ submitls cmsc104_10600 hw9
+\end{verbatim}
+
+\end{document}
