@@ -392,6 +392,23 @@ void DogInit(struct Dog *dog) {
     \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Struct Arrays}
+    Arrays of structs is also possible.
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+struct Dog {
+    char breed[10];
+    char name[10];
+    unsigned int age;
+    float weight;
+}
+
+Struct Dog mydog[5]; // Five-dog array
+
+mydog[2].name = "Fido"; // Index into an array of Structs
+                        // like any other array
+    \end{lstlisting}
+\end{frame}
+
 \subsection{Matrices}
 \begin{frame}[fragile]{How about Matrices?}
     \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
