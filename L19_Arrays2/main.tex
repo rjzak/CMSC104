@@ -1,0 +1,488 @@
+\documentclass[graphics]{beamer}
+\usepackage{graphicx}
+\usepackage{listings} % Syntax highlighing
+\usepackage{fancyvrb} % Inline verbatim
+\usepackage{hyperref} % Hyperlinks
+\usepackage{attachfile} % attach files
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage{multirow,tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\renewcommand{\arraystretch}{2}
+
+\usepackage[normalem]{ulem}               % to striketrhourhg text
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+% header in tables
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+% used for arrows from one point in the slide to another
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes, tikzmark, positioning}
+
+\newcommand{\backupbegin}{
+   \newcounter{framenumberappendix}
+   \setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{framenumberappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumberappendix}} 
+}
+
+\usetheme{Boadilla}
+\title{Lecture 18: Arrays, Part II}
+\author{UMBC CMSC 104}
+\date{Tu 30 November 2021}
+
+\begin{document}
+
+\begin{frame}{}
+\centering
+    Arrays, Part II
+\end{frame}
+
+\frame{\tableofcontents}
+
+\section{Array Declarations Revisited}
+\begin{frame}{Array Declarations Revisited}
+    \texttt{int numbers[5];}
+    \begin{itemize}
+        \item This declaration sets aside a chunk of memory which is big enough to hold 5 integers (total of 20 bytes or 160 bits)
+        \begin{itemize}
+            \item The elements of the array are initialized but still contain garbage.
+        \end{itemize}
+        \item Besides the space needed for the array, this is also a variable allocated which has the name of the array. This variable (a \textbf{pointer}) holds the address of the beginning address of the first element of the array.
+        \begin{itemize}
+            \item First element is at \textbf{index} zero, which is byte address \texttt{0xFE00}
+            \item The second element is at \textbf{index} one, which is byte address \texttt{0xFE04}
+        \end{itemize}
+    \end{itemize}
+    
+    \begin{tabularx}{\textwidth}{|*{7}{Y|}}
+        \multicolumn{1}{l}{numbers} & \multicolumn{1}{l}{~~} & \multicolumn{5}{l}{FE00}\\ \cline{1-1}\cline{3-7}
+        \multicolumn{1}{|c|}{FE00} & \multicolumn{1}{c|}{~~} & -- & -- & -- & -- & -- \\ \cline{1-1}\cline{3-7}
+        \multicolumn{2}{r}~~ & \multicolumn{1}{r}0 & \multicolumn{1}{r}1 & \multicolumn{1}{r}2 & \multicolumn{1}{r}3 & \multicolumn{1}{r}4
+    \end{tabularx}
+\end{frame}
+
+\begin{frame}[fragile]{Array Name Holds an Address}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+int main() {
+    int numbers[5] = {97, 68, 55, 73, 84};
+    printf("numbers[0] = %d, %c\n", numbers[0], numbers[0]);
+    printf("numbers = %X\n", numbers);
+    printf("&numbers[0] = %X\n", &numbers[0]);
+    return 0;
+}
+    \end{lstlisting}
+    Output:
+    \begin{verbatim}
+numbers[0] = 97, a
+numbers = FE00
+&numbers[0] = FE00
+    \end{verbatim}
+\end{frame}
+
+\subsection{Indexing}
+\begin{frame}{How Indexing Works}
+    \texttt{numbers[2] = 7;}
+    \begin{itemize}
+        \item The element assigned the value 7 is stored in a memory location which is calculated using the following formula: \\
+        \textbf{Location = (beginning address) + (index * sizeof(array type))} \\
+        Assuming a 4-byte (32-bit) integer: \\
+        \textbf{Location = FE00 + (2 * 4)}
+    \end{itemize}
+    
+    \begin{tabularx}{\textwidth}{|*{7}{Y|}}
+        \multicolumn{1}{l}{numbers} & \multicolumn{1}{l}{~~} & \multicolumn{1}{l}{FE00} & \multicolumn{1}{l}{FE04} & \multicolumn{1}{l}{FE08} & \multicolumn{1}{l}{FE0C} & \multicolumn{1}{l}{FE10} \\ \cline{1-1}\cline{3-7}
+        \multicolumn{1}{|l|}{FE00} & \multicolumn{1}{c|}{~~} & 97 & 68 & 7 & 73 & 84 \\ \cline{1-1}\cline{3-7}
+        \multicolumn{2}{r}~~ & \multicolumn{1}{r}{0} & \multicolumn{1}{r}{1} & \multicolumn{1}{r}{2} & \multicolumn{1}{r}{3} & \multicolumn{1}{r}{4}
+    \end{tabularx}
+\end{frame}
+
+\begin{frame}{Indexing Arrays}
+    \begin{itemize}
+        \item As long as we know:
+        \begin{itemize}
+            \item the beginning location of an array,
+            \item the data type being held in the array, and
+            \item the size of the array (so we don't overstep our bounds),
+        \end{itemize}
+        then we can access or modify any of its elements using indexing.
+        \item The array name alone (without []) is just a variable which holds a pointer, which indicates (or \textit{points to}) the block of memory where the array is held.
+    \end{itemize}
+\end{frame}
+
+\section{Pass by Value vs Reference}
+\begin{frame}{Call (Pass) by Value}
+    \begin{itemize}
+        \item So far, we have passed only values to functions.
+        \item The function has a local variable (a formal parameter) to hold its own copy of the value passed in.
+        \item When we make changes to this copy, the original (corresponding actual parameter) remains unchanged.
+        \item This is known as \textbf{calling (passing) by value}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Passing Arrays to Functions}
+    \begin{itemize}
+        \item The function prototype: \texttt{void FillArray(int nums[], int numElements);}
+        \item The function call: \texttt{FillArray(numbers, 5);}
+        \item This example passes the name of the array (pointer), and doesn't have a return value. This is because the array will be directly modified from the function.
+        \item This is known as \textbf{calling (passing) by reference}.
+        \item When passing by reference, the function makes changes to the original, and no copy is made.
+        \item This is especially helpful for large arrays, where we wouldn't want to waste memory with a copy of the array.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Passing an Array to a Function}
+    \begin{columns}
+        \column[t]{5cm}
+            \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red},tabsize=2]
+#include<stdio.h>
+#define SIZE 4
+void FillArray(int array[],
+  int size);
+int main() {
+  int i;
+  int someArray[SIZE];
+  FillArray(someArray, SIZE);
+  for(i = 0; i < SIZE; i++) {
+      printf("someArray[%d] = %d\n",
+        i, someArray[i]);
+  }
+  return 0;
+}
+            \end{lstlisting}
+        \column[t]{6cm}
+            \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+void FillArray(int array[], int size) {
+    int i;
+    for(i = 0; i < size; i++) {
+        array[i] = i;
+    }
+}
+            \end{lstlisting}
+            ~~ \\ ~~ \\ ~~ \\ ~~ \\ Output:
+            \footnotesize
+            \begin{verbatim}
+someArray[0] = 0
+someArray[1] = 1
+someArray[2] = 2
+someArray[3] = 3
+            \end{verbatim}
+    \end{columns}
+\end{frame}
+
+\section{Example: Grades Program}
+\begin{frame}{Grades Program Using Pass by Reference}
+    \underline{Problem:} Find the average test score and number of A's, B's, C's, D's, F's for a particular class.
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Grades (continued from prior lecture)}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+#define  SIZE       39
+#define  GRADES     5
+#define  A          4
+#define  B          3
+#define  C          2
+#define  D          1
+#define  F          0
+#define  MAX        100
+#define  MIN        0
+void PrintInstructions();
+void InitArray(int anArray[ ], int size);
+void FillArray(int anArray[ ], int size);
+float ProcessGrades(int score[ ], int size, int gradeCount[ ]);
+float FindAverage(float sum, int num);
+void  PrintResults(float average, int gradeCount[ ]);
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Grades (cont'd)}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+int main() {
+    int score [SIZE];       /* student scores                   */
+    int gradeCount[GRADES]; /* count of A's, B's, C's, D's, F's */
+    float average;          /* average score                    */
+    
+    PrintInstructions();
+    InitArray(gradeCount, GRADES);
+    FillArray(score, SIZE);
+    average = ProcessGrades(score, SIZE, gradeCount);
+    PrintResults(average, gradeCount);
+
+    return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Grades (cont'd)}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/*********************************************************
+** PrintInstructions - prints the user instructions
+** Inputs:  None
+** Outputs:  None
+**********************************************************/
+void PrintInstructions() {
+    printf("This program calculates the average score\n");
+    printf("for a class of 39 students. It also reports the\n");
+    printf("number of As, B's, C's, D's, and F's. You will\n");
+    printf("be asked to enter the individual scores.\n");
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Grades (cont'd)}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/**********************************************************
+** InitArray - initializes an integer array to all zeros
+** Inputs:  anArray - array to be initialized
+**              size - size of the array
+** Outputs:  None
+***********************************************************/
+void InitArray(int anArray[ ], int size) {
+    int i;
+    for (i = 0; i < size; i++ ) {
+        anArray[i] = 0;
+    }
+}    
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Grades (cont'd)}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/******************************************************************
+** FillArray - fills an integer array with valid values that
+**                are entered by the user.  
+**                Assures the values are between MIN and MAX.
+** Inputs:  anArray - array to fill
+** Outputs:  size - size of the array
+** Side Effect - MIN and MAX must be #defined in this file
+********************************************************************/
+void FillArray(int anArray [ ], int size) {
+     int i;   /* loop counter */
+     for( i = 0; i < size; i++ ) {
+         printf("Enter next value: ");
+         scanf("%d", &anArray[ i ]);
+         while( (anArray[ i ] < MIN) || (anArray[ i ] > MAX) ) {
+              printf("Values must be between %d and %d\n", MIN, MAX);
+              printf("Enter next value: ");
+              scanf("%d", &anArray[ i ]);
+         }
+     }
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Grades (cont'd)}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/*******************************************************************
+** ProcessGrades- counts letter grade totals, computes average
+** Inputs: score- array of student scores, size- size of the array
+           gradeCount- grade counts all initialized to zero
+** Outputs: gradeCount- number of A's, B's, C's, D's, and F's
+** Side Effect:  A, B, C, D, and F must be #defined in this file
+********************************************************************/
+float ProcessGrades(int score[ ], int size, int gradeCount [ ]) {
+    int i, total = 0;  /* loop counter, total of all scores */
+    float average;     /* average score      */
+    for( i = 0 ; i < size ; i++) {
+        total += score[ i ];
+        switch(score[ i ] / 10) {
+            case 10: case 9: gradeCount [A]++; break;
+            case 8: gradeCount[B]++; break;
+            case 7: gradeCount[C]++; break;
+            case 6: gradeCount[D]++; break;
+            case 5: case 4: case 3: case 2:
+            case 1: case 0: gradeCount[F]++; break;
+            default: printf("Score %d invalid.\n", score);
+        }
+    }
+    average = findAverage(total, size);
+    return average;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Grades (cont'd)}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/*****************************************************
+** FindAverage - calculates an average
+** Inputs:  sum - the sum of all values
+**              num - the number of values
+** Outputs:  the computed average
+******************************************************/
+float FindAverage(float sum, int num) {
+    float average;   /* computed average */
+     if ( num != 0 ) {
+          average = sum / num;
+     } else {
+          average = 0 ;
+    }
+
+    return average;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Clean'' Grades (cont'd)}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/******************************************************************
+** PrintResults - prints the class average and grade distribution
+** Inputs:  average - class average
+**          gradeCount - number of A's, B's, C's, D's, F's
+** Outputs:  None
+** Side Effect: A, B, C, D, F must be #defined in this file
+*******************************************************************/
+void PrintResults(float average, int gradeCount[ ]) {
+    printf("The class average is %.2f\n", average);
+    printf("There were %2d As\n", gradeCount[A]);
+    printf("           %2d Bs\n", gradeCount[B]);
+    printf("           %2d Cs\n", gradeCount[C]);
+    printf("           %2d Ds\n", gradeCount[D]);
+    printf("           %2d Fs\n", gradeCount[F]);
+}
+    \end{lstlisting}
+\end{frame}
+
+\appendix
+\section*{One More Thing}
+\begin{frame}[fragile]{One More Thing: Non-Array Pointers}
+    \begin{itemize}
+        \item An array declaration is a pointer to the memory, for example: \texttt{int numbers[5];}
+        \item We can also have pointers to non-arrays, such as: \\
+        \texttt{int myNum = 2;}\\
+        \texttt{int *myNumPtr = \&myNum;}
+        \item Functions can receive pointers, and change the values they represent.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Struct \& Pointer Example}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+struct Dog {
+    char breed[10];
+    char name[10];
+    unsigned int age;
+    float weight;
+}
+
+void DogInit(struct Dog *dog);
+
+int main() {
+    struct Dog mydog;
+    DogInit(&mydog);
+    printf("%s weighs %1.2f pounds.\n", mydog.name, mydog.weight);
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Struct \& Pointer Example}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+void DogInit(struct Dog *dog) {
+    dog->breed = "Retriever";
+    dog->name = "Fido";
+    dog->age = 2;
+    dog->weight = 30.1;
+    // -> is shorthand for:
+    // &(dog).weight = 31;
+}
+    \end{lstlisting}
+\end{frame}
+
+\subsection{Matrices}
+\begin{frame}[fragile]{How about Matrices?}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+#define M 2
+#define N 3
+int main() {
+  // matrix[outer][inner]
+  int matrix[M][N] = {{1,2,3}, {4,5,6}};
+  int i, j;
+  for(i = 0; i < M; i++) {
+     for(j = 0; j < N; j++) {
+         printf("matrix[%d][%d] = %d\n", i, j, matrix[i][j]);
+     }
+  }
+  return 0;
+}
+    \end{lstlisting}
+    Output:
+    \scriptsize
+    \begin{verbatim}
+matrix[0][0] = 1
+matrix[0][1] = 2
+matrix[0][2] = 3
+matrix[1][0] = 4
+matrix[1][1] = 5
+matrix[1][2] = 6
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Matrix Function Example}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+#define M 2
+#define N 3
+void MatrixInit(int matrix[][N], int rows);
+void MatrixPrint(int matrix[][N], int rows);
+int main() {
+  // matrix[outer][inner]
+  int matrix[M][N] = {{1,2,3}, {4,5,6}};
+  MatrixInit(matrix, M);
+  MatrixPrint(matrix, M);
+  for(i = 0; i < M; i++) {
+     for(j = 0; j < N; j++) {
+         printf("matrix[%d][%d] = %d\n", i, j, matrix[i][j]);
+     }
+  }
+  return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Matrix Function Example}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+void MatrixInit(int matrix[][N], int rows) {
+    int i, j;
+    for (i = 0; i < rows;i++) {
+        for (j = 0; j < N; j++) {
+            matrix[i][j] = i + j;
+        }
+    }
+}
+
+void MatrixPrint(int matrix[][N], int rows) {
+    int i, j;
+    for(i = 0; i < rows; i++) {
+            for(j = 0; j < N; j++) {
+                    printf("  %d", matrix[i][j]);
+            }
+            printf("\n");
+    }
+}
+    \end{lstlisting}
+    Output:
+    \scriptsize
+    \begin{verbatim}
+  0  1  2
+  1  2  3
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{Matrices}
+    \begin{itemize}
+        \item Matrices, and higher dimension arrays (or, more generally, \textbf{multidimensional arrays}) are possible.
+        \item Indexing into a matrix has two brackets, first to index into the array for that row, then for the element of that array. A matrix is basically an array of arrays.
+        \item Passing a matrix to a function requires specifying the size of the matrix for the second dimensional size.
+        \begin{itemize}
+            \item For higher dimensional arrays, only the first dimension can be empty.
+            \item 3D array: \texttt{int three\_d\_array[10][20][30];}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\end{document}
