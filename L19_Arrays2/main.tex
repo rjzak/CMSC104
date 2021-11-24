@@ -348,8 +348,7 @@ void PrintResults(float average, int gradeCount[ ]) {
     \end{lstlisting}
 \end{frame}
 
-\appendix
-\section*{One More Thing}
+\section*{Pointers}
 \begin{frame}[fragile]{One More Thing: Non-Array Pointers}
     \begin{itemize}
         \item An array declaration is a pointer to the memory, for example: \texttt{int numbers[5];}
@@ -409,7 +408,7 @@ mydog[2].name = "Fido"; // Index into an array of Structs
     \end{lstlisting}
 \end{frame}
 
-\subsection{Matrices}
+\section{Matrices}
 \begin{frame}[fragile]{How about Matrices?}
     \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
 #include<stdio.h>
@@ -500,6 +499,309 @@ void MatrixPrint(int matrix[][N], int rows) {
             \item 3D array: \texttt{int three\_d\_array[10][20][30];}
         \end{itemize}
     \end{itemize}
+\end{frame}
+
+\subsection{Example: Further Grades Program improvement}
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: \#defines, arrays}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include<stdio.h>
+#include<stdbool.h>
+
+#define CLASS_SIZE 10
+#define GRADES 5
+#define PLUS_MINUS_SIZE 3
+#define A 4
+#define B 3
+#define C 2
+#define D 1
+#define F 0
+#define PLUS 0
+#define REGULAR 1
+#define MINUS 2
+#define MAX 100
+
+const char GRADE_LETTERS[GRADES] = {'F', 'D', 'C', 'B', 'A'};
+const char PLUS_MINUS[PLUS_MINUS_SIZE] = {'+', ' ', '-'};
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: Struct \& Prototypes}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+typedef struct {
+    float mean; /* average of all scores */
+    unsigned int median; /* when sorted, which grade is in the middle? */
+    unsigned int max;    /* max score */
+    unsigned int min;    /* minimum score */
+} ClassStatistics;
+
+void PrintInstructions();
+void GetScores(unsigned int scores[], const unsigned int size);
+ClassStatistics CalcStats(unsigned int scores[],
+    const unsigned int size,
+    unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE]);
+
+void swap(unsigned int *p, unsigned int *q);
+void sort(unsigned int scores[], const unsigned int size);
+void PrintStats(const ClassStatistics stats,
+    const unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE]);
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: main()}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+int main() {
+    /* Grades are never negative, so we'll use unsigned integers */
+    unsigned int scores[CLASS_SIZE] = {0};
+    unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE] = {0};
+
+    PrintInstructions();
+    GetScores(scores, CLASS_SIZE);
+    ClassStatistics stats = CalcStats(scores, CLASS_SIZE,
+        gradesCount);
+    PrintStats(stats, gradesCount);
+
+    return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs}
+    \textit{Almost} the same \texttt{PrintInstructions()} function.
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/*********************************************************
+** PrintInstructions - prints the user instructions
+** Inputs:  None
+** Outputs:  None
+** Notes: CLASS_SIZE must be #defined in this file
+**********************************************************/
+void PrintInstructions() {
+    printf("This program calculates the average score\n");
+    printf("for a class of %d students. It also reports the\n",
+        CLASS_SIZE);
+    printf("number of As, B's, C's, D's, and F's. You will\n");
+    printf("be asked to enter the individual scores.\n");
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: GetScores()}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/****************************************************************
+** GetScores - fills an unsigned integer array with valid values
+**                that are entered by the user.  
+**                Assures the values are between zero and MAX.
+** Inputs:  scores - array to fill
+** Outputs: size - size of the array
+** Notes: MAX must be #defined in this file
+******************************************************************/
+void GetScores(unsigned int scores[], const unsigned int size) {
+    int i;
+    for(i = 0; i < size; i++) {
+        printf("Enter next value: ");
+        scanf("%u", &scores[i]); // %u for unsigned ints!
+        while( scores[i] > MAX) {
+            printf("Values must not be greater than %d.\n", MAX);
+            printf("Enter next value: ");
+            scanf("%u", &scores[i]);
+        }
+    }
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: CalcStats()}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/*****************************************************************
+** CalcStats - Returns statistical information about the grades
+** Inputs:  scores array, size of scores array, and grades matrix
+** Outputs: statistics struct
+** Notes: Letter grades, GRADES, PLUS_MINUS_SIZE, MINUS, REGULAR,
+**        PLUS must be #defined in this file
+*******************************************************************/
+ClassStatistics CalcStats(unsigned int scores[],
+    const unsigned int size,
+    unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE]) {
+    
+    unsigned int i, total = 0;
+    ClassStatistics stats;
+    for(i = 0; i < size; i++) {
+        total += scores[i];
+        if (i == 0) {// assume first element is largest, smallest
+            stats.max = scores[i];
+            stats.min = scores[i];
+        } else {
+            if (stats.max < scores[i])
+                stats.max = scores[i];
+            if (stats.min > scores[i])
+                stats.min = scores[i];
+        }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: CalcStats()}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+        switch(scores[i]/10) {
+            case 10: gradesCount[A][PLUS]++; break;
+            
+            /* There has to be a better way to handle plus/minus,
+               is there a common way to have the cut-off values? */
+            case 9:
+                if (scores[i] >= 97) {
+                    gradesCount[A][PLUS]++;
+                } else if (scores[i] > 92) {
+                    gradesCount[A][REGULAR]++;
+                } else {
+                    gradesCount[A][MINUS]++;
+                }
+                break;
+            case 8:
+                if (scores[i] >= 87) {
+                    gradesCount[B][PLUS]++;
+                } else if (scores[i] > 82) {
+                    gradesCount[B][REGULAR]++;
+                } else {
+                    gradesCount[B][MINUS]++;
+                }
+                break;
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: CalcStats()}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+            case 7:
+                if (scores[i] > 77) {
+                    gradesCount[C][PLUS]++;
+                } else if (scores[i] > 72) {
+                    gradesCount[C][REGULAR]++;
+                } else {
+                    gradesCount[C][MINUS]++;
+                }
+                break;
+            case 6:
+                if (scores[i] > 67) {
+                    gradesCount[D][PLUS]++;
+                } else if (scores[i] > 62) {
+                    gradesCount[D][REGULAR]++;
+                } else {
+                    gradesCount[D][MINUS]++;
+                }
+                break;
+            /* F is a special case, no plus or minus */
+            case 5: case 4: case 3: case 2:
+            case 1: case 0: gradesCount[F][REGULAR]++; break;
+            default: printf("Invalid score %d found at index %d.\n", scores[i], i);
+        } // end switch
+    } // end for
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: CalcStats()}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    stats.mean = (float) total / (float) size;
+    
+    sort(scores, size); // Must sort the array first...
+    stats.median = scores[(size+1) / 2 -1]; // get middle value
+    
+    return stats;
+} // end CalcStats()
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: Sorting}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/*********************************************************
+** swap: swaps two locations in an unsigned integer array
+** Inputs: p & q are pointers to specific positions in the array
+** Outputs: None, modifies the contents of the array
+*********************************************************/
+void swap(unsigned int *p, unsigned int *q) {
+   unsigned int temp = *p;
+   *p = *q;
+   *q = temp;
+}
+/*********************************************************
+** sort: sorts an array from low to high
+** Inputs: unsigned integer array, size
+** Outputs: None, modifies the contents of the array
+**********************************************************/
+void sort(unsigned int scores[], const unsigned int size) { 
+   unsigned int i, j;
+   for(i = 0; i < size-1; i++) {
+      for(j = 0; j < size-i-1; j++) {
+         if (scores[j] > scores[j+1])
+            swap(&scores[j], &scores[j+1]);
+      }
+   }
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: PrintStats()}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+/******************************************************************
+** PrintResults - prints the class average and grade distribution
+** Inputs:  stats is the struct with several measured data points
+**          gradesCount matrix which has the totalled grades with
+**                      plus, minus, and regular values
+** Outputs:  None
+** Notes:: A, B, C, D, F must be #defined in this file
+*******************************************************************/
+void PrintStats(const ClassStatistics stats,
+    const unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE]) {
+    
+    unsigned int i, j;
+    bool first = true;
+    printf("The class average is %.2f, median is %d\n",
+        stats.mean, stats.median);
+    printf("Max: %d, Min: %d\n", stats.max, stats.min);
+
+    for(i = GRADES-1; i >= 0; i--) {
+        if (i == F) { /* F is a special case, no plus or minus */
+            printf("           %2d %c\n", gradesCount[i][REGULAR],
+                GRADE_LETTERS[i]);
+            break;
+        }
+        
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: PrintStats()}
+    \begin{lstlisting}[language=C,basicstyle=\scriptsize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+        for(j = 0; j < PLUS_MINUS_SIZE; j++) {
+            if (first) { // Easy way to have cleaner output
+                printf("There were ");
+                first = false;
+            } else {
+                printf("           ");
+            }
+            printf("%2d %c%c\n", gradesCount[i][j], GRADE_LETTERS[i],
+                PLUS_MINUS[j]);
+        }
+    }
+} // end PrintStats()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Grades Program with Matrices \& Structs: Example Output}
+    \scriptsize
+    \begin{verbatim}
+The class average is 80.28, median is 83
+Max: 100, Min: 14
+There were  6 A+
+            5 A 
+            5 A-
+            1 B+
+            5 B 
+            5 B-
+            0 C+
+            1 C 
+            2 C-
+            0 D+
+            4 D 
+            2 D-
+            3 F
+    \end{verbatim}
+    Full code: \textattachfile[color=1 0 0]{grades_matrices.c}{grades\_matrices.c}
 \end{frame}
 
 \end{document}
