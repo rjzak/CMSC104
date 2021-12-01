@@ -1,0 +1,155 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Practice Quiz 5},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Practice Quiz 5}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 30 November 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Practice Quiz 5}
+\normalsize
+
+\paragraph{}Please answer the following questions. Partial credit may be given for incomplete free response questions.
+
+\begin{enumerate}
+    \item Fill in the blank in each of the following statements:
+    \begin{enumerate}
+        \item Function \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} are made after the function prototype.
+        \item The \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} function returns an \texttt{int}.
+        \item All elements of an array have the \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~} data type.
+        \item When we don't want to change the parameters, they are passed by \underline{~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~}.
+    \end{enumerate}
+    
+    \item Write a function prototype for a function which calculates the total bill given the bill subtotal, the percent tax, and suggested tip percentage. The function return type should be \texttt{float}, the function name should be \texttt{calculateTotalBill}, and it will take the following parameters: a \texttt{float} for the bill subtotal called \texttt{subTotal}, an integer for the percent tax called \texttt{percentTax}, and a \texttt{float} for the suggested tip percentage called \texttt{suggestedTipPercentage}. \\
+    \underline{Extra Credit:} Implement the function definition.
+    
+    \item Which of the following is \textit{generally not} part of the function definition?
+    \begin{enumerate}
+        \item return type
+        \item function name
+        \item parameters
+        \item function call
+    \end{enumerate}
+    
+    \item Write a block of code to declare a 25-element character array called \texttt{charArray} and set all of its elements to `x'.
+    
+    \item Explain why we use external libraries, then give an example of an external library we've already used this semester. \\
+    \underline{Extra Credit:} Write a code snippet using this example.
+    
+    \item Review the following code and answer the questions below:
+    \begin{verbatim}
+#include <stdio.h>
+
+int multiplyTwoNumbers(int , int );
+
+int main() {
+   int num1 = 3, num2 = 6, num3;
+   num3 = multiplyTwoNumbers(num1, num2);
+   printf("Multiplying num1 by num2 = %d\n", num3);
+   return 0;
+}
+
+int multiplyTwoNumbers(int num2, int num1) {
+   return num1 * num2;
+}
+    \end{verbatim}
+    \begin{enumerate}
+        \item What is the value of \texttt{num2} in the function \texttt{multiplyTwoNumbers}?
+        \item What is the value of \texttt{num1} in the function \texttt{multiplyTwoNumbers}?
+        \item What is the value of \texttt{num3} in the \texttt{printf} statement in main?
+        \item What is the value of \texttt{num1} after the \texttt{printf} statement in main?
+        \item What is the value of \texttt{num2} after the \texttt{printf} statement in main?
+    \end{enumerate}
+    
+    \item Write function prototypes for:
+    \begin{enumerate}
+        \item A function \texttt{volume} that takes three integers \texttt{a}, \texttt{b}, and \texttt{c} and returns an \texttt{int}.
+        \item A function \texttt{e} that takes two \texttt{double}s \texttt{mc} and \texttt{hammered} and returns a \texttt{double}.
+        \item function \texttt{bac} that takes a double \texttt{pct} and three integers, \texttt{oz}, \texttt{weight}, and \texttt{hours}, and returns a \texttt{double}.
+    \end{enumerate}
+    
+    \item You have a list of 10 class grades, stored as integer values between 0 and 100 and sorted from lowest to highest in an array called \texttt{grades}. Write code to do the following, calculating the index for a and b and using the provided index for c and d:
+    \begin{enumerate}
+        \item Change the 3\textsuperscript{rd} highest score to a 50.
+        \item Change the 4\textsuperscript{th} lowest score to a 100.
+        \item Add 7 (using +=) to the score in position 2.
+        \item Subtract 1 (using post-decrement -- --) from the score in position 5.
+    \end{enumerate}
+    
+    \item What do the following functions do? Assume function prototypes already exist.
+    \begin{verbatim}
+int countMisses(int hits[5], int rolls[5], int bonuses[5]) {
+  int numMisses = 0;
+  for(int i = 0; i < 5; ++i) {
+    numMisses += hitOrMiss(hits[i], rolls[i], bonuses[i]);
+  }
+  return numMisses;
+}
+
+int hitOrMiss(int hit, int roll, int bonus) {
+  return ((roll == 1) || ((roll + bonus) < hit)));   
+}
+    \end{verbatim}
+    \underline{Extra credit:} What is the maximum possible value from \texttt{countMisses()}?
+    
+    \newpage
+    \item Fill in the blanks of the following program that initializes an array to store its index values in each element (i.e. index 1 stores 1) and counts how many odd and even values there are. \\
+    \underline{Extra Credit:} Print the program’s output.
+    \begin{verbatim}
+include <stdio.h>
+#define SIZE 5
+int main() {
+  int myArray[SIZE];
+  int numEvens = 0, numOdds = 0;
+  for (int i = __; i < _______; ++i) {
+    myArray[__] = ___;
+    if ((myArray[___] % 2) != 0) ++_______;
+    else ++________;
+  }
+  printf("In an array of size ___, there are:\n", ______);
+  printf("Odds: %d\n", numOdds);
+  printf("Evens: %d\n", numEvens);
+  return 0;
+}
+    \end{verbatim}
+\end{enumerate}
+
+\end{document}
