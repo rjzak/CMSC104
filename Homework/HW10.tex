@@ -1,0 +1,134 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Homework 10},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{placeins}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+\usepackage{attachfile} % attach files
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Homework 10}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 01 December 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Homework 10: Median}
+\normalsize
+\\ ~~ \\
+\textbf{Due: Thursday 16 December by 11:59PM}
+
+\section*{Objectives}
+\paragraph{}More practice working with arrays.
+
+\section*{Assignment}
+\paragraph{}This assignment is a continuation of Classwork 10. (NOTE: You must still submit Classwork 10 and Homework 10 separately.) For this homework assignment, embellish your program from Classwork 10 by also printing out the number of scores and calculating the median score.
+
+\paragraph{}Recall that the median of a sequence of numbers, $\{x_1, x_2, \ldots, x_n\}$, is the value x such that half of the numbers are less than or equal to x and half of the numbers are greater than or equal to x (NOTE: If there are an even number of values, then two values might be considered the median. Just report one of these two values, do NOT take the average). For example, the median of $\{1, 7, 2, 2, 4, 2, 9, 3, 7\}$ is 3 because 4 values (1, 2, 2, 2) are less than 3 and 4 values (7, 4, 9, 7) are greater than 3.
+
+\subsection*{Example Compilation and Execution}
+\begin{verbatim}
+[rzak1@linux1 hw10]$ gcc -Wall median.c
+[rzak1@linux1 hw10]$ ./a.out < hw10test1.txt
+The number of scores is 21.
+The average score is: 13.047619
+count[0] is 0.
+count[1] is 1.
+count[2] is 2.
+count[3] is 0.
+count[4] is 0.
+count[5] is 0.
+count[6] is 0.
+count[7] is 1.
+count[8] is 1.
+count[9] is 1.
+count[10] is 0.
+count[11] is 1.
+count[12] is 2.
+count[13] is 1.
+count[14] is 0.
+count[15] is 1.
+count[16] is 2.
+count[17] is 2.
+count[18] is 1.
+count[19] is 2.
+count[20] is 3.
+The mode of the scores is 20. It occurred 3 times.
+The median score is 15.
+[rzak1@linux1 hw10]$
+\end{verbatim}
+
+\subsection*{Notes}
+\begin{itemize}
+    \item Make a \textbf{copy} of your program from Classwork 10.
+    \begin{verbatim}
+[rzak1@linux1 ~]$ cp ~/cs104/cw10/mode.c ~/cs104/hw10/median.c
+    \end{verbatim}
+    \item Two input files have been prepared for you: ``hw10test1.txt'' and ``hw10test2.txt''. The first one is a small file with only 21 numbers that is useful for testing while you develop your program. The second file has 999 numbers.
+    \begin{itemize}
+        \item \textattachfile[color=1 0 0]{hw10test1.txt}{hw10test1.txt}
+        \item \textattachfile[color=1 0 0]{hw10test2.txt}{hw10test2.txt}
+    \end{itemize}
+    \item It is useful to print out $n$ just for debugging/development purposes.
+    \item Think about how to calculate the median. You already have the \texttt{count[]} array computed. If you iterate through the \texttt{count[]} array, you should be able to determine when half of the scores have been encountered. Then you have the median. Do this by hand on a small example first.
+\end{itemize}
+
+\section*{Grading Rubric}
+\begin{itemize}
+    \item Header comment: 2 points
+    \item Body comments: 3 points
+    \item Compiles: 35 points
+    \item Prints number of scores: 5 points
+    \item Prints average correctly: 5 points
+    \item Prints out the scores correctly: 5 points
+    \item Finds mode: 5 points
+    \item Finds median correctly: 40 points
+\end{itemize}
+
+\section*{What to Submit}
+\paragraph{}Use the \texttt{script} command to record yourself compiling and running your programs 3 times, using different numbers each time. (Do not record yourself editing your program!) Exit from \texttt{script}. Submit your programs and the typescript file.
+
+\begin{verbatim}
+[rzak1@linux1 hw10]$ submit cmsc104_10600 hw10 median.c typescript
+\end{verbatim}
+
+\subsection*{Verify}
+\paragraph{}Make sure you submitted the assignment correctly.
+\begin{verbatim}
+[rzak1@linux1 hw10]$ submitls cmsc104_10600 hw10
+\end{verbatim}
+
+\end{document}
