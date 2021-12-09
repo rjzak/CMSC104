@@ -1,0 +1,326 @@
+\documentclass[letter,11pt]{article}
+\usepackage[breaklinks]{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={XYZ null null 1.00},    % disable zoom
+    pdftitle={Practice Final Exam with Answers},    % title
+    pdfauthor={Richard Zak},     % author
+    pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
+    pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\pagestyle{fancy}
+\usepackage[letterpaper, margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{parskip} % Disable initial indent
+\usepackage{color,soul} % Highligher
+\usepackage[normalem]{ulem} % Strikethrough with \sout{}
+\usepackage{bbding} % For checkmark in itemize
+\newcommand*\tick{\item[\Checkmark]}
+\newcommand*\fail{\item[\XSolidBrush]}
+
+\usepackage[utf8]{inputenc}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
+\rhead{CMSC 104 Section 01: Practice Final with Answers}
+%\rhead{}
+\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\cfoot{\thepage}
+\rfoot{\input{semester}}
+\lfoot{CMSC 104 Section 01}
+\AtEndDocument{\vfill \footnotesize{Last modified: 08 December 2021}}
+\AtEndDocument{\rfoot{\input{semester}}}
+\renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
+
+\begin{document}
+
+\huge
+\textbf{Practice Final with Answers}
+\normalsize
+
+\paragraph{}Please answer the following questions. Partial credit may be given for incomplete free response questions.
+
+\begin{enumerate}
+    %
+    % Hardware questions
+    %
+    \item Order the following storage devices from fastest to slowest:
+    \begin{itemize}
+        \item \underline{~~ {\color{red}6}~~} Tape
+        \item \underline{~~ {\color{red}2} ~~} Spinning hard drive
+        \item \underline{~~ {\color{red}4}~~} Optical disc
+        \item \underline{~~ {\color{red}3}~~} USB thumb drive
+        \item \underline{~~ {\color{red}1} ~~} Solid state hard drive
+        \item \underline{~~ {\color{red}5}~~} Floppy disk
+    \end{itemize}
+    
+    \item Order the following memory (RAM) devices from fastest to slowest:
+    \begin{itemize}
+        \item \underline{~~ {\color{red}2} ~~} RAM
+        \item \underline{~~ {\color{red}3} ~~} Paged memory saved paged to disk
+        \item \underline{~~ {\color{red}1} ~~} CPU registers
+    \end{itemize}
+    
+    \item Which item doesn't belong?
+    \begin{itemize}
+        \fail Mouse
+        \fail Scanner
+        \fail Keyboard
+        \tick Printer {\color{red}This is an output device in a list of input devices.}
+        \fail Joystick
+        \fail Bar code reader
+    \end{itemize}
+    
+    \item Which is considered the ``brain'' of the hardware?
+    \begin{itemize}
+        \fail Mouse
+        \tick CPU
+        \fail RAM
+        \fail Hard drive
+        \fail Network card
+    \end{itemize}
+    
+    \item Which is considered the ``brain'' of the software?
+    \begin{itemize}
+        \fail Compiler
+        \fail Web browser
+        \tick Operating System
+        \fail RAM
+    \end{itemize}
+    
+    \item What might you do with a supercomputer? \\
+    {\color{red}Supercomputers are often used to perform scientific experiments, from finding the trillionth digit of Pi, to working on advanced models to try out experimental drugs, to searching for cures to diseases.}
+    
+    %
+    % Linux commands
+    %
+    \item Which is the command used to compile C code?
+    \begin{itemize}
+        \fail \texttt{ld}
+        \tick \texttt{gcc}
+        \fail \texttt{vi}
+        \fail \texttt{g++}
+        \fail \texttt{gdb}
+    \end{itemize}
+    
+    %
+    % Pseudocode questions
+    %
+    \item What is the purpose of pseudocode? Select all that apply.
+    \begin{itemize}
+        \fail To run the code directly.
+        \tick To plan how the algorithm will work.
+        \tick To separate the algorithm from C code.
+        \fail To make a more verbose version of the algorithm, so we'll know how many lines of code our program will need.
+    \end{itemize}
+    
+    %
+    % Numeric formats questions
+    %
+    \item Convert the following decimals to hexadecimal
+    \begin{itemize}
+        \item 10 {\color{red}0x0A}
+        \item 42 {\color{red}0x2A}
+        \item 763 {\color{red}0x02FB}
+        \item 19 {\color{red}0x13}
+    \end{itemize}
+    
+    \item Convert the following hexadecimal numbers to octal
+    \begin{itemize}
+        \item 0x12 {\color{red}0o22}
+        \item 0xF00D {\color{red}0o170015}
+        \item 0xBEEF {\color{red}0o137357}
+        \item 0xCAFE {\color{red}0o145376}
+    \end{itemize}
+    
+    \item Convert the following binary to hexadecimal
+    \begin{itemize}
+        \item 01010101 {\color{red}0x55}
+        \item 10101010 {\color{red}0xAA}
+        \item 11001100 {\color{red}0xCC}
+        \item 00100100 {\color{red}0x24}
+    \end{itemize}
+    
+    %
+    % Coding questions
+    %
+    \item Explain when you'd use each of the following control structures:
+    \begin{itemize}
+        \item \texttt{for} loop {\color{red}Used when it's know how many times the loop will iterate.}
+        \item \texttt{while} loop {\color{red}For loops which may run zero or many times.}
+        \item \texttt{do while} loop {\color{red}For loops which may run one or many times.}
+        \item \texttt{switch} statement {\color{red}For binary decisions (this vs. that).}
+        \item \texttt{if else} statement {\color{red}For decisions with many possible integer of character values.}
+    \end{itemize}
+    
+    \item Which loop would you use for each scenario?
+    \begin{itemize}
+        \item Asking the user if the program has guessed their number or not. {\color{red}do-while, will ask the user at least once, can't guess a number without asking!}
+        \item Printing the name of each of the 20 students in the class. {\color{red}for}
+        \item Receiving grades for a class until the user decided they are done. {\color{red}do-while, will ask the user a least once, who ever heard of a class with zero students?}
+        \item Reading in a list of numbers from a file. {\color{red}while, loop might not run of the file doesn't exist}
+    \end{itemize}
+    
+    \item If you have an array of \texttt{short} integers which starts at memory address 0xFE00, what's the memory address of the second value?
+    \begin{itemize}
+        \fail 0xFE00
+        \fail 0xFE01
+        \tick 0xFE02 {\color{red}Shorts are two bytes, and two plus 0xFE00 is 0xFE02.}
+        \fail 0xFE03
+        \fail 0xFE04
+    \end{itemize}
+    
+    \item Given: \texttt{long myNum = 7063;}
+    \begin{itemize}
+        \item How much memory does it take up, in \textit{bytes}? {\color{red}Longs are 8 bytes}
+        \item How much memory does it take up, in \textit{bits}? {\color{red}8 bytes is 64 bits}
+        \item If you multiply that number by another variable, defined as \texttt{int otherNum = 3;}, which is the resulting data type? {\color{red}Long, operations of two different numeric types result in the larger of the two data types.}
+    \end{itemize}
+    
+    \item Write code to create an array of 10 integers, setting each element to the next even number, starting with 2.
+    {
+    \color{red}%
+    \begin{verbatim}
+int evenIntegers[10];
+int i, evens = 2;
+for(i = 0; i < 10; i++) {
+    evenIntegers[i] = evens++; // use current value THEN increment
+    while(evens % 2 != 0) {
+        // loop while evens is still odd
+        evens++;
+    }
+}
+    \end{verbatim}
+    }
+    
+    \item Given an array of ten \texttt{float}s called \texttt{nums}, write code which:
+    \begin{itemize}
+        \item Set the 3\textsuperscript{rd} element to 7. {\color{red}nums[2] = 7;}
+        \item Swap the 7\textsuperscript{th} and 8\textsuperscript{th} elements.
+        {
+    \color{red}%
+    \begin{verbatim}
+float temp = nums[7];
+nums[7] = nums[6];
+nums[6] = temp;
+    \end{verbatim}
+    }
+        \item Divide element 4 by element 6, storing the value in the last element. \\
+        {\color{red} nums[9] = nums[4]/nums[6];}
+        \item Increment the first element. {\color{red}nums[0]++;}
+    \end{itemize}
+    
+    \item In your code, you have a function which might need to exit the entire program early if there is an irrecoverable error condition. How would you do that?
+    \begin{itemize}
+        \fail \texttt{return void;}, regardless of the actual data type the function is supposed to return.
+        \tick Add \texttt{\#include<stdlib.h>} and call \texttt{exit(1);}.
+        \fail \texttt{return -1;}
+        \fail Trick question, errors could never occur in functions.
+    \end{itemize}
+    
+    \item Given: \texttt{int a = 1, b = 2, c = 3;}, evaluate the following expressions independently for their numeric value, and indicate if the expression is true or false.
+    \begin{itemize}
+        \item \texttt{a++ - b / ++c} {\color{red}1, true}
+        \item \texttt{++c / ++b \% ++a} {\color{red}1, true}
+        \item \texttt{++c / --a} {\color{red}Program crashes due to division by zero.}
+    \end{itemize}
+    
+    \item Given: \texttt{int a = 2, b = 4, c = 6;}, evaluate the following expressions in order. Given the resulting value for each variable.
+    \begin{itemize}
+        \item \texttt{a += ++b / c;}
+        \item \texttt{b /= ++c - b;}
+        \item \texttt{c *= ++a - b--};
+        \item \texttt{a}=\underline{~~ {\color{red}3} ~~}
+        \item \texttt{b}=\underline{~~ {\color{red}1} ~~}
+        \item \texttt{c}=\underline{~~ {\color{red}7} ~~}
+    \end{itemize}
+    
+    \item When might you use...
+    \begin{itemize}
+        \item an \texttt{unsigned} data type? {\color{red}When the data will never be negative, and using unsigned allows for increased maximum size for the data type.}
+        \item a \texttt{double} over a \texttt{float}? {\color{red}When extreme precision is needed beyond the decimal point.}
+        \item a \texttt{double} or a \texttt{float} over an \texttt{int}? {\color{red}When a number is needed which has values after the decimal point.}
+        \item a \texttt{long} over an \texttt{int}? {\color{red}When handling very large numbers, billions or more.}
+    \end{itemize}
+    
+    \item Write function prototypes for the following:
+    \begin{itemize}
+        \item A function called ``foo'' which takes in an integer ``bar'' and doesn't return a value. {\color{red}void foo(int bar);}
+        \item A function called ``average'' which takes an integer array ``data'' and an integer ``size'' and returns a \texttt{float}. {\color{red}float average(int data[], int size);}
+        \item A function called ``force'' which returns a \texttt{double} and takes two \texttt{double} parameters, ``mass'' and ``acceleration''. {\color{red}double force(double mass, double acceleration);}
+    \end{itemize}
+    
+    \item Briefly describe each operator:
+    \begin{itemize}
+        \item \texttt{++} {\color{red}Increment a number}
+        \item \texttt{--} {\color{red}Decrement a number}
+        \item \texttt{/=} {\color{red}Dividing two numbers, overwriting the dividend with the quotient}
+        \item \texttt{[ ]} {\color{red}Getting an element from an array (``indexing'').}
+        \item \texttt{*} {\color{red}Dereferencing a pointer (getting the value stored at the pointer's memory location), or indicating a pointer as a function's parameter.}
+        \item \texttt{\&} {\color{red}Getting the memory location (pointer) of a variable.}
+    \end{itemize}
+    
+    \item What does this function do?
+    \begin{verbatim}
+int mysteryFunction(int index) {
+    if (index <= 0) {
+        return 0;
+    }
+    int first = 0, next = 1;
+    int counter;
+    for(counter = 2; counter < index; counter++) {
+        int temp = first + next;
+        first = next;
+        next = temp;
+    }
+    return next;
+}
+    \end{verbatim} {\color{red}This function returns the integer at the given position in the Fibonacci sequence. \\ mysteryFunction(4) = 2, for example.}
+    
+    \item Review the following code and answer the questions:
+    \begin{verbatim}
+#include<stdio.h>
+
+int multiplyTwoNumbers(int,int);
+
+int main() {
+    int num1 = 100, num2 = 20, num3;
+    num3 = multiplyTwoNumbers(num1, num2);
+    printf("Multiplying num1 * num2 = %d\n", num3);
+    return 0;
+}
+
+int multiplyTwoNumbers(int num2, int num1) {
+    return num1 * num2;
+}
+    \end{verbatim}
+    \begin{itemize}
+        \item What is the value of \texttt{num2} in \texttt{multiplyTwoNumbers()}? {\color{red}100}
+        \item What is the value of \texttt{num1} in \texttt{multiplyTwoNumbers()}? {\color{red}20}
+        \item What is the value of \texttt{num2} after the \texttt{printf()} statement in \texttt{main()}? {\color{red}20}
+        \item What is the value of \texttt{num1} after the \texttt{printf()} statement in \texttt{main()}? {\color{red}100}
+        \item What is the value of \texttt{num3} after the \texttt{printf()} statement in \texttt{main()}? {\color{red}2000}
+    \end{itemize}
+    
+    \item You have an array of 20 floats, stored in increasing order in an array called \texttt{averages}. What code to do the following:
+    \begin{itemize}
+        \item Change the 3\textsuperscript{rd} highest value to 49.9. {\color{red}averages[17] = 49.9;}
+        \item Change the 7\textsuperscript{th} lowest value to 2.1. {\color{red}averages[6] = 2.1;}
+        \item Add 1 using the \texttt{++} operator to the value in position 5. {\color{red}averages[5]++;}
+        \item Subtract 3 using the \texttt{-=} operator from the last value. {\color{red}averages[19] -= 3;}
+    \end{itemize}
+\end{enumerate}
+
+\end{document}

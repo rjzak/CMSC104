@@ -37,7 +37,7 @@
 \cfoot{\thepage}
 \rfoot{\input{semester}}
 \lfoot{CMSC 104 Section 01}
-\AtEndDocument{\vfill \footnotesize{Last modified: 07 December 2021}}
+\AtEndDocument{\vfill \footnotesize{Last modified: 08 December 2021}}
 \AtEndDocument{\rfoot{\input{semester}}}
 \renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
 
@@ -161,6 +161,14 @@
         \item \texttt{if else} statement
     \end{itemize}
     
+    \item Which loop would you use for each scenario?
+    \begin{itemize}
+        \item Asking the user if the program has guessed their number or not.
+        \item Printing the name of each of the 20 students in the class.
+        \item Receiving grades for a class until the user decided they are done.
+        \item Reading in a list of numbers from a file.
+    \end{itemize}
+    
     \item If you have an array of \texttt{short} integers which starts at memory address 0xFE00, what's the memory address of the second value?
     \begin{itemize}
         \item 0xFE00
@@ -177,9 +185,9 @@
         \item If you multiply that number by another variable, defined as \texttt{int otherNum = 3;}, which is the resulting data type?
     \end{itemize}
     
-    \item Write code to create an array of 10 integers, setting each element to the next even number.
+    \item Write code to create an array of 10 integers, setting each element to the next even number, starting with 2.
     
-    \item Given an array of ten \texttt{float}s, write code which:
+    \item Given an array of ten \texttt{float}s called \texttt{nums}, write code which:
     \begin{itemize}
         \item Set the 3\textsuperscript{rd} element to 7.
         \item Swap the 7\textsuperscript{th} and 8\textsuperscript{th} elements.
@@ -235,6 +243,56 @@
         \item \texttt{[ ]}
         \item \texttt{*}
         \item \texttt{\&}
+    \end{itemize}
+    
+    \item What does this function do?
+    \begin{verbatim}
+int mysteryFunction(int index) {
+    if (index <= 0) {
+        return 0;
+    }
+    int first = 0, next = 1;
+    int counter;
+    for(counter = 2; counter < index; counter++) {
+        int temp = first + next;
+        first = next;
+        next = temp;
+    }
+    return next;
+}
+    \end{verbatim}
+    
+    \item Review the following code and answer the questions:
+    \begin{verbatim}
+#include<stdio.h>
+
+int multiplyTwoNumbers(int,int);
+
+int main() {
+    int num1 = 100, num2 = 20, num3;
+    num3 = multiplyTwoNumbers(num1, num2);
+    printf("Multiplying num1 * num2 = %d\n", num3);
+    return 0;
+}
+
+int multiplyTwoNumbers(int num2, int num1) {
+    return num1 * num2;
+}
+    \end{verbatim}
+    \begin{itemize}
+        \item What is the value of \texttt{num2} in \texttt{multiplyTwoNumbers()}?
+        \item What is the value of \texttt{num1} in \texttt{multiplyTwoNumbers()}?
+        \item What is the value of \texttt{num2} after the \texttt{printf()} statement in \texttt{main()}?
+        \item What is the value of \texttt{num1} after the \texttt{printf()} statement in \texttt{main()}?
+        \item What is the value of \texttt{num3} after the \texttt{printf()} statement in \texttt{main()}?
+    \end{itemize}
+    
+    \item You have an array of 20 floats, stored in increasing order in an array called \texttt{averages}. What code to do the following:
+    \begin{itemize}
+        \item Change the 3\textsuperscript{rd} highest value to 49.9.
+        \item Change the 7\textsuperscript{th} lowest value to 2.1.
+        \item Add 1 using the \texttt{++} operator to the value in position 5.
+        \item Subtract 3 using the \texttt{-=} operator from the last value.
     \end{itemize}
 \end{enumerate}
 
