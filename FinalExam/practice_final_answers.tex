@@ -194,13 +194,9 @@
     \color{red}%
     \begin{verbatim}
 int evenIntegers[10];
-int i, evens = 2;
+int i, evens = 0;
 for(i = 0; i < 10; i++) {
-    evenIntegers[i] = evens++; // use current value THEN increment
-    while(evens % 2 != 0) {
-        // loop while evens is still odd
-        evens++;
-    }
+    evenIntegers[i] = evens+=2; // use current value THEN increment
 }
     \end{verbatim}
     }
