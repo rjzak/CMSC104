@@ -1,7 +1,6 @@
 \documentclass[letter,11pt]{article}
-\usepackage[breaklinks]{hyperref}
+\usepackage[breaklinks,pdfa=true,bookmarks=true,pdfdisplaydoctitle=true]{hyperref}
 \hypersetup{
-    bookmarks=true,         % show bookmarks bar?
     unicode=false,          % non-Latin characters in Acrobat’s bookmarks
     pdftoolbar=true,        % show Acrobat’s toolbar?
     pdfmenubar=true,        % show Acrobat’s menu?
@@ -12,7 +11,7 @@
     pdfsubject={UMBC CMSC104 Problem Solving and Computer Programming},   % subject of the document
     pdfkeywords={Computer Science, Programming, Problem Solving, CSEE}, % list of keywords
     pdfnewwindow=true,      % links in new PDF window
-    colorlinks=false,       % false: boxed links; true: colored links
+    colorlinks=true,       % false: boxed links; true: colored links
     linkcolor=red,          % color of internal links (change box color with linkbordercolor)
     citecolor=green,        % color of links to bibliography
     filecolor=magenta,      % color of file links
@@ -28,17 +27,19 @@
 \usepackage{color,soul} % Highligher
 \usepackage[normalem]{ulem} % Strikethrough with \sout{}
 
+\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+
 \usepackage[utf8]{inputenc}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt} % Remove default underline from header package
 \rhead{CMSC 104 Section 01: Problem Solving and Computer Programming}
 %\rhead{}
-\lhead{\begin{picture}(0,0) \put(0,-10){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
+\lhead{\begin{picture}(0,0) \put(-65,-8){\includegraphics[width=1.1cm]{Images/UMBC-vertical}} \end{picture}}
 \cfoot{\thepage}
 \rfoot{\input{semester}}
 \lfoot{CMSC 104 Section 01}
 %\AtEndDocument{\vfill \hfill \LaTeX}
-\AtEndDocument{Last modified: 29 October 2021}
+\AtEndDocument{Last modified: 31 January 2022}
 
 \begin{document}
 
@@ -94,19 +95,19 @@ The following is a list of the topics that will be covered:
 
 \paragraph{Software} Windows users will need Putty \url{https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html} and WinSCP \url{https://winscp.net/eng/index.php} for connecting to the UMBC Linux servers and transferring files. Both programs are free. Mac users may want to use Cyberduck \url{https://cyberduck.io/} or Transmit \url{https://panic.com/transmit/} to help with file transfers, but this isn't required, as the Mac command line allows for SSH connections and file transfers natively.
 
-\paragraph{Quizzes}There are five quizzes, and they will be held during the first 40 minutes of the class in which they're administered. The best way to study for the quiz is to do your homework and learn from it. Quizzes will be administered using the Respondus Lockdown Browser in Blackboard, so please read the following section for details on how to set it up and use it. There will be a practice quiz early in the semester to ensure everyone can use the system.
+\paragraph{Quizzes}There are five quizzes, and they will be held during the first 40 minutes of the class in which they're administered. The best way to study for the quiz is to do your homework and learn from it. Each quiz will focus on the materials since the quiz prior, including assigned readings, and will be \underline{cumulative}. Quizzes will be administered using the Respondus Lockdown Browser in Blackboard, so please read the following section for details on how to set it up and use it. There will be a practice quiz early in the semester to ensure everyone can use the system.
 
-%\paragraph{LockDown Browser}This course uses the LockDown Browser for online exams. Watch this short video to get a basic understanding of LockDown Browser and the optional webcam feature (which may be required for some exams) \url{http://www.respondus.com/products/lockdown-browser/student-movie.shtml}. Then download and install LockDown Browser from this link: \url{http://www.respondus.com/lockdown/download.php?id=978442813}. NOTE: This link is unique for UMBC. It cannot be used by non-UMBC students or for another Blackboard or LMS outside of our campus. To take an online test, start LockDown Browser and navigate to the exam. You won't be able to access the exam with a standard web browser. For additional details on using LockDown Browser, review this FAQ \url{https://wiki.umbc.edu/x/BQb9Aw} or the Respondus Student Quick Start Guide (PDF) \url{http://respondus.com/products/lockdown-browser/guides.shtml#student}. Finally, when taking an online exam, follow these guidelines:
-%\begin{itemize}
+\paragraph{LockDown Browser}This course uses the LockDown Browser for online exams. Watch this short video to get a basic understanding of LockDown Browser and the optional webcam feature (which may be required for some exams) \url{http://www.respondus.com/products/lockdown-browser/student-movie.shtml}. Then download and install LockDown Browser from this link: \url{http://www.respondus.com/lockdown/download.php?id=978442813}. NOTE: This link is unique for UMBC. It cannot be used by non-UMBC students or websites outside of our campus. To take an online test, start LockDown Browser and navigate to the exam. You won't be able to access the exam with a standard web browser. For additional details on using LockDown Browser, review this FAQ \url{https://wiki.umbc.edu/x/BQb9Aw} or the Respondus Student Quick Start Guide (PDF) \url{http://respondus.com/products/lockdown-browser/guides.shtml#student}. Finally, when taking an online exam, follow these guidelines:
+\begin{itemize}
 %\item Select a location where you won't be interrupted
-%\item Before starting the test, know how much time is available for it, and that you've allotted sufficient time to complete it
-%\item Turn off all mobile devices, phones, etc. and don't have them within reach
+\item Before starting the test, know how much time is available for it, and that you've allotted sufficient time to complete it
+\item Turn off all mobile devices, phones, etc. and don't have them within reach
 %\item Clear your area of all external materials — books, papers, other computers, or devices
-%\item Remain at your desk or workstation for the duration of the test
-%\item LockDown Browser will prevent you from accessing other websites or applications; you will be unable to exit the test until all questions are completed and submitted
-%\end{itemize}
+\item Remain at your desk or workstation for the duration of the test
+\item LockDown Browser will prevent you from accessing other websites or applications; you will be unable to exit the test until all questions are completed and submitted
+\end{itemize}
 
-\paragraph{Exams}There will be one exam, the final. It is designed to reinforce the topics discussed throughout the semester in order to promote retention of the information.
+\paragraph{Exams}There will be one exam, the final, which will also use the LockDown Browser. It is designed to reinforce the topics discussed throughout the semester in order to promote retention of the information.
 
 \section*{Course Policies}
 \subsection*{Grading}
@@ -126,46 +127,51 @@ $<$60\%     & F &
 
 \subsection*{Academic Integrity}
 \paragraph{}By enrolling is this course, each student assumes the responsibilities of an active participant in UMBC's scholarly community in which everyone's academic work and behavior are held to the highest standards of honesty. Cheating, fabrication, plagiarism, and helping others to commit these acts are all forms of academic dishonesty, and they are wrong. Academic misconduct could result in disciplinary action that may include, but is not limited to, suspension or dismissal. To find useful information about avoiding plagiarism infractions through appropriate citations, or to read the full policy regarding student academic misconduct for the graduate school, please see \url{http://www.umbc.edu/provost/integrity}.
-\paragraph{}While you are allowed \& encouraged to discuss course materials with your peers, all assignments are an individual effort. Assignments will be checked for evidence of shared or copied code. If you have questions, or find that you are struggling, please contact me and/or Fredrick, \underline{do not share code}\textbf{!}
+
+\paragraph{}While you are allowed \& encouraged to discuss course materials with your peers, \underline{all assignments} \underline{are an individual effort!} Assignments will be checked for evidence of shared or copied code. If you have questions, or find that you are struggling, please contact me and/or Fredrick, \underline{do not share code}\textbf{!}
 
 \section*{Schedule}
-\textit{Note: The schedule is subject to change. However, any changes will be thoroughly discussed and well disseminated. The lecture \& textbook topics don't usually align, that's okay, please read the chapter before class starts anyway.}
+\textit{Note: The schedule is subject to change. However, any changes will be thoroughly discussed and well disseminated. The lecture \& textbook topics might not align, that's okay, please read the chapter before class starts anyway.}
 
 \small
 \begin{tabular}{c c l l c}
 Date & Week & ~~~~~~~~~~~~Topic & Chapter & Assignment \\
 \hline
-Tu Aug 31  & 1 & Introduction, Syllabus Review, Linux @ UMBC & 1, Appendix C & Classwork 1  \\ \hline
-Th Sept 2  & 1 & L2: Machine Architecture \& Number Systems & 2 \& 3 & Classwork 2 \\
-Tu Sept 7  & 2 & L3: Operating Systems & 4 & Homework 1 \\
-Th Sept 9  & 2 & L4 \& 5: Algorithms & 5 & Classwork 3 \\
-Tu Sept 14 & 3 & p01-hello (Practice) & &   \\
-Th Sept 16 & 3 & \hl{Quiz 1} & &  \\
-Tu Sept 21 & 4 & L6: Introduction to C & 6 & Homework 2 \\
-Th Sept 23 & 4 & L7: Variables in C, L8: Arithmetic Operators in C & 7 \\
-Tu Sept 28 & 5 & p02-scanf & 8 & Classwork 4 \\
-Th Sept 30 & 5 & L9: Relational \& Logical Operators & 10 & \sout{Homework 3} \\ \hline
-Tu Oct 05 & 6 & L10: While Loops & 11 & Classwork 5 \\
-Th Oct 07 & 6 & Makefiles & 12 & Homework 4 \\
-Tu Oct 12 & 7 & \hl{Quiz 2} & & Classwork 6 \\
-Th Oct 14 & 7 & L11: More Loops, p09-for & 13 & \\
-Tu Oct 19 & 8 & L12: Assignment Operators & 14 & Homework 5 \\
-Th Oct 21 & 8 & \hl{Quiz 3} & 10 \\
-Tu Oct 26 & 9 & L13: Switch Statements & 11 & Homework 6 \\
-Th Oct 28 & 9 & p03-functions demo   & & Classwork 7 \\ \hline
-Tu Nov 02 & 10 & L14: Functions, Part I   & & Homework 7\\
-Th Nov 04 & 10 & L15: Functions, Part II  & 12 \\
-Tu Nov 09 & 11 & L16: Functions, Part III & &  \\
-Th Nov 11 & 11 &  & 13 & Classwork 8 \\
-Tu Nov 16 & 12 & L17: Header Files & 14 & Homework 8 \\
-Th Nov 18 & 12 & \hl{Quiz 4} & & Classwork 9 \\
-Tu Nov 23 & 13 & L18: Arrays, Part I & & Homework 9\\
-Th Nov 25 & 13 & \hl{Thanksgiving Break} &  & \\
-Tu Nov 30 & 14 & L19: Arrays, Part II &  \\ \hline
-Th Dec 02 & 14 & \hl{Quiz 5} & 15 (optional) & Classwork 10 \\
-Tu Dec 07 & 15 & p16-bubble & & Homework 10 \\
-Th Dec 09 & 15 & Review &  \\
-Tu Dec 16 & 16 & \hl{Final Exam, 6 PM} & \\
+Tu Feb 1  & 1 & Introduction, Syllabus Review, Linux @ UMBC & & Classwork 1  \\
+Th Feb 3  & 1 & \hl{Quiz 0}, L2: Machine Architecture \& Number Systems & 1 & Classwork 2 \\
+Tu Feb 8  & 2 & L3: Operating Systems & & Homework 1 \\
+Th Feb 10 & 2 & L4 \& 5: Algorithms & & Classwork 3 \\
+Tu Feb 15 & 3 & hello world (Practice) & & Homework 2 \\
+Th Feb 17 & 3 & \hl{Quiz 1} & &  \\
+Tu Feb 22 & 4 & L6: Introduction to C & 2 & \\
+Th Feb 24 & 4 & L7: Variables in C & 3 \\ \hline
+
+Tu Mar 1 & 5 & L8: Arithmetic Operators in C & 4 & Classwork 4 \\
+Th Mar 3 & 5 & \texttt{scanf} demo & 5 & Homework 3 \\
+Tu Mar 8 & 6 & L9: Relational \& Logical Operators & 6 & Classwork 5 \\
+Th Mar 10 & 6 & L10: While Loops & 7 & Homework 4 \\
+Tu Mar 15 & 7 & while loop demo & & Classwork 6 \\
+Th Mar 17 & 7 & \hl{Quiz 2} & & \\
+Tu Mar 22 & 8 & {\color{cadmiumgreen}Spring Break!} & & \\
+Th Mar 24 & 8 & {\color{cadmiumgreen}Spring Break!} & &  \\
+Tu Mar 29 & 9 & L11: More Loops, For Loops demo & 8 &  \\
+Th Mar 31 & 9 & L12: Assignment Operators & 9 & Homework 5\\ \hline
+
+Tu Apr 5 & 10 & \hl{Quiz 3} & & \\
+Th Apr 7 & 10 & L13: Switch Statements & 10 & \\
+Tu Apr 12 & 11 & Functions demo & 5 & Homework 6\\
+Th Apr 14 & 11 & L14: Functions, Part I & & Classwork 7  \\
+Tu Apr 19 & 12 & L15: Functions, Part II & &  Homework 7 \\
+Th Apr 21 & 12 & L16: Functions, Part III  & & Classwork 8 \\
+Tu Apr 26 & 13 & L17: Header Files & & Homework 8\\
+Th Apr 28 & 13 & \hl{Quiz 4} & 6 & Classwork 9 \\ \hline
+
+Tu May 3 & 14 & L18: Arrays, Part I & & Homework 9 \\
+Th May 5 & 14 & L19: Arrays, Part II  &  &  \\
+Tu May 10 & 15 & \hl{Quiz 5} & & Classwork 10 \\
+Th May 12 & 15 &  &  & Homework 10 \\
+Tu May 17 & 16 & Review & \\
+Tu May 19 & 16 & \hl{Final Exam} \textit{Estimate, date not yet known} & \\
 \end{tabular}
 
 %\section*{Title IX Statement}

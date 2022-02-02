@@ -2,10 +2,9 @@
 \usepackage{graphicx}
 \usepackage{listings} % Syntax highlighing
 \usepackage{fancyvrb} % Inline verbatim
-\usepackage{hyperref} % Hyperlinks
-\hypersetup{pdfpagemode=FullScreen}
+\hypersetup{bookmarksopen=true,bookmarksopenlevel=4,pdfdisplaydoctitle=true,pdfpagemode=FullScreen}
 
-\usepackage[normalem]{ulem}               % to striketrhourhg text
+\usepackage[normalem]{ulem}               % to strikethrough text
 \newcommand\redout{\bgroup\markoverwith
 {\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
 
@@ -19,7 +18,7 @@
 \usetheme{Boadilla}
 \title{Lecture 2: Architecture \& Number Systems}
 \author{UMBC CMSC 104}
-\date{Th 02 Sept 2021}
+\date{Tu 01 Feb 2022}
 
 \begin{document}
 
@@ -28,27 +27,39 @@
     Machine Architecture and Number Systems
 \end{frame}
 
+\frame{\tableofcontents}
+
 \begin{frame}{Why are we in this course?}
-    \center{\includegraphics[scale=0.61]{L02_ArchNumbersSystems/L2_p2.png}}
-    
-    \newline
-    Remember: ``There are no stupid questions, just stupid people who don't know they should be asking something''
+    \only<1> {
+        \center{\includegraphics[scale=0.61]{L02_ArchNumbersSystems/L2_p2.png}}
+        
+        \newline
+        Remember: ``There are no stupid questions, just stupid people who don't know they should be asking something''
+    }
+    \only<2> {
+        \begin{itemize}
+            \item Technology is everywhere: phones, computers, tablets, game consoles, etc.
+            \item It's important to understand that which we all rely on for important activities.
+            \item To understand what technology is and how it works is to be better empowered to make decisions.
+            \item ``Program, or be programmed''\footnote{\url{https://www.opensourcevoices.org/24}}: Learn how technology works, and use it as you wish; or only use technology in the manner that you're told to do so by big companies.
+        \end{itemize}
+    }
 \end{frame}
 
-\begin{frame}{Machine Architecture \& Number Systems}
-Topics:
-\begin{itemize}
-    \item Major computer components
-    \item Bits, bytes, words
-    \item The Decimal number system
-    \item The Binary number system
-    \item Converting from Binary to Decimal
-    \item Converting from Decimal to Binary
-    \item The Hexadecimal number system
-\end{itemize}
-    
-\end{frame}
+%\begin{frame}{Machine Architecture \& Number Systems}
+%Topics:
+%\begin{itemize}
+%    \item Major computer components
+%    \item Bits, bytes, words
+%    \item The Decimal number system
+%    \item The Binary number system
+%    \item Converting from Binary to Decimal
+%    \item Converting from Decimal to Binary
+%    \item The Hexadecimal number system
+%\end{itemize}
+%\end{frame}
 
+\section{Computer Examples}
 \begin{frame}{Some People Think a Computer is...}
     \centering
     \only<1>{
@@ -75,6 +86,7 @@ Topics:
     \footnotesize Both run Linux!
 \end{frame}
 
+\section{Major Computer Components}
 \begin{frame}{Major Computer Components}
     \begin{itemize}
         \item Central Processing Unit (CPU)
@@ -96,6 +108,7 @@ Topics:
     \includegraphics[scale=0.25]{L02_ArchNumbersSystems/L2_p8.png}
 \end{frame}
 
+\subsection{CPU}
 \begin{frame}{The CPU}
 \begin{columns}
     \column{0.6\textwidth}
@@ -111,6 +124,7 @@ Topics:
     \end{columns}
 \end{frame}
 
+\subsection{Bus}
 \begin{frame}{The Bus}
     \begin{itemize}
         \item Computer components are connected by a bus
@@ -124,6 +138,7 @@ Topics:
     \end{itemize}
 \end{frame}
 
+\subsection{Memory}
 \begin{frame}{Main Memory}
 \only<1>{
     \begin{columns}
@@ -185,6 +200,17 @@ Topics:
 }
 \end{frame}
 
+\begin{frame}{Opening MS Word}
+    \begin{itemize}
+        \item Use the mouse to select MS Word
+        \item The CPU requests the MS Word application
+        \item MS Word is loaded from the hard drive to main memory
+        \item The CPU reads instructions from main memory and executes them one at a time
+        \item MS Word appears on your monitor
+    \end{itemize}
+\end{frame}
+
+\subsection{Storage}
 \begin{frame}{Secondary Storage}
     \begin{itemize}
         \item From faster to slower:
@@ -205,6 +231,7 @@ Topics:
     \end{columns}
 \end{frame}
 
+\subsection{I/O Devices}
 \begin{frame}{Input/Output (I/O) Devices}
     \begin{itemize}
         \item Information input and output is handed by I/O devices, also known as peripheral devices
@@ -225,16 +252,7 @@ Topics:
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Opening MS Word}
-    \begin{itemize}
-        \item Use the mouse to select MS Word
-        \item The CPU requests the MS Word application
-        \item MS Word is loaded from the hard drive to main memory
-        \item The CPU reads instructions from main memory and executes them one at a time
-        \item MS Word appears on your monitor
-    \end{itemize}
-\end{frame}
-
+\section{Bytes, Bits, Words}
 \begin{frame}{Bits, Bytes, Words}
     \begin{itemize}
         \item A bit is a single binary digit (zero or one)
@@ -246,6 +264,7 @@ Topics:
     \end{itemize}
 \end{frame}
 
+\section{Number Systems}
 \begin{frame}{Number Systems}
     \begin{itemize}
         \item The most elementary ``number system'' is unary: ``I have \textit{this} many things''.
@@ -266,6 +285,7 @@ Topics:
     \end{itemize}
 \end{frame}
 
+\subsection{Decimal}
 \begin{frame}{The Decimal Number System}
     \begin{itemize}
         \item The decimal number system is a positional number system.
@@ -298,6 +318,7 @@ Topics:
     \end{itemize}
 \end{frame}
 
+\subsection{Binary}
 \begin{frame}{The Binary Number System}
     \begin{itemize}
         \item The binary number system is also known as base 2. The values of the positions are calculated by taking 2 to some power.
@@ -323,6 +344,7 @@ Topics:
     \end{tabular}
 \end{frame}
 
+\subsection{Binary to Decimal}
 \begin{frame}{Converting from Binary to Decimal}
     \begin{columns}
         \column{0.6\textwidth}
@@ -433,6 +455,7 @@ Topics:
     \end{tabular}
 \end{frame}
 
+\subsection{Decimal to Binary}
 \begin{frame}{Converting from Decimal to Binary}
     \begin{itemize}
         \item Practice conversions:
@@ -494,6 +517,7 @@ Topics:
     \end{itemize}
 \end{frame}
 
+\subsection{Hexadecimal}
 \begin{frame}{The Hexadecimal Number System}
     \only<1> {
         \begin{itemize}
@@ -531,6 +555,7 @@ Topics:
     }
 \end{frame}
 
+\subsection{Octal}
 \begin{frame}{The Octal Number System}
     \begin{itemize}
         \item Example of an octal number and the values of the positions:

@@ -37,7 +37,7 @@
 \cfoot{\thepage}
 \rfoot{\input{semester}}
 \lfoot{CMSC 104 Section 01}
-\AtEndDocument{\vfill \footnotesize{Last modified: 04 September 2021}}
+\AtEndDocument{\vfill \footnotesize{Last modified: 1 February 2022}}
 \AtEndDocument{\rfoot{\input{semester}}}
 \renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
 
@@ -47,7 +47,7 @@
 \textbf{Homework 1: Homework Can Be Fun!}.
 \normalsize
 \\ ~~ \\
-\textbf{Due: Monday 13 September by 11:59PM}
+\textbf{Due: Monday 15 February by 11:59PM}
 
 \section*{Objectives}
 \paragraph{}To continue familiarizing with the \texttt{nano} text editor, understanding how to use basic Unix commands (\texttt{cp}, \texttt{mv}, and \texttt{cat}), and reinforcing how to submit assignments. NOTE: Unless otherwise noted, be sure to hit Enter(PC) or return(Mac) after every command.
@@ -63,11 +63,11 @@
     \item Have someone check if the joke is funny. If not, \texttt{rm joke.txt} and try another joke or motto.
     \item Submit joke.txt.
     \begin{verbatim}
-    [rzak1@linux1 ~]$ submit cmsc104_10600 hw1 joke.txt
+    [rzak1@linux1 ~]$ submit cmsc104_1068 hw1 joke.txt
     \end{verbatim}
     \item Check your submission to make sure the file was properly submitted. If there is no output, your submission didn’t go through so repeat step 8, making sure you are in the right directory with the file.
     \begin{verbatim}
-    [rzak1@linux1 ~]$ submitls cmsc104_10600 hw1
+    [rzak1@linux1 ~]$ submitls cmsc104_1068 hw1
     \end{verbatim}
 \end{enumerate}
 
@@ -88,7 +88,7 @@
     \item Save changes to the file by typing \texttt{CTRL-X} to Exit, \texttt{y} to agree to save, and hitting enter (PC) or return (Mac)to save using the provided file name.
     \item Submit your new ``joke2.txt'' file.
     \begin{verbatim}
-    [rzak1@linux1 ~]$ submit cmsc104_10600 hw1 joke2.txt
+    [rzak1@linux1 ~]$ submit cmsc104_1068 hw1 joke2.txt
     \end{verbatim}
     \item Type logout to log out.
 \end{enumerate}
@@ -114,6 +114,14 @@ NOTE: Your joke/motto should display here, followed by the ducks/elephants joke.
 [rzak1@linux1 ~]$ exit
 exit
 Script done, file is typescript
-[rzak1@linux1 ~]$ submit cmsc104_10600 hw1 typescript
+[rzak1@linux1 ~]$ submit cmsc104_1068 hw1 typescript
 \end{verbatim}
+
+\newpage
+\subsection*{Verify}
+\paragraph{}Make sure you submitted the assignment correctly.
+\begin{verbatim}
+[rzak1@linux1 ~]$ submitls cmsc104_1068 hw1
+\end{verbatim}
+
 \end{document}
