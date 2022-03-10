@@ -102,16 +102,16 @@ total_length = num_sticks * avg_stick_length;
             \begin{itemize}
                 \item $17.0 / 5 = 3.4$
                 \item $4/3.2 = 1.25$
-                \item $35.2/9.1 = 3.86813$
+                \item $35.2/9.1 = 3.8681318681318686$
             \end{itemize}
             \item What happens? The integer operand is temporarily converted to a floating point, then the division is performed.
         \end{itemize}
     }
-    \only<3> {
-        Given: \texttt{int my\_integer = 5, my\_product;}, what is \texttt{my\_product}>
+    \only<3-> {
+        Given: \texttt{int my\_integer = 5, my\_product}, what is \texttt{my\_product}?
         \begin{itemize}
-            \item \texttt{my\_product = (my\_integer / 2) * 2.0;}
-            \item \texttt{my\_product = (my\_integer / 2.0) * 2.0;}
+            \item \texttt{my\_product = (my\_integer / 2) * 2.0;} \only<4->{\textbf{= 4}}
+            \item \texttt{my\_product = (my\_integer / 2.0) * 2.0;} \only<5->{\textbf{= 5}}
         \end{itemize}
     }
 \end{frame}
@@ -130,7 +130,7 @@ total_length = num_sticks * avg_stick_length;
 
 \begin{frame}{Modulus}
     \begin{itemize}
-        \item The expression \texttt{m\%n} yields the integer remainer after \texttt{m} is divided by \texttt{n}.
+        \item The expression \texttt{m\%n} yields the integer remainder after \texttt{m} is divided by \texttt{n}.
         \item Modulus is an integer operation -- both operands must be integers.
         \item Examples:
         \begin{itemize}
@@ -184,10 +184,10 @@ total_length = num_sticks * avg_stick_length;
 \begin{frame}{Practice with Evaluating Expressions}
     Given: \texttt{int a = 1, b = 2, c = 3, d = 4;}, evaluate:
     \begin{itemize}
-        \item $a + b - d + d$
-        \item $a * b / c$
-        \item $1 + a * b \% c$
-        \item $e = b = d + c / b - a$
+        \item $a + b - d + d$ \only<2->{ \textbf{= 3}}
+        \item $a * b / c$ \only<3->{ \textbf{= 0}}
+        \item $1 + a * b \% c$ \only<4->{ \textbf{= 3}}
+        \item $e = b = d + c / b - a$ \only<5>{ \textbf{= 4}}
     \end{itemize}
 \end{frame}
 
