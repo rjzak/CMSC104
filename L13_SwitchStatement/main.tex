@@ -179,9 +179,11 @@ switch(day) {
         \begin{verbatim}
     char grade, symbol;
     grade = `B';
-    symbol = `£';
+    symbol = `$';
         \end{verbatim}
         \item The \texttt{char} is held as a one-byte integer in memory. The ASCII code\footnote{\url{https://www.asciitable.com/}} is what is actually stored, so we can use the \texttt{char} type as characters or integers, depending on the requirements of the algorithm we are implementing.
+        \item The maximum value for a \textit{signed} char is 127 (7 bits only zero to 127).
+        \item The maximum value for a \texttt{unsigned char} is 255 (8 bits/1 byte holds only zero to 255).
     \end{itemize}
 \end{frame}
 
