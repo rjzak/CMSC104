@@ -27,6 +27,7 @@
 \usepackage{parskip} % Disable initial indent
 \usepackage{color,soul} % Highligher
 \usepackage[normalem]{ulem} % Strikethrough with \sout{}
+\usepackage{attachfile} % attach files
 
 \usepackage[utf8]{inputenc}
 \fancyhf{}
@@ -37,7 +38,7 @@
 \cfoot{\thepage}
 \rfoot{\input{semester}}
 \lfoot{CMSC 104 Section 01}
-\AtEndDocument{\vfill \footnotesize{Last modified: 11 November 2021}}
+\AtEndDocument{\vfill \footnotesize{Last modified: 05 April 2022}}
 \AtEndDocument{\rfoot{\input{semester}}}
 \renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
 
@@ -47,10 +48,10 @@
 \textbf{Classwork 8: Class Grades Simulator}.
 \normalsize
 \\ ~~ \\
-\textbf{In-class Date: Thursday 11 November}
+\textbf{In-class Date: Thursday 21 April}
 
 \section*{Objectives}
-\paragraph{}Practice writing a program that uses a \texttt{switch} statement, the \texttt{+=} assignment operator, and a texttt{for} loop.
+\paragraph{}Practice writing a program that uses a \texttt{switch} statement, the \texttt{+=} assignment operator, and a \texttt{for} loop.
 
 \section*{Assignment}
 \paragraph{}Write a program to simulate class letter grades (A, B, C, D, or F) and output the count of each letter grade to the screen. To do this, you will utilize a for loop that calculates a random letter grade each time through the loop, then utilizes a switch statement to update the appropriate counter variable using the += assignment operator. Make sure the default case warns the user of invalid letter grade. Outside the loop, you will print the final results.
@@ -69,7 +70,7 @@ F: 5
 \end{verbatim}
 
 \subsection*{Notes}
-\paragraph{}Use the classwork starting point provided on Blackboard and name your program \texttt{grades.c}.  
+\paragraph{}Use the classwork starting point provided on Blackboard and name your program \texttt{grades.c}.  It's also available here: \textattachfile[color=1 0 0]{CW8_grades.c}{grades.c}.
 \paragraph{}Notice how the \texttt{for} loop in the program is provided for you, it terminates after the correct number of grades have been simulated, and for the basic assignment, there is no user input.
 
 \paragraph{}Notice how the starting point file uses \texttt{\#define} to define a constant \texttt{TOTAL\_GRADES} that holds the number of grades to simulate. That way, if you want/need to change the total number, you only have to change it in one place.
@@ -98,12 +99,12 @@ F: 5
 \section*{What to Submit}
 \paragraph{}Use the \texttt{script} command to record yourself compiling and running your program 3 times. (Do not record yourself editing your program!) Exit from script. Submit your program and the typescript file.
 \begin{verbatim}
-[rzak1@linux1 cw8]$ submit cmsc104_10600 cw8 grades.c typescript
+[rzak1@linux1 cw8]$ submit cmsc104_1068 cw8 grades.c typescript
 \end{verbatim}
 
 \subsection*{Verify}
 \paragraph{}Make sure you submitted the assignment correctly.
 \begin{verbatim}
-[rzak1@linux1 cw8]$ submitls cmsc104_10600 cw8
+[rzak1@linux1 cw8]$ submitls cmsc104_1068 cw8
 \end{verbatim}
 \end{document}
