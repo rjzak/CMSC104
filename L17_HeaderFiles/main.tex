@@ -126,16 +126,139 @@ $
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Makefiles}
+\subsection{Custom Types}
+\begin{frame}{Custom Types}
+    So far, we've been using integers, floating point numbers, characters, and strings. It's possible to have our own types.
     \begin{itemize}
-        \item This discussion on separate compilation should remind you of Makefiles, from earlier in the semester.
-        \item For larger projects, using separate compilation and \texttt{make} can reduce the time it takes to compile your project by only compiling the pieces needed.
+        \item Enumerations
+        \item Structures
+    \end{itemize}
+    
+    Definitions for these would be in the header file.
+\end{frame}
+
+\begin{frame}[fragile]{Enumerations}
+    Enumerations, or \texttt{enum}s, allow for specifying variables which have values that are custom defined. Internally, they are just integers.
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+
+enum color {
+    Red, Green,
+    Blue, Purple,
+    Orange, Yellow
+};
+
+void print_color(enum color the_color); // Enums as a parameter
+
+int main() {
+    enum color my_color = Red;
+    printf("Red: %d\n"); // Prints "Red: 0"
+    return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Structures}
+    Structures, or \texttt{struct}s, allow for combining different values into one object. This is used to store related variables, or to model real-world things.
+    
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+#include <stdio.h>
+enum color {Red, Green, Blue, Purple, Orange, Yellow};
+struct car {
+    char* make;
+    char* model;
+    enum color the_color;
+    int miles;
+}
+void print_car(struct car the_car); // Struct as a parameter
+int main() {
+    struct car my_car;
+    my_car.make = "Honda";
+    my_car.model = "Civic";
+    my_car.color = Blue;
+    my_car.miles = 1234;
+    print_car(my_car);
+    return 0;
+}
+    \end{lstlisting}
+\end{frame}
+
+\section{Make}
+\begin{frame}{Separate Compilation}
+    Often, programs are too large for one .c file, in which case similar parts are put in to their own .c files. But the code still works together.
+    \begin{itemize}
+        \item \texttt{gcc -c my\_program.c}
         \begin{itemize}
-            \item \texttt{gcc -c main.c}
-            \item \texttt{gcc -c example.c}
-            \item \texttt{gcc main.o example.o -o example}
+            \item Yields ``my\_program.o''
+        \end{itemize}
+        \item \texttt{gcc -c main.c}
+        \begin{itemize}
+            \item Yields ``main.o''
+        \end{itemize}
+        \item \texttt{gcc my\_program.o main.o -o my\_program}
+        \begin{itemize}
+            \item Yields ``my\_program''
+            \item Combined code from main.c \& my\_program.c into one executable file, despite being in separate source code files.
         \end{itemize}
     \end{itemize}
+\end{frame}
+
+\begin{frame}{Makefile}
+    Introducing \textit{Make}!
+    \begin{itemize}
+        \item The file is called ``Makefile'' and is in the main directory of your code.
+        \item It contains the commands needed to compile everything
+        \begin{itemize}
+            \item And often the commands to clean up after (remove the executable \& intermediate .o files)
+        \end{itemize}
+        \item Easier than remembering the commands
+        \item Only compiles what's needed
+        \begin{itemize}
+            \item If you only changed one .c file, you don't need to re-compile the other .c files each time you want to test the code.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Makefile example}
+\begin{verbatim}
+OPTS=-Wall
+all: my_program
+my_program: main.o part1.o part2.o
+    gcc -o my_program main.o part1.o part2.o ${OPTS}
+main.o: main.c part1.h
+    gcc -o main.c ${OPTS}
+part1.o: part1.c part1.h part2.h
+    gcc -o part1.c ${OPTS}
+part2.o: part2.c part2.h
+    gcc -o part2.c ${OPTS}
+
+.phony: clean
+clean:
+    rm *.o my_program
+\end{verbatim}
+\end{frame}
+
+\subsection{Software Development}
+\begin{frame}{Build Environments}
+    \begin{itemize}
+        \item C, C++: AutoTools, Make, CMake, others
+        \item Java: Ant, Maven, Gradle
+        \item Go: Go modules
+        \item Rust: Cargo
+    \end{itemize}
+    The person compiling someone else’s code shouldn't have to worry about the needed compiler flags, build order, etc.
+    \\ ~~ \\
+    Whatever the language or the build environment, the goal is to make easily reproducible builds regardless of the environment.
+    \\ ~~ \\
+    \footnotesize
+    And so many more: \url{https://en.wikipedia.org/wiki/List\_of\_build\_automation\_software}
+\end{frame}
+
+\begin{frame}{Software Sharing \& Collaboration}
+    People, independent developers, small teams all the way to large companies and big projects use code management software to store and manage code.  These programs are said to host \textit{code repositories}, with the most popular being \texttt{git}. It allows for people to keep track when/how a file was created/edited and by whom. It shows all the files and the history for each.
+    \\ ~~ \\
+    A great example is that of the Linux kernel hosted on the popular software repository hosting website, Github. \\
+    \url{https://github.com/torvalds/linux}
 \end{frame}
 
 \end{document}
