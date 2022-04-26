@@ -226,15 +226,15 @@ all: my_program
 my_program: main.o part1.o part2.o
     gcc -o my_program main.o part1.o part2.o ${OPTS}
 main.o: main.c part1.h
-    gcc -o main.c ${OPTS}
+    gcc -c main.c ${OPTS}
 part1.o: part1.c part1.h part2.h
-    gcc -o part1.c ${OPTS}
+    gcc -c part1.c ${OPTS}
 part2.o: part2.c part2.h
-    gcc -o part2.c ${OPTS}
+    gcc -c part2.c ${OPTS}
 
 .phony: clean
 clean:
-    rm *.o my_program
+    rm -f *.o my_program
 \end{verbatim}
 \end{frame}
 
