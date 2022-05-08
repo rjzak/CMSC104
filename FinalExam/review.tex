@@ -43,7 +43,7 @@
 \cfoot{\thepage}
 \rfoot{\input{semester}}
 \lfoot{CMSC 104 Section 01}
-\AtEndDocument{\vfill \footnotesize{Last modified: 07 December 2021}}
+\AtEndDocument{\vfill \footnotesize{Last modified: 08 May 2022}}
 \AtEndDocument{\rfoot{\input{semester}}}
 \renewcommand\thesubsection{\arabic{subsection}} % Show only subsection numbers, not section.subsection
 \title{Final Exam Review}
@@ -110,20 +110,23 @@
         \item Linux
         \begin{itemize}
             \item Android
+            \item Chrome OS
         \end{itemize}
         \item FreeBSD, OpenBSD, NetBSD
         \item Solaris
         \item AIX
+        \item \textit{others}
     \end{itemize}
 \end{itemize}
 
-\paragraph{}This is by no means an exhaustive list. There are other operating systems out there, things which include hobbyist operating systems like Haiku\footnote{\url{https://www.haiku-os.org/}} to Serenity\footnote{\url{https://serenityos.org/}}, and industrial operating systems, like VxWorks\footnote{\url{https://en.wikipedia.org/wiki/VxWorks}}, which run some robotic systems, satellites, and some Mars rovers. However, the Mars helicopter \textit{Ingenuity} does run Linux\footnote{\url{https://spectrum.ieee.org/nasa-designed-perseverance-helicopter-rover-fly-autonomously-mars}}!
+\paragraph{}This is by no means an exhaustive list. There are other operating systems out there, things which include hobbyist operating systems like Haiku\footnote{\url{https://www.haiku-os.org/}}, Redox\footnote{\url{https://www.redox-os.org/}}, \& Serenity\footnote{\url{https://serenityos.org/}}, and industrial operating systems, like VxWorks\footnote{\url{https://en.wikipedia.org/wiki/VxWorks}}, which run some robotic systems, satellites, and some Mars rovers. However, the Mars helicopter \textit{Ingenuity} does run Linux\footnote{\url{https://spectrum.ieee.org/nasa-designed-perseverance-helicopter-rover-fly-autonomously-mars}}!
 
 \subsection{Unix Commands}
 \paragraph{}Some basic Unix commands, which usually work across Unix and Unix-like operating systems:
 \begin{itemize}
     \item \texttt{cat <fileName>}: Show the contents of a file, followed by the path to that file
     \item \texttt{cd <dirName>}: Change directory, followed by the directory path to change to
+    \item \texttt{file <fileName>}: Identify the type for an unknown file
     \item \texttt{ls}: List the contents of a directory
     \item \texttt{mv from/path/A to/path/B}: Move a file (or directory) from location A to location B
     \item \texttt{pwd}: print working directory (current location)
@@ -249,6 +252,8 @@
     \label{fig:datatypeschart}
 \end{figure}
 
+\paragraph{Integers}The types \texttt{short}, \texttt{int}, and \texttt{long} are immediately recognized as integer data types. However, \texttt{char} is also an integer type, which means it can also be used in \hyperref[sec:switchcase]{switch statements}.
+
 \paragraph{}For a program calculating or using the distance to Voyager 1 in astronomical units, then use an integer: \texttt{int distToVoyagerAU = 156;}. If the distance to Voyager 1 would be needed in inches, use a float: 
 \begin{verbatim}
     #include <math.h> // so we can use exponents
@@ -260,12 +265,27 @@
 
 \FloatBarrier
 \subsubsection{ASCII Table}
-\paragraph{}Since the computer can only understand numbers, characters and character arrays (also known as strings) exist in memory as integers. The ASCII table shows the mapping of integer value to character. The full table is shown in \autoref{fig:asciitable}, from \url{https://www.asciitable.com/}.
+\paragraph{Strings}Since the computer can only understand numbers, characters and character \hyperref[sec:arrays]{arrays} (also known as strings) exist in memory as integers. The ASCII table shows the mapping of integer value to character. The full table is shown in \autoref{fig:asciitable}, from \url{https://www.asciitable.com/}.
+
+\paragraph{}A string can be initialized like this: \texttt{char name[5] = \{`J', `o', `h', `n',`\textbackslash0'\};} or: \texttt{char name[5] = "John";}. Notice that the string length is 4, but the array size is five. That allows for the \textbf{null terminator}, which is the byte value \texttt{0x00} and is also seen on the ASCII table. It indicates to the C language that the string has ended, preventing the use or accessing of memory which would be outside the boundary for that variable and could cause the program to crash. Since the characters are just integers, \autoref{fig:stringjohn} shows the representation of the string as it would appear in memory. Notice that if you wanted a string with spaces, such as a sentence or a phrase, the in-memory representation for a space is hex \texttt{0x20} or decimal \texttt{32}.
 
 \begin{figure}[h!]
     \includegraphics[scale=0.72]{FinalExam/asciifull.png}
     \caption{ASCII Table from asciitable.com}
     \label{fig:asciitable}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        `J' & `o' & `h' & `n' & `\textbackslash0' \\
+        \hline
+        74 & 111 & 104 & 110 & 0 \\
+        \hline
+    \end{tabular}
+    \caption{The in-memory representation of ``John''}
+    \label{fig:stringjohn}
 \end{figure}
 
 \FloatBarrier
@@ -287,7 +307,7 @@ if (tempVar == 12) {
 }
 \end{verbatim}
 
-\subsection{Switch \& Case Statements}
+\subsection{Switch \& Case Statements}\label{sec:switchcase}
 \paragraph{}In some scenarios, it is necessary to chose some action based on a wide possible set of values. Instead of having nested \texttt{if} statements, a \texttt{switch} statement can be used where the variable being used is an \texttt{integer} or \texttt{char}. The \texttt{default} statement is usually used to handle errors, when the value used for the \texttt{switch} statement wasn't expected, or is invalid.
 
 \paragraph{}The \texttt{case} statement has the value for that statement, and usually each \texttt{case} statement ends with \texttt{break;}. Sometimes, it makes sense to have the \texttt{case} statement \textit{cascade} down to the next \texttt{case} statement, if the action to be done for those values would be the same.
@@ -348,7 +368,7 @@ switch tempVar {
 \subsubsection{External Libraries}
 \paragraph{}Sometimes, when using certain header files, another command has to be added to the compiler. An example is when using the header file \texttt{math.h}, which has some helpful mathematical functions, such as the exponent example in the \hyperref[sec:datatypes]{data types section}. In that example, we'd add \texttt{-lm} to also link the program against the C math library.
 
-\subsection{Arrays}
+\subsection{Arrays}\label{sec:arrays}
 \paragraph{}Arrays hold several items of the same data type, so an array of 10 integers is really having 10 different integer variables, but with one name.
 \begin{itemize}
     \item Arrays cannot be resized.
