@@ -83,8 +83,8 @@ int main(int argc, char* argv[]) {
     
     GrowingArray* scores = GrowingArray_CreateWithCapacity(10);
 
-    PrintInstructions();
     if (argc == 1) {
+        PrintInstructions();
         GetScores(scores);
     } else if (argc == 2) {
         GetScoresFromFile(argv[1], scores);
@@ -160,7 +160,8 @@ void GetScoresFromFile(const char filePath[], GrowingArray* scores) {
         return;
     }
     
-    GRADE_TYPE value, matched;
+    GRADE_TYPE value;
+    int matched;
     while(1) {
         matched = fscanf(fp, GRADE_TYPE_FORMATTER, &value);
         if (matched == 0 || matched == EOF) {
@@ -264,7 +265,7 @@ ClassStatistics CalcStats(GrowingArray* scores, GRADE_TYPE gradesCount[GRADES][P
     }
     
     GrowingArray_Sort(scores);
-    stats.median = scores->array[((scores->currentPosition+1) / 2) -1];
+    stats.median = scores->array[scores->currentPosition / 2];
     
     return stats;
 }
