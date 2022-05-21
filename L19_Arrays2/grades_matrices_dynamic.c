@@ -248,7 +248,7 @@ ClassStatistics CalcStats(GrowingArray* scores, GRADE_TYPE gradesCount[GRADES][P
             /* F is a special case, no plus or minus */
             case 5: case 4: case 3: case 2:
             case 1: case 0: gradesCount[F][REGULAR]++; break;
-            default: printf("Invalid score %d found at index %d.\n", scores->array[i], i);
+            default: printf("Invalid score " GRADE_TYPE_FORMATTER " found at index %d.\n", scores->array[i], i);
         } // end switch
     } // end for
     if (scores->currentPosition > 0)
@@ -257,14 +257,14 @@ ClassStatistics CalcStats(GrowingArray* scores, GRADE_TYPE gradesCount[GRADES][P
     stats.mode = 0;
     stats.mode_count = 0;
     for(i = 0; i <= MAX; i++) {
-        if (counter[i] > stats.mode) {
+        if (counter[i] > stats.mode_count) {
             stats.mode = i;
             stats.mode_count = counter[i];
         }
     }
     
     GrowingArray_Sort(scores);
-    stats.median = scores->array[(scores->currentPosition+1) / 2 -1];
+    stats.median = scores->array[((scores->currentPosition+1) / 2) -1];
     
     return stats;
 }
@@ -296,9 +296,9 @@ void PrintStats(const ClassStatistics stats, const GRADE_TYPE gradesCount[GRADES
         printf("No grades entered.\n");
         return;
     }
-    printf("The class average is %.2f, median is %d, mode is %d with %d occurrences.\n", stats.mean, stats.median, stats.mode, stats.mode_count);
-    printf("Max: %d, Min: %d\n", stats.max, stats.min);
-    printf("Of the %d grades, there were:\n", stats.counts);
+    printf("The class average is %.2f, median is " GRADE_TYPE_FORMATTER ", mode is " GRADE_TYPE_FORMATTER " with %hu occurrences.\n", stats.mean, stats.median, stats.mode, stats.mode_count);
+    printf("Max: " GRADE_TYPE_FORMATTER ", Min: " GRADE_TYPE_FORMATTER "\n", stats.max, stats.min);
+    printf("Of the %hu grades, there were:\n", stats.counts);
 
     for(i = GRADES-1; i >= 0; i--) {
         if (i == F) { /* F is a special case, no plus or minus */
