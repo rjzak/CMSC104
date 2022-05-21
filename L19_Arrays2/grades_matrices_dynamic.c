@@ -2,19 +2,23 @@
  * File: grades_matrices.c
  * Author: Richard Zak
  * Email: rzak1@umbc.edu
- * Date: 31 March 2022
+ * Date: 21 May 2022
  *
  * This file is a companion to Lecture 19: Arrays, Part 2.
  * Grade values are collected from the user, and stats are calculated.
  * Shows a use for two dimensional arrays, structs, #defines, constant arrays,
  * and how to use dynamic memory for arrays which increase as needed.
+ *
+ * Added is an example showing how to read from a text file directly, and how
+ * to experiment with different data types by changing just two lines of code.
  */
 
 
-#include<stdio.h>
-#include<stdbool.h>
-#include<stdint.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
 
 #define GRADES 5
 #define PLUS_MINUS_SIZE 3
@@ -28,19 +32,32 @@
 #define MINUS 2
 #define MAX 100
 
+/*
+** Here, we can play with the data type we'll use.
+** Some thoughts:
+**   * Always used unsigned, should never be negative
+**   * Always be an integer type, otherwise some code will break
+**   * Always update the former to make sure the values are read correctly
+**   * Try: char, short, int, long.
+*/
+typedef unsigned short GRADE_TYPE;
+#define GRADE_TYPE_FORMATTER "%hu"
+
 const char GRADE_LETTERS[GRADES] = {'F', 'D', 'C', 'B', 'A'};
 const char PLUS_MINUS[PLUS_MINUS_SIZE] = {'+', ' ', '-'};
 
 typedef struct {
     float mean; /* average of all scores */
-    unsigned int median; /* when sorted, which grade is in the middle? */
-    unsigned int max;    /* max score */
-    unsigned int min;    /* minimum score */
+    GRADE_TYPE median;     /* when sorted, which grade is in the middle? */
+    GRADE_TYPE mode;       /* which grade was the most common? */
+    unsigned int mode_count; /* what was the frequency for mode? */
+    GRADE_TYPE max;        /* max score */
+    GRADE_TYPE min;        /* minimum score */
+    unsigned int counts;   /* how many grades? */
 } ClassStatistics;
 
 typedef struct {
-    unsigned int* array;    /* the array itself */
-                            /* Grades are never negative, so we use unsigned integers */
+    GRADE_TYPE* array;      /* the array itself */
     size_t size;            /* the size of the array */
     size_t currentPosition; /* the location for the next insertion */
 } GrowingArray;
@@ -48,25 +65,33 @@ typedef struct {
 // Functions for GrowingArray
 GrowingArray* GrowingArray_Create();
 GrowingArray* GrowingArray_CreateWithCapacity(const size_t initialSize);
-void GrowingArray_InsertValue(GrowingArray* gr, const unsigned int value);
+void GrowingArray_InsertValue(GrowingArray* gr, const GRADE_TYPE value);
 void GrowingArray_Sort(GrowingArray* gr);
 void GrowingArray_Destroy(GrowingArray* gr);
-void swap(unsigned int *p, unsigned int *q);
+void swap(GRADE_TYPE *p, GRADE_TYPE *q);
 
 // Functions for handling grades
 void PrintInstructions();
 void GetScores(GrowingArray* scores);
-ClassStatistics CalcStats(GrowingArray* scores, unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE]);
-void PrintStats(const ClassStatistics stats, const unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE]);
+void GetScoresFromFile(const char filePath[], GrowingArray* scores);
+ClassStatistics CalcStats(GrowingArray* scores, GRADE_TYPE gradesCount[GRADES][PLUS_MINUS_SIZE]);
+void PrintStats(const ClassStatistics stats, const GRADE_TYPE gradesCount[GRADES][PLUS_MINUS_SIZE]);
 
-int main() {
+int main(int argc, char* argv[]) {
     /* Counts are never negative, so we use unsigned integers */
-    unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE] = {0};
+    GRADE_TYPE gradesCount[GRADES][PLUS_MINUS_SIZE] = {0};
     
     GrowingArray* scores = GrowingArray_CreateWithCapacity(10);
 
     PrintInstructions();
-    GetScores(scores);
+    if (argc == 1) {
+        GetScores(scores);
+    } else if (argc == 2) {
+        GetScoresFromFile(argv[1], scores);
+    } else {
+        printf("Unexpected arguments. Provide path to a file to read from a file.\n");
+        return EXIT_FAILURE;
+    }
     ClassStatistics stats = CalcStats(scores, gradesCount);
     PrintStats(stats, gradesCount);
     
@@ -98,20 +123,56 @@ void PrintInstructions() {
 ** Notes: MAX must be #defined in this file
 ********************************************************************/
 void GetScores(GrowingArray* scores) {
-    int value;
+    GRADE_TYPE value;
+    int matched;
     while(1) {
         printf("Enter next value: ");
-        scanf("%d", &value);
-        if (value < 0) {
+        matched = scanf(GRADE_TYPE_FORMATTER, &value);
+        if (matched == 0 || value < 0) {
             break;
         }
         while(value > MAX) {
             printf("Values must not be greater than %d.\n", MAX);
             printf("Enter next value: ");
-            scanf("%u", &value);
+            matched = scanf(GRADE_TYPE_FORMATTER, &value);
+            if (matched == 0) {
+                return; // bail out!
+            }
         }
         GrowingArray_InsertValue(scores, value);
     }
+}
+
+/******************************************************************
+** GetScoresFromFile - fills an unsigned integer array with valid values that
+**                     are read from the indicated text file.  
+**                     Assures the values are between zero and MAX.
+** Inputs:  filePath - path to the text file to read
+**            scores - array to fill
+** Outputs: size - size of the array
+** Notes: MAX must be #defined in this file
+********************************************************************/
+void GetScoresFromFile(const char filePath[], GrowingArray* scores) {
+    FILE *fp = fopen(filePath, "r+");
+    if (fp == NULL) {
+        fprintf(stderr, "Could not open file %s for reading: %s\n", filePath, strerror(errno));
+        errno = 0;
+        return;
+    }
+    
+    GRADE_TYPE value, matched;
+    while(1) {
+        matched = fscanf(fp, GRADE_TYPE_FORMATTER, &value);
+        if (matched == 0 || matched == EOF) {
+            break;
+        }
+        if (value > MAX)
+            continue;
+        GrowingArray_InsertValue(scores, value);
+    }
+    
+    fclose(fp);
+    fp = NULL;
 }
 
 /******************************************************************
@@ -121,9 +182,13 @@ void GetScores(GrowingArray* scores) {
 ** Notes: Letter grades, GRADES, PLUS_MINUS_SIZE, MINUS, REGULAR, PLUS
 **        must be #defined in this file
 ********************************************************************/
-ClassStatistics CalcStats(GrowingArray* scores, unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE]) {
-    unsigned int i, total = 0;
+ClassStatistics CalcStats(GrowingArray* scores, GRADE_TYPE gradesCount[GRADES][PLUS_MINUS_SIZE]) {
+    GRADE_TYPE i, total = 0;
+    GRADE_TYPE counter[MAX+1] = {0};
     ClassStatistics stats;
+    stats.max = 0;
+    stats.min = 0;
+    stats.mean = 0;
     for(i = 0; i < scores->currentPosition; i++) {
         total += scores->array[i];
         if (i == 0) { // We can assume the first element in the array is the largest and smallest
@@ -137,6 +202,7 @@ ClassStatistics CalcStats(GrowingArray* scores, unsigned int gradesCount[GRADES]
                 stats.min = scores->array[i];
             }
         }
+        counter[scores->array[i]]++; // count the frequency for the grades to calculate the mode
         switch(scores->array[i]/10) {
             case 10: gradesCount[A][PLUS]++; break;
             
@@ -185,7 +251,17 @@ ClassStatistics CalcStats(GrowingArray* scores, unsigned int gradesCount[GRADES]
             default: printf("Invalid score %d found at index %d.\n", scores->array[i], i);
         } // end switch
     } // end for
-    stats.mean = (float) total / (float) scores->currentPosition;
+    if (scores->currentPosition > 0)
+        stats.mean = (float) total / (float) scores->currentPosition;
+    stats.counts = scores->currentPosition;
+    stats.mode = 0;
+    stats.mode_count = 0;
+    for(i = 0; i <= MAX; i++) {
+        if (counter[i] > stats.mode) {
+            stats.mode = i;
+            stats.mode_count = counter[i];
+        }
+    }
     
     GrowingArray_Sort(scores);
     stats.median = scores->array[(scores->currentPosition+1) / 2 -1];
@@ -199,8 +275,8 @@ ClassStatistics CalcStats(GrowingArray* scores, unsigned int gradesCount[GRADES]
 ** Outputs: None
 ** Note: modifies the values at the represented locations
 *********************************************************/
-void swap(unsigned int *p, unsigned int *q) {
-   unsigned int temp;
+void swap(GRADE_TYPE *p, GRADE_TYPE *q) {
+   GRADE_TYPE temp;
    temp = *p;
    *p = *q;
    *q = temp;
@@ -214,11 +290,15 @@ void swap(unsigned int *p, unsigned int *q) {
 ** Outputs:  None
 ** Notes:: A, B, C, D, F must be #defined in this file
 *******************************************************************/
-void PrintStats(const ClassStatistics stats, const unsigned int gradesCount[GRADES][PLUS_MINUS_SIZE]) {
-    unsigned int i, j;
-    bool first = true;
-    printf("The class average is %.2f, median is %d\n", stats.mean, stats.median);
+void PrintStats(const ClassStatistics stats, const GRADE_TYPE gradesCount[GRADES][PLUS_MINUS_SIZE]) {
+    GRADE_TYPE i, j;
+    if (stats.counts == 0) {
+        printf("No grades entered.\n");
+        return;
+    }
+    printf("The class average is %.2f, median is %d, mode is %d with %d occurrences.\n", stats.mean, stats.median, stats.mode, stats.mode_count);
     printf("Max: %d, Min: %d\n", stats.max, stats.min);
+    printf("Of the %d grades, there were:\n", stats.counts);
 
     for(i = GRADES-1; i >= 0; i--) {
         if (i == F) { /* F is a special case, no plus or minus */
@@ -226,13 +306,7 @@ void PrintStats(const ClassStatistics stats, const unsigned int gradesCount[GRAD
             break;
         }
         for(j = 0; j < PLUS_MINUS_SIZE; j++) {
-            if (first) { // Easy way to have cleaner output for the user.
-                printf("There were ");
-                first = false;
-            } else {
-                printf("           ");
-            }
-            printf("%2d %c%c\n", gradesCount[i][j], GRADE_LETTERS[i], PLUS_MINUS[j]);
+            printf("           %2d %c%c\n", gradesCount[i][j], GRADE_LETTERS[i], PLUS_MINUS[j]);
         }
     }
 }
@@ -253,7 +327,7 @@ GrowingArray* GrowingArray_Create() {
  *****************************************************************************************/
 GrowingArray* GrowingArray_CreateWithCapacity(const size_t initialSize) {
     GrowingArray* array = GrowingArray_Create();
-    array->array = (unsigned int*) calloc(initialSize, sizeof(unsigned int));
+    array->array = (GRADE_TYPE*) calloc(initialSize, sizeof(GRADE_TYPE));
     array->size = initialSize;
     return array;
 }
@@ -263,11 +337,11 @@ GrowingArray* GrowingArray_CreateWithCapacity(const size_t initialSize) {
  ** Inputs: Pointer to the array, value to be added
  ** Outputs: None
  *********************************************************************************/
-void GrowingArray_InsertValue(GrowingArray* gr, const unsigned int value) {
+void GrowingArray_InsertValue(GrowingArray* gr, const GRADE_TYPE value) {
     if (gr->currentPosition == gr->size-1) {
         size_t new_size = gr->size * 2;
         int i;
-        unsigned int* temp = (unsigned int*) calloc(new_size, sizeof(unsigned int));
+        GRADE_TYPE* temp = (GRADE_TYPE*) calloc(new_size, sizeof(GRADE_TYPE));
         for(i = 0; i < gr->size; i++) {
             temp[i] = gr->array[i];
         }
@@ -285,7 +359,7 @@ void GrowingArray_InsertValue(GrowingArray* gr, const unsigned int value) {
 ** Note: modifies the contents of the array in-memory
 **********************************************************/
 void GrowingArray_Sort(GrowingArray* gr) {
-   unsigned int i, j;
+   GRADE_TYPE i, j;
 
    for(i = 0; i < gr->currentPosition; i++) {
       for(j = 0; j < gr->currentPosition-i; j++) {
