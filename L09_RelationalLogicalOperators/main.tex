@@ -57,11 +57,11 @@
     \texttt{int a = 1, b = 2, c = 3;} \\ ~~ \\
     \begin{tabular}{l l l l}
         Expression & Value & Expression & Value \\ \hline \\
-        $a < c$    &       & $a + b >= c$ &     \\
-        $b <= c$   &       & $a + b == c$ &     \\
-        $c <= a$   &       & $a != b$     &     \\
-        $a > b$    &       & $a + b != c$ &     \\
-        $b >= c$   &       &              &
+        $a < c$    & \only<2->{true}      & $a + b >= c$ & \only<3->{true}   \\
+        $b <= c$   & \only<4->{true}      & $a + b == c$ & \only<5->{true}   \\
+        $c <= a$   & \only<6->{false}     & $a != b$     & \only<7->{true}   \\
+        $a > b$    & \only<8->{false}     & $a + b != c$ & \only<9->{false}  \\
+        $b >= c$   & \only<10->{false}    &              &
     \end{tabular}
 \end{frame}
 
@@ -77,13 +77,13 @@
     \texttt{int a = 1, b = 2, c = 3;} \\
     \texttt{float x = 3.33, y = 6.66;} \\ ~~ \\
     \begin{tabular}{l l l}
-        Expression & Numeric Value & True/False  \\ \hline \\
-        $a+b$ & \\
-        $b-2*a$ & \\
-        $c-b-a$ & \\
-        $c-a$ & \\
-        $y-x$ & \\
-        $y-2*x$ & \\
+        Expression & Numeric Value & True/False   \\ \hline \\
+        $a+b$   & \only<2->{3} & \only<2->{true}  \\
+        $b-2*a$ & \only<3->{0} & \only<3->{false} \\
+        $c-b-a$ & \only<4->{0} & \only<4->{false} \\
+        $c-a$   & \only<5->{2} & \only<5->{true}  \\
+        $y-x$   & \only<6->{3.33} & \only<6->{true} \\
+        $y-2*x$ & \only<7->{0.00} & \only<7->{false} \\
     \end{tabular}
 \end{frame}
 
@@ -168,6 +168,25 @@ if ( condition1 ) {
     different statement(s);
 } else if .... {
     /* there can be any number of if-else statements */
+} else {
+    statement(s); /* the default case */
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Nesting of if-else Statements}
+\begin{verbatim}
+if ( condition1 ) {
+    statement(s);
+} else if (condition 2) {
+    different statement(s);
+    if (condition 3) {
+        // conditions 2 and 3 are both true
+        another statement();
+    } else {
+        // condition 2 is true, but condition 3 is false
+        yet another statement();
+    }
 } else {
     statement(s); /* the default case */
 }
