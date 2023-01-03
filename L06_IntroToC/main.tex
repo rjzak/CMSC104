@@ -19,7 +19,7 @@
 \usetheme{Boadilla}
 \title{Lecture 6: Intro to C}
 \author{UMBC CMSC 104}
-\date{Th 22 Sept 2022}
+\date{Tu 21 Feb 2023}
 
 \begin{document}
 
@@ -28,17 +28,9 @@
     Introduction to C
 \end{frame}
 
-\begin{frame}{Introduction to C}
-    Topics
-    \begin{itemize}
-        \item Brief History of Programming Languages \& C
-        \item The Anatomy of a C Program
-        \item Compilation
-        \item Using the gcc Compiler
-        \item CMSC 104 C Program Standards \& Indentation Styles
-    \end{itemize}
-\end{frame}
+\frame{\tableofcontents}
 
+\section{Brief History of Programming Languages \& C}
 \begin{frame}{History of Programming Languages \& C}
     \only<1> {
         \begin{itemize}
@@ -83,6 +75,7 @@
     }
 \end{frame}
 
+\subsection{Assembly}
 \begin{frame}[fragile]{Assembly Example}
     \begin{columns}
         \column{0.4\textwidth}
@@ -101,10 +94,10 @@ mov     eax, DWORD PTR [rbp-4]
 imul    eax, eax
 pop     rbp
 ret
-            \end{verbatim}
+    \end{verbatim}
     \end{columns}
     \vfill
-    Intel 64-bit
+    Intel x64\_64 (64-bit)
 \end{frame}
 
 \begin{frame}[fragile]{Assembly Example}
@@ -124,10 +117,68 @@ ldr     w0, [sp, 12]
 mul     w0, w0, w0
 add     sp, sp, 16
 ret
-            \end{verbatim}
+    \end{verbatim}
     \end{columns}
     \vfill
     ARM 64-bit
+\end{frame}
+
+\begin{frame}[fragile]{Assembly Example}
+    \begin{columns}
+        \column{0.4\textwidth}
+            \begin{verbatim}
+int square(int num) {
+    return num * num;
+}
+            \end{verbatim}
+        \column{0.5\textwidth}
+            \footnotesize
+            \begin{verbatim}
+std 31,-8(1)
+stdu 1,-64(1)
+mr 31,1
+mr 9,3
+stw 9,32(31)
+lwz 9,32(31)
+mullw 9,9,9
+extsw 9,9
+mr 3,9
+addi 1,31,64
+ld 31,-8(1)
+blr
+    \end{verbatim}
+    \end{columns}
+    \vfill
+    PowerPC 64-bit LE-mode
+\end{frame}
+
+\begin{frame}[fragile]{Assembly Example}
+    \begin{columns}
+        \column{0.4\textwidth}
+            \begin{verbatim}
+int square(int num) {
+    return num * num;
+}
+            \end{verbatim}
+        \column{0.5\textwidth}
+            \footnotesize
+            \begin{verbatim}
+addi    sp,sp,-32
+sd      s0,24(sp)
+addi    s0,sp,32
+mv      a5,a0
+sw      a5,-20(s0)
+lw      a5,-20(s0)
+mulw    a5,a5,a5
+sext.w  a5,a5
+mv      a0,a5
+ld      s0,24(sp)
+addi    sp,sp,32
+jr      ra
+    \end{verbatim}
+    \end{columns}
+    \vfill
+    RISC-V 64-bit
 \end{frame}
 
 \begin{frame}{Assembly}
@@ -167,6 +218,7 @@ ret
     \end{itemize}
 \end{frame}
 
+\section{The Anatomy of a C Program}
 \begin{frame}{Writing C Programs}
     \begin{itemize}
         \item A programmer uses a \textbf{text editor} to create \& modify code, which is completely different from a word processor.
@@ -187,6 +239,7 @@ ret
     After creating the code, the programmer invokes the compiler which turns code into a program.
 \end{frame}
 
+\section{Compilation}
 \begin{frame}{Stages of Compilation}
     Stage 1: Preprocessing
     \begin{itemize}
@@ -308,6 +361,7 @@ ret
     \end{itemize}
 \end{frame}
 
+\section{Using the gcc Compiler}
 \begin{frame}{Using the C compiler at UMBC}
     On the GL system at UMBC, use the \texttt{gcc} command to compile your code.
     \begin{itemize}
@@ -342,6 +396,7 @@ ret
     \end{itemize}
 \end{frame}
 
+\section{CMSC 104 C Program Standards \& Indentation Styles}
 \begin{frame}{Good Programming Practices}
     \begin{itemize}
         \item C programming standards and indentation styles are available on Blackboard

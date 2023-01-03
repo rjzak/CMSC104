@@ -39,7 +39,7 @@
 \rfoot{\input{semester}}
 \lfoot{CMSC 104 Section 01}
 %\AtEndDocument{\vfill \LaTeX \hfill}
-\AtEndDocument{\hfill \vfill Last modified: 24 August 2022}
+\AtEndDocument{\hfill \vfill Last modified: 03 January 2023}
 
 \begin{document}
 
@@ -48,12 +48,12 @@
 \textbf{Time:} Tuesdays \& Thursdays 5:30 -- 6:45p \\
 \textbf{Instructor:} Richard Zak \\
 \textbf{Email:} \href{mailto:richard.zak@umbc.edu?Subject=CMSC104}{richard.zak@umbc.edu} \\
-\textbf{Teaching Fellow:} Leann Alhashishi \\
-\textbf{Email:} \href{mailto:lalhash1@umbc.edu?Subject=CMSC104}{lalhash1@umbc.edu}
+\textbf{Teaching Fellow:} TBD \\ %Leann Alhashishi \\
+%\textbf{Email:} \href{mailto:lalhash1@umbc.edu?Subject=CMSC104}{lalhash1@umbc.edu}
 
 \section*{Day/Hours Available}
 \begin{itemize}
-\item Approximately 30 minutes prior to class if you coordinate with us prior to the day of class.
+\item Approximately 30 minutes prior to class, if planned ahead.
 \item At least 30 minutes after class, possibly longer.
 \item Virtual meeting MWF by appointment.
 \item In Email: Anytime, and we will respond within 48 hours.
@@ -64,6 +64,7 @@
 
 \section*{Course Description}
 \paragraph{}This course is designed to provide an introduction to problem solving and computer programming that does not require prior programming experience. Elementary problem solving skills and algorithm development will be introduced. Students will be taught the basic use of a programming environment and basic programming constructs (including loops, control statements, functions, and arrays). This course also teaches students the fundamentals of using the UNIX operating system, and introduces general computer science concepts.
+
 \paragraph{Note:}This course does not fulfill any of the computer science major requirements. Students who have taken and received transfer credit for, or who are taking concurrently any computer programming course in a high-level programming language, will not receive credit for CMSC 104. The list of such computer programming courses includes, but is not limited to AP Computer Science, CMSC 201, CMSC 202, and sections of CMSC 291 that cover programming topics.
 
 The following is a list of the topics that will be covered:
@@ -90,12 +91,12 @@ The following is a list of the topics that will be covered:
 \section*{Course Textbook}
 \textbf{C How to Program} by Deitel \& Deitel, Eighth Edition. Pearson, ISBN 978-0133976892.
 
-\section*{Course Work}
-\paragraph{Attendance}It is important to be present for each class, though it's up to each individual student to best manage their own time. This is your time to have regular interaction with the instructor and Teaching Fellow, to ask questions, ask for specific examples, seek clarification, etc. I cannot overstate the importance of being able to ask questions and engage in dialog to help facilitate the learning process. \textbf{The students who end up being the most successful are usually the ones who regularly attend and ask questions!}
+\section*{Course Work}\label{sec:coursework}
+\paragraph{Attendance}It is important to be present for each class, though it's up to each individual student to best manage their own time. This is your time to have regular interaction with the instructor and Teaching Fellow, to ask questions, ask for specific examples, seek clarification, etc. I cannot overstate the importance of being able to ask questions and engage in dialog to help facilitate the learning process. \textbf{The students who end up being the most successful are the ones who regularly attend \underline{and} ask questions!}
 
-\paragraph{Classwork \& Homework}Assignments will be submitted using the submit system on GL (ssh userID@gl.umbc.edu). All assignments are due one week after being assigned. For example, Classwork 1 is assigned on Thursday, August 26\textsuperscript{th}, therefore the due date is 11:59 PM on Thursday, September 2\textsuperscript{nd}. An example of the submit command: \texttt{submit cs104 cw1 proj.txt file2.ext}. Assignments may be completed early, but late assignments will \underline{not} be accepted.
+\paragraph{Classwork \& Homework}Assignments will be submitted using the submit system on GL (ssh userID@gl.umbc.edu). All assignments are due precisely one week after being assigned. For example, Classwork 1 is assigned on Tuesday, January 31\textsuperscript{st}, therefore the due date is 11:59 PM on Tuesday, February 7\textsuperscript{th}. An example of the submit command: \texttt{submit cs104 cw1 proj.txt file2.ext}. Assignments may be completed early, but \underline{\hypertarget{cwhw}{late assignments} will \textbf{not} be accepted}\footnote{Late assignments may be accepted \textit{only} in the event of a documented extenuating circumstance.}.
 
-\paragraph{Coding Assignments}Most of the assignments for classwork and homework ones in which you the student writes code to complete a given task. Each assignment indicates what the task is, and most assignments have examples as to how the program should behave. \textbf{Therefore, for coding assignments, there's no reason why each student shouldn't get 100\% on each assignment, since you'll know \underline{before} turning it in whether or not your code works!}
+\paragraph{Coding Assignments}Most of the assignments for classwork and homework ones in which you the student writes code to complete a given task. Each assignment indicates what the task is, and most assignments have examples as to how the program should behave. \textbf{Therefore, for coding assignments, there's no reason why each student shouldn't get 100\% on each assignment, since you'll know \underline{before} turning it in whether or not your code works, and the assignments indicate how the program should work!}
 
 \paragraph{Software} Windows users will need Putty \url{https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html} and WinSCP \url{https://winscp.net/eng/index.php} for connecting to the UMBC Linux servers and transferring files\footnote{Alternatively, Windows users install the Windows Subsystem for Linux (WSL).}. Both programs are free. Mac users may want to use Cyberduck \url{https://cyberduck.io/} or Transmit \url{https://panic.com/transmit/} to help with file transfers, but this isn't required, as the Mac command line (\texttt{Terminal.app}) allows for SSH connections and file transfers natively.
 
@@ -127,7 +128,7 @@ $<$60\%     & F &
 \end{tabular}
 \end{center}
 
-\paragraph{}For borderline grades, there may be adjustments in the student's favor based on attendance, but under no circumstances will the letter grades be lower than in the standard formula. Grades will not be ``curved'' in the sense that the percentages of A's, B's and C's are not fixed. As a guideline, a student receiving an ``A'' should be able to produce correct programs for the homework assignments and quizzes with ease.
+\paragraph{}For borderline grades, there may be adjustments in the student's favor based on attendance, but under no circumstances will the letter grades be lower than in the standard formula. Grades will not be ``curved'' in the sense that the percentages of A's, B's and C's are not fixed. As a guideline, a student receiving an ``A'' should be able to produce correct programs for the homework assignments and quizzes with ease. As stated in the \hyperlink{cwhw}{Classwork \& Homework} section, late work will not be accepted.
 
 \subsection*{Academic Integrity}
 \paragraph{}By enrolling is this course, each student assumes the responsibilities of an active participant in UMBC's scholarly community in which everyone's academic work and behavior are held to the highest standards of honesty. Cheating, fabrication, plagiarism, and helping others to commit these acts are all forms of academic dishonesty, and they are wrong. Academic misconduct could result in disciplinary action that may include, but is not limited to, suspension or dismissal. To find useful information about avoiding plagiarism infractions through appropriate citations, or to read the full policy regarding student academic misconduct for the graduate school, please see \url{http://www.umbc.edu/provost/integrity}.
@@ -138,6 +139,7 @@ $<$60\%     & F &
 \textit{Note: The schedule is subject to change. However, any changes will be thoroughly discussed and well disseminated. The lecture \& textbook topics might not align, that's okay, please read the chapter before class starts anyway.}
 
 % Fall schedule
+\iffalse % Poor man's comment block
 \small
 \begin{tabular}{c c l l c}
 Date & Week & ~~~~~~~~~~~~Topic & Chapter & Assignment \\
@@ -174,50 +176,50 @@ Th Dec 8   & 15 & Demos & & Homework 10 \\
 Tu Dec 13  & 16 & Review &  \\
 Th Dec 15  & 16 & \hl{Final Exam?, TBD} & \\
 \end{tabular}
+\fi
 
 % Spring schedule
-\iffalse % Poor man's comment block
 \small
 \begin{tabular}{c c l l c}
 Date & Week & ~~~~~~~~~~~~Topic & Chapter & Assignment \\
 \hline
-Tu Feb 1  & 1 & Introduction, Syllabus Review, Linux @ UMBC & & Classwork 1  \\
-Th Feb 3  & 1 & \hl{Quiz 0}, L2: Machine Architecture \& Number Systems & 1 & Classwork 2 \\
-Tu Feb 8  & 2 & L3: Operating Systems & & Homework 1 \\
-Th Feb 10 & 2 & L4 \& 5: Algorithms & & Classwork 3 \\
-Tu Feb 15 & 3 & hello world (Practice) & & Homework 2 \\
-Th Feb 17 & 3 & \hl{Quiz 1} & &  \\
-Tu Feb 22 & 4 & L6: Introduction to C & 2 & Homework 3\\
-Th Feb 24 & 4 & L7: Variables in C & 3 \\ \hline
+Tu Jan 31  & 1 & Introduction, Syllabus Review, Linux @ UMBC & & Classwork 1  \\ \hline
 
-Tu Mar 1 & 5 & L8: Arithmetic Operators in C & 4 & Classwork 4 \\
-Th Mar 3 & 5 & \texttt{scanf} demo & 5 &  \\
-Tu Mar 8 & 6 & L9: Relational \& Logical Operators & 6 & Homework 4 \\
-Th Mar 10 & 6 & L10: While Loops & 7 & Classwork 5 \\
-Tu Mar 15 & 7 & while loop demo & & Classwork 6 \\
-Th Mar 17 & 7 & \hl{Quiz 2} & & \\
-Tu Mar 22 & 8 & {\color{cadmiumgreen}Spring Break!} & & \\
-Th Mar 24 & 8 & {\color{cadmiumgreen}Spring Break!} & &  \\
-Tu Mar 29 & 9 & L11: More Loops, For Loops demo & 8 &  \\
-Th Mar 31 & 9 & L12: Assignment Operators & 9 & Homework 5\\ \hline
+Th Feb 2  & 1 & \hl{Quiz 0}, L2: Machine Architecture \& Number Systems & 1 & Classwork 2 \\
+Tu Feb 7  & 2 & L3: Operating Systems & & Homework 1 \\
+Th Feb 9 & 2 & L4 \& 5: Algorithms & & Classwork 3 \\
+Tu Feb 14 & 3 & hello world (Practice) & & Homework 2 \\
+Th Feb 16 & 3 & \hl{Quiz 1} & &  \\
+Tu Feb 21 & 4 & L6: Introduction to C & 2 & Homework 3\\
+Th Feb 23 & 4 & L7: Variables in C & 3 \\
 
-Tu Apr 5 & 10 & \hl{Quiz 3} & & \\
-Th Apr 7 & 10 & L13: Switch Statements & 10 & \\
-Tu Apr 12 & 11 & Functions demo & 5 & Homework 6\\
-Th Apr 14 & 11 & L14: Functions, Part I & & Classwork 7  \\
-Tu Apr 19 & 12 & L15: Functions, Part II & &  Homework 7 \\
-Th Apr 21 & 12 & L16: Functions, Part III  & & Classwork 8 \\
-Tu Apr 26 & 13 & L17: Header Files & & Homework 8\\
-Th Apr 28 & 13 & \hl{Quiz 4} & 6 & Classwork 9 \\ \hline
+Tu Feb 28 & 5 & L8: Arithmetic Operators in C & 4 & Classwork 4 \\ \hline
+Th Mar 2 & 5 & \texttt{scanf} demo & 5 &  \\
+Tu Mar 7 & 6 & L9: Relational \& Logical Operators & 6 & Homework 4 \\
+Th Mar 9 & 6 & L10: While Loops & 7 & Classwork 5 \\
+Tu Mar 14 & 7 & while loop demo & & Classwork 6 \\
+Th Mar 16 & 7 & \hl{Quiz 2} & & \\
+Tu Mar 21 & 8 & {\color{cadmiumgreen}Spring Break!} & & \\
+Th Mar 23 & 8 & {\color{cadmiumgreen}Spring Break!} & &  \\
+Tu Mar 28 & 9 & L11: More Loops, For Loops demo & 8 &  \\
+Th Mar 30 & 9 & L12: Assignment Operators & 9 & Homework 5\\ \hline
 
-Tu May 3 & 14 & L18: Arrays, Part I & & Homework 9 \\
-Th May 5 & 14 & L19: Arrays, Part II  &  &  \\
-Tu May 10 & 15 & \hl{Quiz 5} & & Classwork 10 \\
-Th May 12 & 15 & Demos &  & Homework 10 \\
-Tu May 17 & 16 & Review & \\
-Th May 19 & 16 & \hl{Final Exam, 6-8PM} & \\
+Tu Apr 4 & 10 & \hl{Quiz 3} & & \\
+Th Apr 6 & 10 & L13: Switch Statements & 10 & \\
+Tu Apr 11 & 11 & Functions demo & 5 & Homework 6\\
+Th Apr 13 & 11 & L14: Functions, Part I & & Classwork 7  \\
+Tu Apr 18 & 12 & L15: Functions, Part II & &  Homework 7 \\
+Th Apr 20 & 12 & L16: Functions, Part III  & & Classwork 8 \\
+Tu Apr 25 & 13 & L17: Header Files & & Homework 8\\
+Th Apr 27 & 13 & \hl{Quiz 4} & 6 & Classwork 9 \\ \hline
+
+Tu May 2 & 14 & L18: Arrays, Part I & & Homework 9 \\
+Th May 4 & 14 & L19: Arrays, Part II  &  &  \\
+Tu May 9 & 15 & \hl{Quiz 5} & & Classwork 10 \\
+Th May 11 & 15 & Demos &  & Homework 10 \\
+Tu May 16 & 16 & Review & \\
+Th May 18 & 16 & \hl{Final Exam, 6-8PM} & \\
 \end{tabular}
-\fi
 
 %\section*{Title IX Statement}
 %\paragraph{}As an instructor, I am considered a Responsible Employee, per UMBC’s Policy on Prohibited Sexual Misconduct, Interpersonal Violence, and Other Related Misconduct \footnote{\url{http://humanrelations.umbc.edu/sexual-misconduct/umbc-resource-page-for-sexual-misconduct-and-other-related-misconduct/}}. While my goal is for you to be able to share information related to your life experiences through discussion and written work, I want to be transparent that as a Responsible Employee I am required to report disclosures of sexual assault, domestic violence, relationship violence, stalking, and/or gender-based harassment to the University’s Title IX Coordinator.
@@ -250,13 +252,20 @@ If you will be using SDS approved accommodations in this class, please contact t
 UMBC’s Academic Success Center (ASC) \url{https://academicsuccess.umbc.edu/} provides a range of resources to support students as they progress toward degree completion. They will continue to offer all of their services online. 
 The ASC has created a specialized set of Online Learning Resources \url{https://lrc.umbc.edu/online_learning/}, including videos and guides to help students succeed while learning online.
 In addition, check out the following resources:
+
 \begin{itemize}
 \item Academic Success Center Resources \url{https://academicsuccess.umbc.edu/asc-business-continuity/} include: Online tutoring and writing support, supplemental instruction/peer-assisted study sessions (SI PASS), placement testing, FYI academic alerts, success courses, academic advocacy, academic policy and academic success meetings.
+
 \item Tutoring and Writing Center Appointments \url{https://lrc.umbc.edu/tutor/}b will be online; students can make appointments by going to \url{https://saml2.go-redrock.com/relay.php}.
+
 \item SI PASS \url{https://si.lrc.umbc.edu/} Supplemental Instruction (SI)/ Peer Assisted Study Sessions (PASS). The SI PASS program targets traditionally difficult academic courses, providing regularly scheduled, out-of-class review sessions, happening in Blackboard Collaborate inside your existing Blackboard course.
+
 \item Academic Advocates: Advocates work one-on-one with students who need support navigating academic and institutional challenges, no matter how complex the concerns (i.e., personal, academic, or financial). \url{https://academicadvocacy.umbc.edu/student-referrals/submit-a-referral/}
+
 \item Academic Success Meetings - Schedule a one-to-one virtual meeting with an Academic Success Center Professional who can help you with time management, study skills, and accessing campus resources. \url{https://lrc.umbc.edu/academic-success-meeting/}
+
 \end{itemize}
+
 If you have a question, please contact the ASC at \href{mailto:academicsuccess@umbc.edu}{academicsuccess@umbc.edu}.
 
 %\paragraph{}Additional resources: \url{https://docs.google.com/document/d/1xWWGAR8qEzKYr7qaVHoEhvO6lyXIyn6M3M7EFZPJQgA/edit?usp=sharing}
