@@ -1,16 +1,22 @@
 \documentclass{beamer}
+\setbeamersize{text margin left=5mm,text margin right=5mm}
 \usepackage[utf8]{inputenc}
 \usepackage{xcolor}
 \usepackage{ulem} % strikeout
 
 \usepackage{tikz}
 \usetikzlibrary{arrows,shapes,tikzmark}
+\usepackage{attachfile}
+
+\renewcommand{\today}{\number \day \ \ifcase \month \or January\or February\or March\or %
+April\or May \or June\or July\or August\or September\or October\or November\or %
+December\fi \ \number \year}
 
 %Information to be included in the title page:
 \title{Data Types}
 \author{Richard Zak}
 \institute{UMBC}
-\date{2021}
+\date{\today}
 \begin{document}
 
 %\frame{\titlepage}
@@ -281,6 +287,12 @@ long: 8 bytes, 64-bit \\
 long min: -9,223,372,036,854,775,808 \\
 long max: +9,223,372,036,854,775,807 \\
 unsigned long max: +18,446,744,073,709,551,615
+\end{frame}
+
+\begin{frame}{Data Types}
+\includegraphics[scale=0.256]{DataTypesMeme.jpeg}
+\footnotesize Source: \url{https://twitter.com/b0rk/status/1623041736242040872/photo/1}
+\attachfile[zoom=false]{DataTypesMeme.jpeg}
 \end{frame}
 
 \end{document}
