@@ -28,18 +28,9 @@
     Relational \& Logical Operators
 \end{frame}
 
-\begin{frame}{Relational \& Logical Operators}
-    Topics:
-    \begin{itemize}
-        \item Relational Operators \& Expressions
-        \item The \texttt{if} Statement
-        \item The \texttt{if}-\texttt{else} Statement
-        \item Nesting \texttt{if}-\texttt{else} Statements
-        \item Logical Operators \& Expressions
-        \item Truth Tables
-    \end{itemize}
-\end{frame}
+\frame{\tableofcontents}
 
+\section{Relational Operators}
 \begin{frame}{Relational Operators}
 ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~  \begin{tabular}{l l}
         $<$ & less than \\
@@ -96,6 +87,7 @@
     \end{enumerate}
 \end{frame}
 
+\subsection{if statements}
 \begin{frame}[fragile]{Selection: the if statement}
 \begin{verbatim}
     if ( condition ) {
@@ -116,6 +108,7 @@ if (value == 0) {
 \end{verbatim}
 \end{frame}
 
+\subsection{if-else statements}
 \begin{frame}[fragile]{Selection: The if-else statement}
 \begin{verbatim}
 if ( condition ) {
@@ -160,6 +153,7 @@ if (value == 0) {
     \end{itemize}
 \end{frame}
 
+\subsection{Nested if statements}
 \begin{frame}[fragile]{Nesting of if-else Statements}
 \begin{verbatim}
 if ( condition1 ) {
@@ -228,6 +222,7 @@ if (a = 1) { /* semantic error! */
     \end{itemize}
 \end{frame}
 
+\section{Logical Operators}
 \begin{frame}{Logical Operators}
     \begin{itemize}
         \item So far, we have seen only \textbf{simple conditions}, like \texttt{if (count > 10)...}.
@@ -259,6 +254,7 @@ if (!(x==2)) { /* same as (x!=2) */
 \end{verbatim}
 \end{frame}
 
+\section{Truth Tables}
 \begin{frame}{Truth Table for \&\&}
     \begin{tabular}{l l l}
         Expression 1 & Expression 2 & Expression 1 \&\& Expression 2  \\

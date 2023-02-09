@@ -28,19 +28,10 @@
     More Loops
 \end{frame}
 
-\begin{frame}
-    Topics:
-    \begin{itemize}
-        \item Counter-controlled (definite) repetition
-        \item Event-controlled (indefinite) repetition
-        \item for loops
-        \item do-while loops
-        \item Choosing the appropriate loop
-        \item Break \& continue statements
-    \end{itemize}
-\end{frame}
+\frame{\tableofcontents}
 
-\section*{Counter-Controlled Repetition}
+\section{Loop Types}
+\subsection{Counter-Controlled Repetition (Definite)}
 \begin{frame}[fragile]{Counter-Controlled Repetition (Definite)}
     If it is known in advance exactly how many times a loop will execute, it is known as a \textbf{counter-controlled loop}.
     \begin{verbatim}
@@ -52,7 +43,7 @@ while(i <= 10) {
     \end{verbatim}
 \end{frame}
 
-    \section*{Event-Controlled Repetition (Indefinite)}
+\subsection{Event-Controlled Repetition (Indefinite)}
 \begin{frame}[fragile]{Event-Controlled Repetition}
     If it is \underline{not} known in advance exactly how many times a loop will execute, it is known as an \textbf{event-controlled loop}.
     \begin{verbatim}
@@ -92,7 +83,7 @@ int main() {
     \end{lstlisting}
 \end{frame}
 
-\section*{for loop}
+\subsection{for loop}
 \begin{frame}[fragile]{The for Loop Repetition Structure}
     \begin{itemize}
         \item The \texttt{for} loop handles details of the counter-controlled loop automatically.
@@ -139,7 +130,7 @@ for(i = 0; i <= 10; i = i + 2) {
 \end{lstlisting}
 \end{frame}
 
-\section*{do-while loop}
+\subsection{do-while loop}
 \begin{frame}[fragile]{The do-while Repetition Structure}
     \begin{verbatim}
 do {
@@ -195,7 +186,7 @@ for(; num <= 0; ) {
     \end{lstlisting}
 \end{frame}
 
-\section*{Loop Selection}
+\section{Loop Selection}
 \begin{frame}{Which Loop to Use?}
     \begin{itemize}
         \item Use a \texttt{for} loop for counter-controlled repetition.
@@ -235,12 +226,12 @@ for ( i = 0; i < 5; i = i + 1 ) {
     \end{itemize}
 \end{frame}
 
-\section*{Break \& Continue}
+\section{Break \& Continue}
 \begin{frame}{The break Statement}
     \begin{itemize}
         \item The \textbf{break} statement can be used in loops to cause a premature exit of the loop.
         \item Sometimes it's necessary for your algorithm to exit early, perhaps because the proper solution was found early, or because of unexpected input.
-        \item Normally, it's not a recommended technique.
+        \item Normally, it's not a recommended technique, and should only be used when needed.
     \end{itemize}
 \end{frame}
 
@@ -270,7 +261,7 @@ Broke out of loop at i = 5
     \begin{itemize}
         \item The \textbf{continue} statement can be used in loops to skip computation for that particular iteration.
         \item Sometimes it's necessary for your algorithm to skip an iteration, perhaps to avoid an error.
-        \item Normally, it's not a recommended technique.
+        \item Normally, it's not a recommended technique, and should only be used when needed.
     \end{itemize}
 \end{frame}
 

@@ -29,7 +29,7 @@
 \usetheme{Boadilla}
 \title{Lecture 18: Arrays, Part I}
 \author{UMBC CMSC 104}
-\date{Tu 29 Nov 2022}
+\date{Tu 02 May 2023}
 
 \begin{document}
 
@@ -228,18 +228,18 @@ int main() {
         blanknode/.style={rectangle, draw=white!0, minimum size=0mm},
         ]
         %Nodes
-        \node[squarednode]  (heightfunc) [below=of mainnode] {\footnotesize{Print Instructions}};
+        \node[squarednode]  (heightfunc) [below=of roundnode] {\footnotesize{Print Instructions}};
         %\node[squarednode]  (widthfunc) [right=4mm of heightfunc] {\footnotesize{Width function}};
         \node[blanknode]    (midpoint)  [right=4mm of heightfunc] {};
-        \node[roundnode]    (mainnode)  [above=of midpoint]  {\footnotesize{main()}};
+        \node[roundnode]    (roundnode)  [above=of midpoint]  {\footnotesize{main()}};
         %\node[squarednode]  (solidline) [right=4mm of widthfunc]  {\footnotesize{Draw solid line}};
         \node[squarednode]  (hollowline) [right=10mm of midpoint]  {\footnotesize{Calculate Average Score}};
         
         %Lines
-        \draw[->] (mainnode.south) -| (heightfunc.north);
+        \draw[->] (roundnode.south) -| (heightfunc.north);
         %\draw[->] (mainnode.south) -| (widthfunc.north);
         %\draw[->] (mainnode.south) -| (solidline.north);
-        \draw[->] (mainnode.south) -| (hollowline.north);
+        \draw[->] (roundnode.south) -| (hollowline.north);
     \end{tikzpicture}
 \end{frame}
 
