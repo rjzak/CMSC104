@@ -21,6 +21,7 @@ December\fi \ \number \year}
 
 %\frame{\titlepage}
 
+\section{Example Walk-through}
 \begin{frame}
 Consider these numbers in memory. What do they mean?
 \begin{table}[]
@@ -33,6 +34,7 @@ Consider these numbers in memory. What do they mean?
 \end{table}
 \end{frame}
 
+\subsection{char}
 \begin{frame}{Char - 8 bits, 1 byte}
 
 \begin{table}[]
@@ -55,6 +57,7 @@ Order & 0x00 & 0x00
 
 \end{frame}
 
+\subsection{char []}
 \begin{frame}{Array of Chars}
 
 \begin{table}[]
@@ -88,6 +91,7 @@ Index & Little Endian & Big Endian \\
 
 \end{frame}
 
+\subsection{short}
 \begin{frame}{Short Integer - 16 bits, 2 bytes}
 
 \begin{table}[]
@@ -110,6 +114,7 @@ Order & 0x0100 & 0x0001
 
 \end{frame}
 
+\subsection{short []}
 \begin{frame}{Array of Short Integers}
 
 \begin{table}[]
@@ -138,6 +143,7 @@ Index & Little Endian & Big Endian \\
 
 \end{frame}
 
+\subsection{int}
 \begin{frame}{Integer - 32 bits, 4 bytes}
 
 \begin{table}[]
@@ -160,6 +166,7 @@ Order & 0x03020100 & 0x00010203
 
 \end{frame}
 
+\subsection{int []}
 \begin{frame}{Array of Integers}
 
 \begin{table}[]
@@ -182,6 +189,7 @@ Index & Little Endian & Big Endian \\
 
 \end{frame}
 
+\subsection{long}
 \begin{frame}{Long Integer - 64 bits, 8 bytes}
 
 \begin{table}[]
@@ -204,6 +212,7 @@ Order & 0x0706050403020100 & 0x0001020304050607
 
 \end{frame}
 
+\subsection{float}
 \begin{frame}{Floating Point Value - 32 bits, 4 bytes}
 
 \begin{table}[]
@@ -226,6 +235,7 @@ Order & 0x03020100 & 0x00010203
 
 \end{frame}
 
+\subsection{float []}
 \begin{frame}{Array of Floating Point Values - 32 bits, 4 bytes}
 
 \begin{table}[]
@@ -248,6 +258,7 @@ Index & Little Endian & Big Endian \\
 
 \end{frame}
 
+\subsection{double}
 \begin{frame}{Double-Precision Floating Point Value - 64 bits, 8 bytes}
 
 \begin{table}[]
@@ -289,10 +300,18 @@ long max: +9,223,372,036,854,775,807 \\
 unsigned long max: +18,446,744,073,709,551,615
 \end{frame}
 
+\section{Visually Explained}
 \begin{frame}{Data Types}
 \includegraphics[scale=0.256]{DataTypesMeme.jpeg}
 \footnotesize Source: \url{https://twitter.com/b0rk/status/1623041736242040872/photo/1}
 \attachfile[zoom=false]{DataTypesMeme.jpeg}
+\end{frame}
+
+\subsection{floats}
+\begin{frame}{Floats, Explained}
+\includegraphics[scale=0.204]{FloatsMeme.jpeg}
+\footnotesize Source: \url{https://twitter.com/b0rk/status/1624094389399171088/photo/1}
+\attachfile[zoom=false]{FloatsMeme.jpeg}
 \end{frame}
 
 \end{document}
