@@ -281,7 +281,32 @@ Order & 0x0706050403020100 & 0x0001020304050607
 
 \end{frame}
 
-\begin{frame}{Data Types}
+\subsection{Endianness}
+\begin{frame}{Endianness}
+    \textit{What's going on with Big and Little Endian\footnote{The term `Endian' first appeared in Jonathan Swift's \\ ~~ ~~ \underline{Gulliver's Travels} in 1726.} in some of the prior slides?} \\
+    ~~ \\
+    Endianness is is order in which bytes are read, when more than one byte is needed to represent some data. \\
+    \begin{itemize}
+        \item Big Endian: the bytes go from left to right, like English
+        \begin{itemize}
+            \item \texttt{00 01} $\rightarrow$ \texttt{01}
+            \item Used by some processors, notable the old PowerPC Macintosh systems, PS3, and others.
+            \item This is how data is represented when being transmitted on a network.
+            \item Sometimes referred to as ``Most Significant Bit'' or ``MSB''.
+        \end{itemize}
+        \item Little Endian: the bytes go from right to left
+        \begin{itemize}
+            \item \texttt{00 01} $\rightarrow$ \texttt{256}
+            \item Used in all modern processors, notable Intel/AMD \texttt{x86\_64}, ARM, RISC-V.
+            \item Sometimes referred to as ``Least Significant Bit'' or ``LSB''.
+        \end{itemize}
+    \end{itemize}
+    Not knowing the Endianness of your system, or data, your code is running on can cause problems which are difficult to debug. \\
+    ~~
+\end{frame}
+
+\subsection{Data Types Summary}
+\begin{frame}{Data Types Minimum \& Maximum Sizes}
 \begin{table}[]
 \begin{tabular}{c c r r}
 Type & Bytes & Min & Max \\
