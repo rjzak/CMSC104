@@ -1,0 +1,6 @@
+/pdf
+*.pdf
+*.dvi
+*.log
+*.out
+*.aux
