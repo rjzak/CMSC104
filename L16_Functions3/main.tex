@@ -304,7 +304,7 @@ int get_value(char* label) {
 
 \section{Coding Practice: The Rectangle}
 \begin{frame}{Draw a Rectangle}
-    \underline{Problem:} Write an interactive program which will draw a solid rectangle of asterisks (*). The program must also display the dimensions of the rectangle, and perform error checking to ensure the dimensions are greater than zero.
+    \underline{Problem:} Write an interactive program which will draw a hollow rectangle of asterisks (*). The program must also display the dimensions of the rectangle, and perform error checking to ensure the dimensions are greater than zero.
     \\ ~~ \\
     \centering
     {\color{purple} * * * * * * * * * * * * *} \\
@@ -522,7 +522,7 @@ int main() {
     for(hCounter = 0; hCounter < height - 2; hCounter++) {
         draw_line(width, 1);
     }
-    draw_solid(width, 0);
+    draw_line(width, 0);
     return 0;
 }
     \end{lstlisting}
