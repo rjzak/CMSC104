@@ -160,7 +160,7 @@ int main() {
         \item Subscript values are integers and always begin at zero.
         \item Values of individual elements can be accessed by \textbf{indexing} into the array. For example: 
         \begin{verbatim}
-printf("The third element is %d.\n", numbers[2]);}\end{verbatim} ~~ ~~ would give the output: \\
+printf("The third element is %d.\n", numbers[2]);\end{verbatim} ~~ ~~ would give the output: \\
         \texttt{The third element is 6.}
         \item A subscript can also be an expression which evaluates to an integer:
         \begin{verbatim}
@@ -233,16 +233,12 @@ int main() {
         ]
         %Nodes
         \node[squarednode]  (heightfunc) [below=of roundnode] {\footnotesize{Print Instructions}};
-        %\node[squarednode]  (widthfunc) [right=4mm of heightfunc] {\footnotesize{Width function}};
         \node[blanknode]    (midpoint)  [right=4mm of heightfunc] {};
         \node[roundnode]    (roundnode)  [above=of midpoint]  {\footnotesize{main()}};
-        %\node[squarednode]  (solidline) [right=4mm of widthfunc]  {\footnotesize{Draw solid line}};
         \node[squarednode]  (hollowline) [right=10mm of midpoint]  {\footnotesize{Calculate Average Score}};
         
         %Lines
         \draw[->] (roundnode.south) -| (heightfunc.north);
-        %\draw[->] (mainnode.south) -| (widthfunc.north);
-        %\draw[->] (mainnode.south) -| (solidline.north);
         \draw[->] (roundnode.south) -| (hollowline.north);
     \end{tikzpicture}
 \end{frame}
@@ -320,11 +316,11 @@ int main() {
 
 \begin{frame}[fragile]{``Clean'' Example}
     \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
-/******************************************************/
-** PrintInstructions - prints the user instructions
-** Inputs:  None
-** Outputs:  None
-/******************************************************/
+/******************************************************
+ ** PrintInstructions - prints the user instructions
+ ** Inputs:  None
+ ** Outputs:  None
+ ******************************************************/
 void PrintInstructions() {
     printf("This program calculates the average score\n");
     printf("for a class of 39 students. It also reports the\n");
@@ -337,12 +333,12 @@ void PrintInstructions() {
 
 \begin{frame}[fragile]{``Clean'' Example}
     \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
-/****************************************************/
-** FindAverage - calculates an average
-** Inputs:  sum - the sum of all values
-**          num - the number of values
-** Outputs:  the computed average
-/****************************************************/
+/****************************************************
+ ** FindAverage - calculates an average
+ ** Inputs:  sum - the sum of all values
+ **          num - the number of values
+ ** Outputs:  the computed average
+ ****************************************************/
 float FindAverage(float sum, int num) {
     float average;   /* computed average */
 
@@ -421,7 +417,7 @@ int main() {
             case   2 : case 1: case 0:
                        gradeCount[F]++; break;
             default : printf("Error, score %d is invalid.\n",
-                    score);
+                    score[i]);
         }
     }
     \end{lstlisting}
