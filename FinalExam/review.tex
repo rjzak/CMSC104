@@ -33,6 +33,7 @@
 \usepackage[normalem]{ulem} % Strikethrough with \sout{}
 \usepackage{placeins} % FloatBarrier
 \usepackage[utf8]{inputenc}
+\usepackage{listings} % Syntax highlighing
 
 % arrays table
 \usepackage{multirow,tabularx}
@@ -128,7 +129,7 @@
     \end{itemize}
 \end{itemize}
 
-\paragraph{}This is by no means an exhaustive list. There are other operating systems out there, things which include hobbyist operating systems like Haiku\footnote{\url{https://www.haiku-os.org/}}, Redox\footnote{\url{https://www.redox-os.org/}}, \& Serenity\footnote{\url{https://serenityos.org/}}, and industrial operating systems, like VxWorks\footnote{\url{https://en.wikipedia.org/wiki/VxWorks}}, which run some robotic systems, satellites, and some Mars rovers. However, the Mars helicopter \textit{Ingenuity} does run Linux\footnote{\url{https://spectrum.ieee.org/nasa-designed-perseverance-helicopter-rover-fly-autonomously-mars}}!
+\paragraph{}This is by no means an exhaustive list. There are other operating systems out there, things which include hobbyist operating systems like Haiku\footnote{\url{https://www.haiku-os.org/}}, Redox\footnote{\url{https://www.redox-os.org/}}, \& Serenity\footnote{\url{https://serenityos.org/}}, and industrial operating systems, like VxWorks\footnote{\url{https://en.wikipedia.org/wiki/VxWorks}}, which run some robotic systems, satellites, and some Mars rovers. However, the Mars helicopter \textit{Ingenuity} does run Linux\footnote{\url{https://spectrum.ieee.org/nasa-designed-perseverance-helicopter-rover-fly-autonomously-mars}}! It's important to know there is more to computing than just Windows and Macintosh.
 
 \subsection{Unix Commands}
 \paragraph{}Some basic Unix commands, which usually work across Unix and Unix-like operating systems:
@@ -198,12 +199,17 @@
 \paragraph{Note:}The compiler will catch syntax errors. Semantic errors, also sometimes called bugs\footnote{Computer bugs got their name from a time in September 1947, where a computer problem was caused by an actual insect. \url{https://www.atlasobscura.com/places/grace-hoppers-bug}.}, are not caught automatically. You have to identify them, and figure out how to resolve them. If someone could invent a semantic error detector which works with a compiler, that person would be a billionaire.
 
 \section{Algorithms}
-\paragraph{}An algorithm is a set of instructions which is clear \& easy to understand no matter who reads it, and has a small (or manageable) amount of steps. It is clear at each step what must be done, without assumptions.
+\paragraph{}An algorithm is a set of instructions which is clear \& easy to understand no matter who reads it, and has a small (or manageable) amount of steps. It is clear at each step what must be done, without assumptions or confusion.
 
 \paragraph{}A professor at Harvard University made a video which demonstrates this clearly by discussing how to make a peanut butter and jelly sandwich: \url{https://youtu.be/okkIyWhN0iQ}. Note that some steps, like ``open the bag'', or how to open the bag of bread, is missed because some people \textit{assumed} aspects of that step based on prior knowledge. A good algorithm wouldn't have an assumption, each step would be clear. If an assumption can't be avoided, it would be documented somewhere in the code. An algorithm should pay attention to deals, and handle unexpected inputs accordingly.
 
+\paragraph{}The final definition from Lecture 5:
+\begin{quote}
+An algorithm is a finite set of unambiguous, executable instructions which directs a terminating activity.
+\end{quote}
+
 \section{Pseudocode}
-\paragraph{}To help with planning how a program, or function might look like, \texttt{pseudocode} is used because it hides the issues pertaining to C syntax. Separating out semantics from syntax can be helpful in planning how the code will look by first focusing on what it's supposed to do. Example:
+\paragraph{}To help with planning how a program, or function might look like, \texttt{pseudocode} is used because it hides the issues pertaining to C syntax. Separating out semantics from syntax can be helpful in planning how the code will look by first focusing on what it's supposed to do. It can also be used to explain an algorithm to someone who isn't familiar with code. Example:
 
 \begin{verbatim}
     DISPLAY "How many grades?"
@@ -220,6 +226,45 @@
 
 \section{Programming in C}
 \paragraph{}C is an exciting and powerful programming language. It's been used to create operating systems, video games, web browsers, word processors, and to program some microchips (like Arduino\footnote{\url{https://www.arduino.cc/}}).
+
+\subsection{Why?}
+\paragraph{}C, Fortran, and a few other languages in the 1960s and 70s were the first languages which were machine independent. Previously, for each type of computer system, a programmer would have to learn the assembly language for the system's CPU. Systems languages, like C, C++, Fortran, Go, Rust, and others abstract away the details of assembly and CPU features and generate the assembly code for you. Recall from Lecture 6:
+
+\begin{figure}[h!]
+    \centering
+    \begin{tabular}{l l l l}
+        Intel & ARM & RISC-V & PowerPC \\ \hline
+        push rbp & sub sp, sp, \#16 & addi sp,sp,-32 & std 31,-8(1) \\
+        mov rbp, rsp & str w0, [sp, 12] & sd s0,24(sp) & stdu 1,-64(1) \\
+        mov DWORD PTR [rbp-4], edi & ldr w0, [sp, 12] & addi s0,sp,32 & mr 31,1 \\
+        mov eax, DWORD PTR [rbp-4] & mul w0, w0, w0 & mv  a5,a0 & mr 9,3 \\
+        imul eax, eax & add sp, sp, 16 & sw a5,-20(s0) & stw 9,32(31) \\
+        pop rbp	& ret & lw a5,-20(s0)   & lwz 9,32(31) \\
+        ret	&         & mulw a5,a5,a5   & mullw 9,9,9 \\
+	    &         & sext.w a5,a5    & extsw 9,9 \\
+		&         & mv a0,a5        & mr 3,9 \\
+		&         & ld s0, 24(sp)   & addi 1,31,64 \\
+		&         & addi sp, sp, 32 & ld 31,-8(1) \\
+		&         & jr ra           & blr
+    \end{tabular}
+    \caption{Equivalent assembly example, a function which multiplies an integer by itself}
+    \label{fig:assemblyexample}
+\end{figure}
+
+\paragraph{}Note how the four systems differ drastically in the amount of code needed, and the commands for each line. C code makes this much easier.
+
+\begin{figure}[h!]
+    \centering
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
+    int square(int num) {
+        return num * num;
+    }
+    \end{lstlisting}
+    \caption{A function which multiplies an integer by itself, in C}
+    \label{fig:assemblyexamplecversion}
+\end{figure}
+
+\paragraph{}If you'd like to learn more about assembly and various types of Instruction Set Architectures (ISA), visit the ``Comparison of Instruction Set Architectures'' on Wikipedia \footnote{\url{https://en.wikipedia.org/wiki/Comparison_of_instruction_set_architectures}}.
 
 \subsection{Compiling}
 \paragraph{}Compiling is the process of converting typed programming language code into an executable file which can be run by the operating system. The program which makes this conversion is a \texttt{compiler}, and it operates at three stages:
@@ -244,7 +289,7 @@
         == != & left to right \\
         \&\& & left to right \\
         \textbar\textbar & left to right \\
-        $=$ & right to left
+        $=$ (including +=, -=, etc) & right to left
     \end{tabular}
     \caption{Operator Precedence}
     \label{fig:opprec}
@@ -277,11 +322,11 @@
 \paragraph{}Look again at the data types chart, and recalling \autoref{fig:binarychart}, you should notice that the maximum sizes are equal to powers of two, or powers of two minus one. For example, the maximum size of an unsigned char is 255. That's because the exponent for the powers of two starts at zero ($2^7$ is the last position in a char), and all bits being set would equal 255. So representing 256 would require two bytes, as $2^8$ is the first value of the \textit{second} byte!
 
 \paragraph{}For a program calculating or using the distance to Voyager 1 in astronomical units, then use an integer: \texttt{int distToVoyagerAU = 156;}. If the distance to Voyager 1 would be needed in inches, use a float: 
-\begin{verbatim}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
     #include <math.h> // so we can use exponents
 
     float distToVoyagerInches = 9.16 * powf(10, 14);
-\end{verbatim}
+\end{lstlisting}
 
 \paragraph{}It's a silly example, but $9.6 x 10^{14}$ is less than the maximum of $10^{38}$. But if operations are to be done which modify that variable, potentially make it bigger by consider using a \texttt{double} instead.
 
@@ -321,20 +366,20 @@
 
 \subsection{If Statements}
 \paragraph{}If statements are an example of binary selection, either \textit{this} or \textit{that}.
-\begin{verbatim}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
 if (tempVar == 12) {
     doThis();
 } else {
     doThat();
 }
-\end{verbatim}
+\end{lstlisting}
 
 \subsection{Switch \& Case Statements}\label{sec:switchcase}
 \paragraph{}In some scenarios, it is necessary to chose some action based on a wide possible set of values. Instead of having nested \texttt{if} statements, a \texttt{switch} statement can be used where the variable being used is an \texttt{integer} or \texttt{char}. The \texttt{default} statement is usually used to handle errors, when the value used for the \texttt{switch} statement wasn't expected, or is invalid.
 
 \paragraph{}The \texttt{case} statement has the value for that statement, and usually each \texttt{case} statement ends with \texttt{break;}. Sometimes, it makes sense to have the \texttt{case} statement \textit{cascade} down to the next \texttt{case} statement, if the action to be done for those values would be the same.
 
-\begin{verbatim}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
 int tempVar = doSomething();
 switch tempVar {
     case 1: doSomething(); break;
@@ -344,7 +389,7 @@ switch tempVar {
     case 5: nowForSomethingCompletelyDifferent(); break;
     default: printf("Invalid value: %d\n", tempVar);
 }
-\end{verbatim}
+\end{lstlisting}
 
 \subsection{Operators}
 
@@ -395,24 +440,24 @@ switch tempVar {
 \begin{itemize}
     \item Arrays cannot be resized.
     \item Create an array by indicating the size, along with the data type. Use a value in braces to set all elements to that value, or don't set a value if the values will be set later.
-    \begin{verbatim}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
         int myIntegerArray[200] = {0};
-    \end{verbatim}
+    \end{lstlisting}
     \item Access each element in the array with brackets, using the index value.
-    \begin{verbatim}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
         myIntegerArray[17] = 204;
-    \end{verbatim}
+    \end{lstlisting}
 \end{itemize}
 
 \subsection{Pointers}
 \paragraph{}All of the variables exist in memory, and using that location is what is don when using pointers.
 \begin{itemize}
     \item Pointers allow a function to change the value of a variable. Example, \texttt{scanf()} uses a pointer as the second parameter as the location where the received data will be placed.
-    \begin{verbatim}
+    \begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
 int temp;
 scanf("%d", &temp); // & in front of temp returns the memory address, or pointer,
                     // of temp
-    \end{verbatim}
+    \end{lstlisting}
     \item Pointers are the beginning point for an array.
 \end{itemize}
 
@@ -428,10 +473,11 @@ scanf("%d", &temp); // & in front of temp returns the memory address, or pointer
 \end{figure}
 
 \paragraph{}The variable which represents an array is really just the pointer to the first element, as shown in \autoref{fig:arraymemory}. The variable name ``numbers'' is the pointer, and dereferencing the pointer directly, or by indexing to the first element, shows the same value.
-\begin{verbatim}
+\begin{lstlisting}[language=C,basicstyle=\footnotesize,keywordstyle=\color{blue},commentstyle=\color{green},showstringspaces=false,stringstyle=\color{red}]
     printf("Dereferencing numbers: %d\n", *numbers);
     printf("Indexing into position 0: %d\n, numbers[0]);
-    
+\end{lstlisting}
+\begin{verbatim}
     Output:
     Dereferencing numbers: 97
     Indexing into position 0: 97
