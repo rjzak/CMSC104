@@ -1,0 +1,66 @@
+# https://davidegerosa.com/githubforlatex/
+
+name: writeapaper
+on: [push]
+jobs:
+  syllabus:
+    runs-on: ubuntu-latest
+    env:
+      # Edit here with the names of your latex file and directory (can use ".")
+      FILE: syllabus
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install TeXlive
+        run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super
+      - name: LaTeX compile
+        #working-directory: ${{ env.DIR }}
+        #run: latexmk -pdf -bibtex ${{ env.FILE }}
+        run: pdflatex ${{ env.FILE }}
+      - name: move
+        run: mkdir -p github_artifacts && mv ${{ env.FILE }}.pdf ./github_artifacts/
+      - name: Upload pdf as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.FILE }}.pdf
+          path: ./github_artifacts
+  L02:
+    runs-on: ubuntu-latest
+    env:
+      # Edit here with the names of your latex file and directory (can use ".")
+      DIR: L02_ArchNumbersSystems
+      FILE: main
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install TeXlive
+        run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super
+      - name: LaTeX compile
+        #working-directory: ${{ env.DIR }}
+        run: pdflatex ${{ env.DIR }}/${{ env.FILE }}
+      - name: move
+        run: mkdir -p github_artifacts && mv ${{ env.FILE }}.pdf ./github_artifacts/${{ env.DIR }}.pdf
+      - name: Upload pdf as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.DIR }}.pdf
+          path: ./github_artifacts
+  deploy:
+    # Edit here if compiling multiple papers
+    needs: [syllabus, L02]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          path: github_artifacts
+      - name: move
+        run: mkdir -p github_deploy && mv github_artifacts/*/* github_deploy
+      - name: deploy on orphan branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./github_deploy
+          publish_branch: build
+          force_orphan: true
