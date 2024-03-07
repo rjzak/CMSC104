@@ -309,7 +309,7 @@ int main() {
     if (counter == 0) { // Avoid a divide by zero error
         printf("No grades entered.\n");
     } else {
-        average = total / float(counter);
+        average = total / (float) counter;
         printf("Class average for %d students: %1.2f\n",
             counter, average);
     }

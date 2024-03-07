@@ -307,29 +307,29 @@ if (!(x==2)) { /* same as (x!=2) */
     \texttt{int a = 1, b = 0, c = 7;} \\ ~~ \\
     \begin{tabular}{l l l}
         Expression & Numeric Value & True/False \\ \hline
-        a & \\
-        b & \\
-        c & \\
-        $a+b$ & \\
-        a \&\& b & \\
-        a \textbar\textbar b & \\
-        !c & \\
-        !!c & \\
-        a \&\& !b & \\
-        $a < b$ \&\& $b<c$ & \\
-        $a>b$ \&\& $b<c$ & \\
-        $a>=b$ \textbar\textbar $b>c$ &
+        a & \only<2->{1} & \only<2->{true} \\
+        b & \only<3->{0} & \only<3->{false} \\
+        c & \only<4->{7} & \only<4->{true} \\
+        $a+b$ & \only<5->{1} & \only<5->{true} \\
+        a \&\& b & \only<6->{0} & \only<6->{false} \\
+        a \textbar\textbar b & \only<7->{1} & \only<7->{true} \\
+        !c & \only<8->{0} & \only<8->{false} \\
+        !!c & \only<9->{1} & \only<9->{true} \\
+        a \&\& !b & \only<10->{1} & \only<10->{true} \\
+        $a < b$ \&\& $b<c$ & \only<11->{0} & \only<11->{false} \\
+        $a>b$ \&\& $b<c$ & \only<12->{1} & \only<12->{true} \\
+        $a>=b$ \textbar\textbar $b>c$ & \only<13->{1} & \only<13->{true}
     \end{tabular}
 \end{frame}
 
 \begin{frame}{More Practice}
     Given: \texttt{int a = 5, b = 7, c = 17;} evaluate as true or false:
     \begin{itemize}
-        \item $c / b == 2$
-        \item $c \% b <= a \% b$
-        \item $b + c / a != c - a$
-        \item $(b<c)$ \&\& $(c == 7)$
-        \item $(c + 1 - b == 0$ \textbar\textbar $(b = 5)$
+        \item $c / b == 2$ \only<2->{\underline{true}}
+        \item $c \% b <= a \% b$ \only<3->{\underline{true}}
+        \item $b + c / a != c - a$ \only<4->{\underline{true}}
+        \item $(b<c)$ \&\& $(c == 7)$ \only<5->{\underline{false}}
+        \item $(c + 1 - b == 0$ \textbar\textbar $(b = 5)$ \only<5->{\underline{true}}
     \end{itemize}
 \end{frame}
 
